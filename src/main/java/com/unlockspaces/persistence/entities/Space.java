@@ -15,6 +15,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 @Entity
 public class Space implements Serializable {
@@ -56,6 +57,8 @@ public class Space implements Serializable {
     private Collection<Amenity> amenitiesAvailable;
     @OneToOne(targetEntity = Picture.class)
     private Picture frontPhoto;
+
+    private Double distance;
 
     public Space() {
 
@@ -195,5 +198,21 @@ public class Space implements Serializable {
 
     public void setFrontPhoto(Picture frontPhoto) {
         this.frontPhoto = frontPhoto;
+    }
+    
+    /**
+     * @return the distance
+     */
+    @Transient
+    public Double getDistance() {
+        return distance;
+    }
+
+    /**
+     * @param distance the distance to set
+     */
+    @Transient
+    public void setDistance(Double distance) {
+        this.distance = distance;
     }
 }

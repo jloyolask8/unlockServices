@@ -5,8 +5,11 @@
  */
 package com.unlockspaces.restws.service;
 
+import com.unlockspaces.persistence.entities.Space;
+import java.util.LinkedList;
 import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 
 /**
  *
@@ -58,6 +61,37 @@ public abstract class AbstractFacade<T> {
         cq.select(getEntityManager().getCriteriaBuilder().count(rt));
         javax.persistence.Query q = getEntityManager().createQuery(cq);
         return ((Long) q.getSingleResult()).intValue();
+    }
+    
+    public List findSpacesOnRadio(String lat, String lon, int meters) {
+        EntityManager em = null;
+        String centerLocation = lon+' '+lat;
+        try {
+            em = getEntityManager();
+            //Debug purposes
+            System.out.println("findMerchantsOnRadio(" + centerLocation + "," + meters + ")");
+            long startTime = System.currentTimeMillis();
+            //**************************/
+            Query query = em.createNativeQuery("select *, ST_Distance(ST_Transform(locaciones.geom4326,32719), "
+                    + "ST_Transform(ST_GeomFromText('POINT(" + centerLocation + ")', 4326),32719)) as distance\n"
+                    + "from (SELECT *\n"
+                    + " FROM space\n"
+                    + " WHERE ST_Distance(ST_Transform(geom4326,32719), ST_Transform(ST_GeomFromText('POINT(" + centerLocation + ")', 4326),32719)) < " + meters + ") locaciones"
+                    + " order by distance;", Space.class);
+            List<Space> results = query.getResultList();
+            //Debug purposes
+            long elapsedTime = System.currentTimeMillis() - startTime;
+            System.out.println("query return " + results.size() + " results in " + elapsedTime + " milliseconds");
+            //*****************************/
+            return results;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+        return new LinkedList();
     }
     
 }
