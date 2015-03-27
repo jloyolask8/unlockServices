@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ViewSpaceCategoryTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputText value="#{bundle.ViewSpaceCategoryLabel_name}"/>
+                    <h:outputText value="#{spaceCategoryController.selected.name}" title="#{bundle.ViewSpaceCategoryTitle_name}"/>
+                    <h:outputText value="#{bundle.ViewSpaceCategoryLabel_details}"/>
+                    <h:outputText value="#{spaceCategoryController.selected.details}" title="#{bundle.ViewSpaceCategoryTitle_details}"/>
+                    <h:outputText value="#{bundle.ViewSpaceCategoryLabel_id}"/>
+                    <h:outputText value="#{spaceCategoryController.selected.id}" title="#{bundle.ViewSpaceCategoryTitle_id}"/>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{spaceCategoryController.destroyAndView}" value="#{bundle.ViewSpaceCategoryDestroyLink}"/>
+                <br />
+                <br />
+                <h:link outcome="Edit" value="#{bundle.ViewSpaceCategoryEditLink}"/>
+                <br />
+                <h:commandLink action="#{spaceCategoryController.prepareCreate}" value="#{bundle.ViewSpaceCategoryCreateLink}" />
+                <br />
+                <h:commandLink action="#{spaceCategoryController.prepareList}" value="#{bundle.ViewSpaceCategoryShowAllLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.ViewSpaceCategoryIndexLink}"/>
+
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

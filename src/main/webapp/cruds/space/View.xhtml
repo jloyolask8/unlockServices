@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ViewSpaceTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputText value="#{bundle.ViewSpaceLabel_overview}"/>
+                    <h:outputText value="#{spaceController.selected.overview}" title="#{bundle.ViewSpaceTitle_overview}"/>
+                    <h:outputText value="#{bundle.ViewSpaceLabel_venue}"/>
+                    <h:outputText value="#{spaceController.selected.venue}" title="#{bundle.ViewSpaceTitle_venue}"/>
+                    <h:outputText value="#{bundle.ViewSpaceLabel_cancelationPolicy}"/>
+                    <h:outputText value="#{spaceController.selected.cancelationPolicy}" title="#{bundle.ViewSpaceTitle_cancelationPolicy}"/>
+                    <h:outputText value="#{bundle.ViewSpaceLabel_creationDate}"/>
+                    <h:outputText value="#{spaceController.selected.creationDate}" title="#{bundle.ViewSpaceTitle_creationDate}">
+                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                    </h:outputText>
+                    <h:outputText value="#{bundle.ViewSpaceLabel_type}"/>
+                    <h:outputText value="#{spaceController.selected.type}" title="#{bundle.ViewSpaceTitle_type}"/>
+                    <h:outputText value="#{bundle.ViewSpaceLabel_capacity}"/>
+                    <h:outputText value="#{spaceController.selected.capacity}" title="#{bundle.ViewSpaceTitle_capacity}"/>
+                    <h:outputText value="#{bundle.ViewSpaceLabel_spaceStatus}"/>
+                    <h:outputText value="#{spaceController.selected.spaceStatus}" title="#{bundle.ViewSpaceTitle_spaceStatus}"/>
+                    <h:outputText value="#{bundle.ViewSpaceLabel_createdBy}"/>
+                    <h:outputText value="#{spaceController.selected.createdBy}" title="#{bundle.ViewSpaceTitle_createdBy}"/>
+                    <h:outputText value="#{bundle.ViewSpaceLabel_reservationMethod}"/>
+                    <h:outputText value="#{spaceController.selected.reservationMethod}" title="#{bundle.ViewSpaceTitle_reservationMethod}"/>
+                    <h:outputText value="#{bundle.ViewSpaceLabel_id}"/>
+                    <h:outputText value="#{spaceController.selected.id}" title="#{bundle.ViewSpaceTitle_id}"/>
+                    <h:outputText value="#{bundle.ViewSpaceLabel_lastModifDate}"/>
+                    <h:outputText value="#{spaceController.selected.lastModifDate}" title="#{bundle.ViewSpaceTitle_lastModifDate}">
+                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                    </h:outputText>
+                    <h:outputText value="#{bundle.ViewSpaceLabel_category}"/>
+                    <h:outputText value="#{spaceController.selected.category}" title="#{bundle.ViewSpaceTitle_category}"/>
+                    <h:outputText value="#{bundle.ViewSpaceLabel_pricing}"/>
+                    <h:outputText value="#{spaceController.selected.pricing}" title="#{bundle.ViewSpaceTitle_pricing}"/>
+                    <h:outputText value="#{bundle.ViewSpaceLabel_frontPhoto}"/>
+                    <h:outputText value="#{spaceController.selected.frontPhoto}" title="#{bundle.ViewSpaceTitle_frontPhoto}"/>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{spaceController.destroyAndView}" value="#{bundle.ViewSpaceDestroyLink}"/>
+                <br />
+                <br />
+                <h:link outcome="Edit" value="#{bundle.ViewSpaceEditLink}"/>
+                <br />
+                <h:commandLink action="#{spaceController.prepareCreate}" value="#{bundle.ViewSpaceCreateLink}" />
+                <br />
+                <h:commandLink action="#{spaceController.prepareList}" value="#{bundle.ViewSpaceShowAllLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.ViewSpaceIndexLink}"/>
+
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

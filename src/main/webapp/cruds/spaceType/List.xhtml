@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ListSpaceTypeTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:form styleClass="jsfcrud_list_form">
+                <h:panelGroup id="messagePanel" layout="block">
+                    <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+                </h:panelGroup>
+                <h:outputText escape="false" value="#{bundle.ListSpaceTypeEmpty}" rendered="#{spaceTypeController.items.rowCount == 0}"/>
+                <h:panelGroup rendered="#{spaceTypeController.items.rowCount > 0}">
+                    <h:outputText value="#{spaceTypeController.pagination.pageFirstItem + 1}..#{spaceTypeController.pagination.pageLastItem + 1}/#{spaceTypeController.pagination.itemsCount}"/>&nbsp;
+                    <h:commandLink action="#{spaceTypeController.previous}" value="#{bundle.Previous} #{spaceTypeController.pagination.pageSize}" rendered="#{spaceTypeController.pagination.hasPreviousPage}"/>&nbsp;
+                    <h:commandLink action="#{spaceTypeController.next}" value="#{bundle.Next} #{spaceTypeController.pagination.pageSize}" rendered="#{spaceTypeController.pagination.hasNextPage}"/>&nbsp;
+                    <h:dataTable value="#{spaceTypeController.items}" var="item" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" style="border:solid 1px">
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListSpaceTypeTitle_name}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.name}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListSpaceTypeTitle_details}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.details}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListSpaceTypeTitle_id}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.id}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="&nbsp;"/>
+                            </f:facet>
+                            <h:commandLink action="#{spaceTypeController.prepareView}" value="#{bundle.ListSpaceTypeViewLink}"/>
+                            <h:outputText value=" "/>
+                            <h:commandLink action="#{spaceTypeController.prepareEdit}" value="#{bundle.ListSpaceTypeEditLink}"/>
+                            <h:outputText value=" "/>
+                            <h:commandLink action="#{spaceTypeController.destroy}" value="#{bundle.ListSpaceTypeDestroyLink}"/>
+                        </h:column>
+                    </h:dataTable>
+                </h:panelGroup>
+                <br />
+                <h:commandLink action="#{spaceTypeController.prepareCreate}" value="#{bundle.ListSpaceTypeCreateLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.ListSpaceTypeIndexLink}"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

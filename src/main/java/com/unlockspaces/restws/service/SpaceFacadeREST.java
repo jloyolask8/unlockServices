@@ -6,6 +6,7 @@
 package com.unlockspaces.restws.service;
 
 import com.unlockspaces.persistence.entities.Space;
+import com.unlockspaces.persistence.entities.SpaceD;
 import java.util.Collections;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -71,7 +72,7 @@ public class SpaceFacadeREST extends AbstractFacade<Space> {
     @GET
     @Path("{latitude}/{longitude}")
     @Produces({"application/xml", "application/json"})
-    public List<Space> searchLatLong(@PathParam("latitude") String latitude, @PathParam("longitude") String longitude) {
+    public List<SpaceD> searchLatLong(@PathParam("latitude") String latitude, @PathParam("longitude") String longitude) {
         //10000 meters setted only for test purposes
         return super.findSpacesOnRadio(latitude, longitude, 10000);
         //Jorge's search here

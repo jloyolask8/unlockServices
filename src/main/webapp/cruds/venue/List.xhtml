@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ListVenueTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:form styleClass="jsfcrud_list_form">
+                <h:panelGroup id="messagePanel" layout="block">
+                    <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+                </h:panelGroup>
+                <h:outputText escape="false" value="#{bundle.ListVenueEmpty}" rendered="#{venueController.items.rowCount == 0}"/>
+                <h:panelGroup rendered="#{venueController.items.rowCount > 0}">
+                    <h:outputText value="#{venueController.pagination.pageFirstItem + 1}..#{venueController.pagination.pageLastItem + 1}/#{venueController.pagination.itemsCount}"/>&nbsp;
+                    <h:commandLink action="#{venueController.previous}" value="#{bundle.Previous} #{venueController.pagination.pageSize}" rendered="#{venueController.pagination.hasPreviousPage}"/>&nbsp;
+                    <h:commandLink action="#{venueController.next}" value="#{bundle.Next} #{venueController.pagination.pageSize}" rendered="#{venueController.pagination.hasNextPage}"/>&nbsp;
+                    <h:dataTable value="#{venueController.items}" var="item" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" style="border:solid 1px">
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListVenueTitle_overview}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.overview}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListVenueTitle_address}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.address}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListVenueTitle_contactInfo}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.contactInfo}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListVenueTitle_timezone}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.timezone}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListVenueTitle_hoursOfOperation}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.hoursOfOperation}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListVenueTitle_creationDate}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.creationDate}">
+                                <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                            </h:outputText>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListVenueTitle_venueLogo}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.venueLogo}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListVenueTitle_createdBy}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.createdBy}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListVenueTitle_organization}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.organization}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListVenueTitle_id}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.id}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListVenueTitle_lastModifDate}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.lastModifDate}">
+                                <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                            </h:outputText>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListVenueTitle_frontPhoto}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.frontPhoto}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="&nbsp;"/>
+                            </f:facet>
+                            <h:commandLink action="#{venueController.prepareView}" value="#{bundle.ListVenueViewLink}"/>
+                            <h:outputText value=" "/>
+                            <h:commandLink action="#{venueController.prepareEdit}" value="#{bundle.ListVenueEditLink}"/>
+                            <h:outputText value=" "/>
+                            <h:commandLink action="#{venueController.destroy}" value="#{bundle.ListVenueDestroyLink}"/>
+                        </h:column>
+                    </h:dataTable>
+                </h:panelGroup>
+                <br />
+                <h:commandLink action="#{venueController.prepareCreate}" value="#{bundle.ListVenueCreateLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.ListVenueIndexLink}"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

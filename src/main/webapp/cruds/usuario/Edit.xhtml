@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.EditUsuarioTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.EditUsuarioLabel_password}" for="password" />
+                    <h:inputText id="password" styleClass="form-control" value="#{usuarioController.selected.password}" title="#{bundle.EditUsuarioTitle_password}" />
+                    <h:outputLabel value="#{bundle.EditUsuarioLabel_organization}" for="organization" />
+                    <h:selectOneMenu id="organization" value="#{usuarioController.selected.organization}" title="#{bundle.EditUsuarioTitle_organization}" >
+                        <f:selectItems value="#{organizationController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                    <h:outputLabel value="#{bundle.EditUsuarioLabel_creationDate}" for="creationDate" />
+                    <h:inputText id="creationDate" styleClass="form-control" value="#{usuarioController.selected.creationDate}" title="#{bundle.EditUsuarioTitle_creationDate}" />
+                    <h:outputLabel value="#{bundle.EditUsuarioLabel_lastModifDate}" for="lastModifDate" />
+                    <h:inputText id="lastModifDate" styleClass="form-control" value="#{usuarioController.selected.lastModifDate}" title="#{bundle.EditUsuarioTitle_lastModifDate}" />
+                    <h:outputLabel value="#{bundle.EditUsuarioLabel_username}" for="username" />
+                    <h:inputText id="username" styleClass="form-control" value="#{usuarioController.selected.username}" title="#{bundle.EditUsuarioTitle_username}" />
+                    <h:outputLabel value="#{bundle.EditUsuarioLabel_country}" for="country" />
+                    <h:selectOneMenu id="country" value="#{usuarioController.selected.country}" title="#{bundle.EditUsuarioTitle_country}" >
+                        <f:selectItems value="#{countryController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                    <h:outputLabel value="#{bundle.EditUsuarioLabel_systemId}" for="systemId" />
+                    <h:inputText id="systemId" styleClass="form-control" value="#{usuarioController.selected.systemId}" title="#{bundle.EditUsuarioTitle_systemId}" />
+                    <h:outputLabel value="#{bundle.EditUsuarioLabel_emailAddress}" for="emailAddress" />
+                    <h:inputText id="emailAddress" styleClass="form-control" value="#{usuarioController.selected.emailAddress}" title="#{bundle.EditUsuarioTitle_emailAddress}" />
+                    <h:outputLabel value="#{bundle.EditUsuarioLabel_addresses}" for="addresses" />
+                    <h:inputText id="addresses" styleClass="form-control" value="#{usuarioController.selected.addresses}" title="#{bundle.EditUsuarioTitle_addresses}" />
+                    <h:outputLabel value="#{bundle.EditUsuarioLabel_identification}" for="identification" />
+                    <h:inputText id="identification" styleClass="form-control" value="#{usuarioController.selected.identification}" title="#{bundle.EditUsuarioTitle_identification}" />
+                    <h:outputLabel value="#{bundle.EditUsuarioLabel_name}" for="name" />
+                    <h:inputText id="name" styleClass="form-control" value="#{usuarioController.selected.name}" title="#{bundle.EditUsuarioTitle_name}" />
+                    <h:outputLabel value="#{bundle.EditUsuarioLabel_genre}" for="genre" />
+                    <h:inputText id="genre" styleClass="form-control" value="#{usuarioController.selected.genre}" title="#{bundle.EditUsuarioTitle_genre}" />
+                    <h:outputLabel value="#{bundle.EditUsuarioLabel_bornDate}" for="bornDate" />
+                    <h:inputText id="bornDate" styleClass="form-control" value="#{usuarioController.selected.bornDate}" title="#{bundle.EditUsuarioTitle_bornDate}" >
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </h:inputText>
+                    <h:outputLabel value="#{bundle.EditUsuarioLabel_phoneNumbers}" for="phoneNumbers" />
+                    <h:inputText id="phoneNumbers" styleClass="form-control" value="#{usuarioController.selected.phoneNumbers}" title="#{bundle.EditUsuarioTitle_phoneNumbers}" />
+                    <h:outputLabel value="#{bundle.EditUsuarioLabel_lastname}" for="lastname" />
+                    <h:inputText id="lastname" styleClass="form-control" value="#{usuarioController.selected.lastname}" title="#{bundle.EditUsuarioTitle_lastname}" />
+                    <h:outputLabel value="#{bundle.EditUsuarioLabel_selfDescription}" for="selfDescription" />
+                    <h:inputText id="selfDescription" styleClass="form-control" value="#{usuarioController.selected.selfDescription}" title="#{bundle.EditUsuarioTitle_selfDescription}" />
+                </h:panelGrid>
+                <h:commandLink action="#{usuarioController.update}" value="#{bundle.EditUsuarioSaveLink}"/>
+                <br />
+                <br />
+                <h:link outcome="View" value="#{bundle.EditUsuarioViewLink}"/>
+                <br />
+                <h:commandLink action="#{usuarioController.prepareList}" value="#{bundle.EditUsuarioShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.EditUsuarioIndexLink}" />
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

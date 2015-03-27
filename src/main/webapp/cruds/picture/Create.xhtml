@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.CreatePictureTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.CreatePictureLabel_cloudinaryUrl2}" for="cloudinaryUrl2" />
+                    <h:inputText id="cloudinaryUrl2" styleClass="form-control" value="#{pictureController.selected.cloudinaryUrl2}" title="#{bundle.CreatePictureTitle_cloudinaryUrl2}" />
+                    <h:outputLabel value="#{bundle.CreatePictureLabel_cloudinaryUrl1}" for="cloudinaryUrl1" />
+                    <h:inputText id="cloudinaryUrl1" styleClass="form-control" value="#{pictureController.selected.cloudinaryUrl1}" title="#{bundle.CreatePictureTitle_cloudinaryUrl1}" />
+                    <h:outputLabel value="#{bundle.CreatePictureLabel_filename}" for="filename" />
+                    <h:inputText id="filename" styleClass="form-control" value="#{pictureController.selected.filename}" title="#{bundle.CreatePictureTitle_filename}" />
+                    <h:outputLabel value="#{bundle.CreatePictureLabel_cloudinaryUrl3}" for="cloudinaryUrl3" />
+                    <h:inputText id="cloudinaryUrl3" styleClass="form-control" value="#{pictureController.selected.cloudinaryUrl3}" title="#{bundle.CreatePictureTitle_cloudinaryUrl3}" />
+                    <h:outputLabel value="#{bundle.CreatePictureLabel_id}" for="id" />
+                    <h:inputText id="id" styleClass="form-control" value="#{pictureController.selected.id}" title="#{bundle.CreatePictureTitle_id}" />
+                    <h:outputLabel value="#{bundle.CreatePictureLabel_mimeType}" for="mimeType" />
+                    <h:inputText id="mimeType" styleClass="form-control" value="#{pictureController.selected.mimeType}" title="#{bundle.CreatePictureTitle_mimeType}" />
+                    <h:outputLabel value="#{bundle.CreatePictureLabel_creationDate}" for="creationDate" />
+                    <h:inputText id="creationDate" styleClass="form-control" value="#{pictureController.selected.creationDate}" title="#{bundle.CreatePictureTitle_creationDate}" >
+                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                    </h:inputText>
+                    <h:outputLabel value="#{bundle.CreatePictureLabel_uploadedBy}" for="uploadedBy" />
+                    <h:selectOneMenu id="uploadedBy" value="#{pictureController.selected.uploadedBy}" title="#{bundle.CreatePictureTitle_uploadedBy}" >
+                        <f:selectItems value="#{usuarioController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                    <h:outputLabel value="#{bundle.CreatePictureLabel_space}" for="space" />
+                    <h:selectOneMenu id="space" value="#{pictureController.selected.space}" title="#{bundle.CreatePictureTitle_space}" >
+                        <f:selectItems value="#{spaceController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{pictureController.create}" value="#{bundle.CreatePictureSaveLink}" />
+                <br />
+                <br />
+                <h:commandLink action="#{pictureController.prepareList}" value="#{bundle.CreatePictureShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.CreatePictureIndexLink}"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

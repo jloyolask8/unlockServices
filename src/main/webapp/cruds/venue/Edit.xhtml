@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.EditVenueTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.EditVenueLabel_overview}" for="overview" />
+                    <h:inputText id="overview" styleClass="form-control" value="#{venueController.selected.overview}" title="#{bundle.EditVenueTitle_overview}" />
+                    <h:outputLabel value="#{bundle.EditVenueLabel_address}" for="address" />
+                    <h:inputText id="address" styleClass="form-control" value="#{venueController.selected.address}" title="#{bundle.EditVenueTitle_address}" />
+                    <h:outputLabel value="#{bundle.EditVenueLabel_contactInfo}" for="contactInfo" />
+                    <h:inputText id="contactInfo" styleClass="form-control" value="#{venueController.selected.contactInfo}" title="#{bundle.EditVenueTitle_contactInfo}" />
+                    <h:outputLabel value="#{bundle.EditVenueLabel_timezone}" for="timezone" />
+                    <h:inputText id="timezone" styleClass="form-control" value="#{venueController.selected.timezone}" title="#{bundle.EditVenueTitle_timezone}" />
+                    <h:outputLabel value="#{bundle.EditVenueLabel_hoursOfOperation}" for="hoursOfOperation" />
+                    <h:inputText id="hoursOfOperation" styleClass="form-control" value="#{venueController.selected.hoursOfOperation}" title="#{bundle.EditVenueTitle_hoursOfOperation}" />
+                    <h:outputLabel value="#{bundle.EditVenueLabel_creationDate}" for="creationDate" />
+                    <h:inputText id="creationDate" styleClass="form-control" value="#{venueController.selected.creationDate}" title="#{bundle.EditVenueTitle_creationDate}" >
+                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                    </h:inputText>
+                    <h:outputLabel value="#{bundle.EditVenueLabel_venueLogo}" for="venueLogo" />
+                    <h:selectOneMenu id="venueLogo" value="#{venueController.selected.venueLogo}" title="#{bundle.EditVenueTitle_venueLogo}" >
+                        <f:selectItems value="#{pictureController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                    <h:outputLabel value="#{bundle.EditVenueLabel_createdBy}" for="createdBy" />
+                    <h:selectOneMenu id="createdBy" value="#{venueController.selected.createdBy}" title="#{bundle.EditVenueTitle_createdBy}" >
+                        <f:selectItems value="#{usuarioController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                    <h:outputLabel value="#{bundle.EditVenueLabel_organization}" for="organization" />
+                    <h:selectOneMenu id="organization" value="#{venueController.selected.organization}" title="#{bundle.EditVenueTitle_organization}" >
+                        <f:selectItems value="#{organizationController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                    <h:outputLabel value="#{bundle.EditVenueLabel_id}" for="id" />
+                    <h:inputText id="id" styleClass="form-control" value="#{venueController.selected.id}" title="#{bundle.EditVenueTitle_id}" />
+                    <h:outputLabel value="#{bundle.EditVenueLabel_lastModifDate}" for="lastModifDate" />
+                    <h:inputText id="lastModifDate" styleClass="form-control" value="#{venueController.selected.lastModifDate}" title="#{bundle.EditVenueTitle_lastModifDate}" >
+                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                    </h:inputText>
+                    <h:outputLabel value="#{bundle.EditVenueLabel_frontPhoto}" for="frontPhoto" />
+                    <h:selectOneMenu id="frontPhoto" value="#{venueController.selected.frontPhoto}" title="#{bundle.EditVenueTitle_frontPhoto}" >
+                        <f:selectItems value="#{pictureController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                </h:panelGrid>
+                <h:commandLink action="#{venueController.update}" value="#{bundle.EditVenueSaveLink}"/>
+                <br />
+                <br />
+                <h:link outcome="View" value="#{bundle.EditVenueViewLink}"/>
+                <br />
+                <h:commandLink action="#{venueController.prepareList}" value="#{bundle.EditVenueShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.EditVenueIndexLink}" />
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ViewVenueTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputText value="#{bundle.ViewVenueLabel_overview}"/>
+                    <h:outputText value="#{venueController.selected.overview}" title="#{bundle.ViewVenueTitle_overview}"/>
+                    <h:outputText value="#{bundle.ViewVenueLabel_address}"/>
+                    <h:outputText value="#{venueController.selected.address}" title="#{bundle.ViewVenueTitle_address}"/>
+                    <h:outputText value="#{bundle.ViewVenueLabel_contactInfo}"/>
+                    <h:outputText value="#{venueController.selected.contactInfo}" title="#{bundle.ViewVenueTitle_contactInfo}"/>
+                    <h:outputText value="#{bundle.ViewVenueLabel_timezone}"/>
+                    <h:outputText value="#{venueController.selected.timezone}" title="#{bundle.ViewVenueTitle_timezone}"/>
+                    <h:outputText value="#{bundle.ViewVenueLabel_hoursOfOperation}"/>
+                    <h:outputText value="#{venueController.selected.hoursOfOperation}" title="#{bundle.ViewVenueTitle_hoursOfOperation}"/>
+                    <h:outputText value="#{bundle.ViewVenueLabel_creationDate}"/>
+                    <h:outputText value="#{venueController.selected.creationDate}" title="#{bundle.ViewVenueTitle_creationDate}">
+                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                    </h:outputText>
+                    <h:outputText value="#{bundle.ViewVenueLabel_venueLogo}"/>
+                    <h:outputText value="#{venueController.selected.venueLogo}" title="#{bundle.ViewVenueTitle_venueLogo}"/>
+                    <h:outputText value="#{bundle.ViewVenueLabel_createdBy}"/>
+                    <h:outputText value="#{venueController.selected.createdBy}" title="#{bundle.ViewVenueTitle_createdBy}"/>
+                    <h:outputText value="#{bundle.ViewVenueLabel_organization}"/>
+                    <h:outputText value="#{venueController.selected.organization}" title="#{bundle.ViewVenueTitle_organization}"/>
+                    <h:outputText value="#{bundle.ViewVenueLabel_id}"/>
+                    <h:outputText value="#{venueController.selected.id}" title="#{bundle.ViewVenueTitle_id}"/>
+                    <h:outputText value="#{bundle.ViewVenueLabel_lastModifDate}"/>
+                    <h:outputText value="#{venueController.selected.lastModifDate}" title="#{bundle.ViewVenueTitle_lastModifDate}">
+                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                    </h:outputText>
+                    <h:outputText value="#{bundle.ViewVenueLabel_frontPhoto}"/>
+                    <h:outputText value="#{venueController.selected.frontPhoto}" title="#{bundle.ViewVenueTitle_frontPhoto}"/>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{venueController.destroyAndView}" value="#{bundle.ViewVenueDestroyLink}"/>
+                <br />
+                <br />
+                <h:link outcome="Edit" value="#{bundle.ViewVenueEditLink}"/>
+                <br />
+                <h:commandLink action="#{venueController.prepareCreate}" value="#{bundle.ViewVenueCreateLink}" />
+                <br />
+                <h:commandLink action="#{venueController.prepareList}" value="#{bundle.ViewVenueShowAllLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.ViewVenueIndexLink}"/>
+
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

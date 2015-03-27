@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.CreateCountryTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.CreateCountryLabel_personIDName}" for="personIDName" />
+                    <h:inputText id="personIDName" styleClass="form-control" value="#{countryController.selected.personIDName}" title="#{bundle.CreateCountryTitle_personIDName}" />
+                    <h:outputLabel value="#{bundle.CreateCountryLabel_name}" for="name" />
+                    <h:inputText id="name" styleClass="form-control" value="#{countryController.selected.name}" title="#{bundle.CreateCountryTitle_name}" />
+                    <h:outputLabel value="#{bundle.CreateCountryLabel_idRegex}" for="idRegex" />
+                    <h:inputText id="idRegex" styleClass="form-control" value="#{countryController.selected.idRegex}" title="#{bundle.CreateCountryTitle_idRegex}" />
+                    <h:outputLabel value="#{bundle.CreateCountryLabel_id_code}" for="id_code" />
+                    <h:inputText id="id_code" styleClass="form-control" value="#{countryController.selected.id_code}" title="#{bundle.CreateCountryTitle_id_code}" />
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{countryController.create}" value="#{bundle.CreateCountrySaveLink}" />
+                <br />
+                <br />
+                <h:commandLink action="#{countryController.prepareList}" value="#{bundle.CreateCountryShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.CreateCountryIndexLink}"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

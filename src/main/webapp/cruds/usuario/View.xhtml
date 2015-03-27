@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ViewUsuarioTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputText value="#{bundle.ViewUsuarioLabel_password}"/>
+                    <h:outputText value="#{usuarioController.selected.password}" title="#{bundle.ViewUsuarioTitle_password}"/>
+                    <h:outputText value="#{bundle.ViewUsuarioLabel_organization}"/>
+                    <h:outputText value="#{usuarioController.selected.organization}" title="#{bundle.ViewUsuarioTitle_organization}"/>
+                    <h:outputText value="#{bundle.ViewUsuarioLabel_creationDate}"/>
+                    <h:outputText value="#{usuarioController.selected.creationDate}" title="#{bundle.ViewUsuarioTitle_creationDate}"/>
+                    <h:outputText value="#{bundle.ViewUsuarioLabel_lastModifDate}"/>
+                    <h:outputText value="#{usuarioController.selected.lastModifDate}" title="#{bundle.ViewUsuarioTitle_lastModifDate}"/>
+                    <h:outputText value="#{bundle.ViewUsuarioLabel_username}"/>
+                    <h:outputText value="#{usuarioController.selected.username}" title="#{bundle.ViewUsuarioTitle_username}"/>
+                    <h:outputText value="#{bundle.ViewUsuarioLabel_country}"/>
+                    <h:outputText value="#{usuarioController.selected.country}" title="#{bundle.ViewUsuarioTitle_country}"/>
+                    <h:outputText value="#{bundle.ViewUsuarioLabel_systemId}"/>
+                    <h:outputText value="#{usuarioController.selected.systemId}" title="#{bundle.ViewUsuarioTitle_systemId}"/>
+                    <h:outputText value="#{bundle.ViewUsuarioLabel_emailAddress}"/>
+                    <h:outputText value="#{usuarioController.selected.emailAddress}" title="#{bundle.ViewUsuarioTitle_emailAddress}"/>
+                    <h:outputText value="#{bundle.ViewUsuarioLabel_addresses}"/>
+                    <h:outputText value="#{usuarioController.selected.addresses}" title="#{bundle.ViewUsuarioTitle_addresses}"/>
+                    <h:outputText value="#{bundle.ViewUsuarioLabel_identification}"/>
+                    <h:outputText value="#{usuarioController.selected.identification}" title="#{bundle.ViewUsuarioTitle_identification}"/>
+                    <h:outputText value="#{bundle.ViewUsuarioLabel_name}"/>
+                    <h:outputText value="#{usuarioController.selected.name}" title="#{bundle.ViewUsuarioTitle_name}"/>
+                    <h:outputText value="#{bundle.ViewUsuarioLabel_genre}"/>
+                    <h:outputText value="#{usuarioController.selected.genre}" title="#{bundle.ViewUsuarioTitle_genre}"/>
+                    <h:outputText value="#{bundle.ViewUsuarioLabel_bornDate}"/>
+                    <h:outputText value="#{usuarioController.selected.bornDate}" title="#{bundle.ViewUsuarioTitle_bornDate}">
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </h:outputText>
+                    <h:outputText value="#{bundle.ViewUsuarioLabel_phoneNumbers}"/>
+                    <h:outputText value="#{usuarioController.selected.phoneNumbers}" title="#{bundle.ViewUsuarioTitle_phoneNumbers}"/>
+                    <h:outputText value="#{bundle.ViewUsuarioLabel_lastname}"/>
+                    <h:outputText value="#{usuarioController.selected.lastname}" title="#{bundle.ViewUsuarioTitle_lastname}"/>
+                    <h:outputText value="#{bundle.ViewUsuarioLabel_selfDescription}"/>
+                    <h:outputText value="#{usuarioController.selected.selfDescription}" title="#{bundle.ViewUsuarioTitle_selfDescription}"/>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{usuarioController.destroyAndView}" value="#{bundle.ViewUsuarioDestroyLink}"/>
+                <br />
+                <br />
+                <h:link outcome="Edit" value="#{bundle.ViewUsuarioEditLink}"/>
+                <br />
+                <h:commandLink action="#{usuarioController.prepareCreate}" value="#{bundle.ViewUsuarioCreateLink}" />
+                <br />
+                <h:commandLink action="#{usuarioController.prepareList}" value="#{bundle.ViewUsuarioShowAllLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.ViewUsuarioIndexLink}"/>
+
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>
