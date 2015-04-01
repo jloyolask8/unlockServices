@@ -21,6 +21,10 @@
                     <h:selectOneMenu id="venue" value="#{spaceController.selected.venue}" title="#{bundle.EditSpaceTitle_venue}" >
                         <f:selectItems value="#{venueController.itemsAvailableSelectOne}"/>
                     </h:selectOneMenu>
+                    <h:outputLabel value="#{bundle.EditSpaceLabel_address}" for="address" />
+                    <h:inputText id="address" styleClass="form-control" value="#{spaceController.selected.address}" title="#{bundle.EditSpaceTitle_address}" />
+                    <h:outputLabel value="#{bundle.EditSpaceLabel_distance}" for="distance" />
+                    <h:inputText id="distance" styleClass="form-control" value="#{spaceController.selected.distance}" title="#{bundle.EditSpaceTitle_distance}" />
                     <h:outputLabel value="#{bundle.EditSpaceLabel_cancelationPolicy}" for="cancelationPolicy" />
                     <h:selectOneMenu id="cancelationPolicy" value="#{spaceController.selected.cancelationPolicy}" title="#{bundle.EditSpaceTitle_cancelationPolicy}" >
                         <f:selectItems value="#{cancelationPolicyController.itemsAvailableSelectOne}"/>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ViewActivityLogTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputText value="#{bundle.ViewActivityLogLabel_spaceId}"/>
+                    <h:outputText value="#{activityLogController.selected.spaceId}" title="#{bundle.ViewActivityLogTitle_spaceId}"/>
+                    <h:outputText value="#{bundle.ViewActivityLogLabel_description}"/>
+                    <h:outputText value="#{activityLogController.selected.description}" title="#{bundle.ViewActivityLogTitle_description}"/>
+                    <h:outputText value="#{bundle.ViewActivityLogLabel_userId}"/>
+                    <h:outputText value="#{activityLogController.selected.userId}" title="#{bundle.ViewActivityLogTitle_userId}"/>
+                    <h:outputText value="#{bundle.ViewActivityLogLabel_idLog}"/>
+                    <h:outputText value="#{activityLogController.selected.idLog}" title="#{bundle.ViewActivityLogTitle_idLog}"/>
+                    <h:outputText value="#{bundle.ViewActivityLogLabel_creationDateTime}"/>
+                    <h:outputText value="#{activityLogController.selected.creationDateTime}" title="#{bundle.ViewActivityLogTitle_creationDateTime}">
+                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                    </h:outputText>
+                    <h:outputText value="#{bundle.ViewActivityLogLabel_status}"/>
+                    <h:outputText value="#{activityLogController.selected.status}" title="#{bundle.ViewActivityLogTitle_status}"/>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{activityLogController.destroyAndView}" value="#{bundle.ViewActivityLogDestroyLink}"/>
+                <br />
+                <br />
+                <h:link outcome="Edit" value="#{bundle.ViewActivityLogEditLink}"/>
+                <br />
+                <h:commandLink action="#{activityLogController.prepareCreate}" value="#{bundle.ViewActivityLogCreateLink}" />
+                <br />
+                <h:commandLink action="#{activityLogController.prepareList}" value="#{bundle.ViewActivityLogShowAllLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.ViewActivityLogIndexLink}"/>
+
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

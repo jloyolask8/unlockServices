@@ -17,11 +17,15 @@ public class Address implements Serializable {
     @Basic
     private String postalCode;
     @Basic
+    private String latitude;
+    @Basic
     private String region;
     @Basic
     private String line2;
     @Basic
     private String line1;
+    @Basic
+    private String longitude;
 
     public Address() {
 
@@ -59,6 +63,14 @@ public class Address implements Serializable {
         this.postalCode = postalCode;
     }
    
+    public String getLatitude() {
+        return this.latitude;
+    }
+
+    public void setLatitude(String latitude) {
+        this.latitude = latitude;
+    }
+   
     public String getRegion() {
         return this.region;
     }
@@ -81,5 +93,13 @@ public class Address implements Serializable {
 
     public void setLine1(String line1) {
         this.line1 = line1;
+    }
+   
+    public String getLongitude() {
+        return this.longitude;
+    }
+
+    public void setLongitude(String longitude) {
+        this.longitude = longitude;
     }
 }

@@ -4,8 +4,6 @@ import com.unlockspaces.persistence.entities.Space;
 import com.unlockspaces.jsf.util.JsfUtil;
 import com.unlockspaces.jsf.util.PaginationHelper;
 import com.unlockspaces.ejb.SpaceFacade;
-import com.unlockspaces.persistence.entities.Overview;
-import com.unlockspaces.persistence.entities.Pricing;
 
 import java.io.Serializable;
 import java.util.ResourceBundle;
@@ -76,7 +74,7 @@ public class SpaceController implements Serializable {
     }
 
     public String prepareCreate() {
-        current = new Space();        
+        current = new Space();
         selectedItemIndex = -1;
         return "Create";
     }

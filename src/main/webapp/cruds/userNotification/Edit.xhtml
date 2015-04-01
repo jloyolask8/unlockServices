@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.EditUserNotificationTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.EditUserNotificationLabel_details}" for="details" />
+                    <h:inputText id="details" styleClass="form-control" value="#{userNotificationController.selected.details}" title="#{bundle.EditUserNotificationTitle_details}" />
+                    <h:outputLabel value="#{bundle.EditUserNotificationLabel_id}" for="id" />
+                    <h:inputText id="id" styleClass="form-control" value="#{userNotificationController.selected.id}" title="#{bundle.EditUserNotificationTitle_id}" />
+                    <h:outputLabel value="#{bundle.EditUserNotificationLabel_title}" for="title" />
+                    <h:inputText id="title" styleClass="form-control" value="#{userNotificationController.selected.title}" title="#{bundle.EditUserNotificationTitle_title}" />
+                    <h:outputLabel value="#{bundle.EditUserNotificationLabel_creationDate}" for="creationDate" />
+                    <h:inputText id="creationDate" styleClass="form-control" value="#{userNotificationController.selected.creationDate}" title="#{bundle.EditUserNotificationTitle_creationDate}" >
+                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                    </h:inputText>
+                    <h:outputLabel value="#{bundle.EditUserNotificationLabel_targetUser}" for="targetUser" />
+                    <h:selectOneMenu id="targetUser" value="#{userNotificationController.selected.targetUser}" title="#{bundle.EditUserNotificationTitle_targetUser}" >
+                        <f:selectItems value="#{usuarioController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                </h:panelGrid>
+                <h:commandLink action="#{userNotificationController.update}" value="#{bundle.EditUserNotificationSaveLink}"/>
+                <br />
+                <br />
+                <h:link outcome="View" value="#{bundle.EditUserNotificationViewLink}"/>
+                <br />
+                <h:commandLink action="#{userNotificationController.prepareList}" value="#{bundle.EditUserNotificationShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.EditUserNotificationIndexLink}" />
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

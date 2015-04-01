@@ -15,6 +15,10 @@
             </h:panelGroup>
             <h:form>
                 <h:panelGrid columns="2">
+                    <h:outputText value="#{bundle.ViewReservationMethodLabel_name}"/>
+                    <h:outputText value="#{reservationMethodController.selected.name}" title="#{bundle.ViewReservationMethodTitle_name}"/>
+                    <h:outputText value="#{bundle.ViewReservationMethodLabel_details}"/>
+                    <h:outputText value="#{reservationMethodController.selected.details}" title="#{bundle.ViewReservationMethodTitle_details}"/>
                     <h:outputText value="#{bundle.ViewReservationMethodLabel_id}"/>
                     <h:outputText value="#{reservationMethodController.selected.id}" title="#{bundle.ViewReservationMethodTitle_id}"/>
                 </h:panelGrid>

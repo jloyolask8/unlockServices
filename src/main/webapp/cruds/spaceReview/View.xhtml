@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ViewSpaceReviewTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputText value="#{bundle.ViewSpaceReviewLabel_rating}"/>
+                    <h:outputText value="#{spaceReviewController.selected.rating}" title="#{bundle.ViewSpaceReviewTitle_rating}"/>
+                    <h:outputText value="#{bundle.ViewSpaceReviewLabel_id}"/>
+                    <h:outputText value="#{spaceReviewController.selected.id}" title="#{bundle.ViewSpaceReviewTitle_id}"/>
+                    <h:outputText value="#{bundle.ViewSpaceReviewLabel_text}"/>
+                    <h:outputText value="#{spaceReviewController.selected.text}" title="#{bundle.ViewSpaceReviewTitle_text}"/>
+                    <h:outputText value="#{bundle.ViewSpaceReviewLabel_creationDate}"/>
+                    <h:outputText value="#{spaceReviewController.selected.creationDate}" title="#{bundle.ViewSpaceReviewTitle_creationDate}">
+                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                    </h:outputText>
+                    <h:outputText value="#{bundle.ViewSpaceReviewLabel_lastModifDate}"/>
+                    <h:outputText value="#{spaceReviewController.selected.lastModifDate}" title="#{bundle.ViewSpaceReviewTitle_lastModifDate}">
+                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                    </h:outputText>
+                    <h:outputText value="#{bundle.ViewSpaceReviewLabel_reviewedBy}"/>
+                    <h:outputText value="#{spaceReviewController.selected.reviewedBy}" title="#{bundle.ViewSpaceReviewTitle_reviewedBy}"/>
+                    <h:outputText value="#{bundle.ViewSpaceReviewLabel_space}"/>
+                    <h:outputText value="#{spaceReviewController.selected.space}" title="#{bundle.ViewSpaceReviewTitle_space}"/>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{spaceReviewController.destroyAndView}" value="#{bundle.ViewSpaceReviewDestroyLink}"/>
+                <br />
+                <br />
+                <h:link outcome="Edit" value="#{bundle.ViewSpaceReviewEditLink}"/>
+                <br />
+                <h:commandLink action="#{spaceReviewController.prepareCreate}" value="#{bundle.ViewSpaceReviewCreateLink}" />
+                <br />
+                <h:commandLink action="#{spaceReviewController.prepareList}" value="#{bundle.ViewSpaceReviewShowAllLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.ViewSpaceReviewIndexLink}"/>
+
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

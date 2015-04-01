@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ViewReservationTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputText value="#{bundle.ViewReservationLabel_payPalPaymentInfo}"/>
+                    <h:outputText value="#{reservationController.selected.payPalPaymentInfo}" title="#{bundle.ViewReservationTitle_payPalPaymentInfo}"/>
+                    <h:outputText value="#{bundle.ViewReservationLabel_title}"/>
+                    <h:outputText value="#{reservationController.selected.title}" title="#{bundle.ViewReservationTitle_title}"/>
+                    <h:outputText value="#{bundle.ViewReservationLabel_endDateTime}"/>
+                    <h:outputText value="#{reservationController.selected.endDateTime}" title="#{bundle.ViewReservationTitle_endDateTime}">
+                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                    </h:outputText>
+                    <h:outputText value="#{bundle.ViewReservationLabel_creationDate}"/>
+                    <h:outputText value="#{reservationController.selected.creationDate}" title="#{bundle.ViewReservationTitle_creationDate}"/>
+                    <h:outputText value="#{bundle.ViewReservationLabel_attendeesEmails}"/>
+                    <h:outputText value="#{reservationController.selected.attendeesEmails}" title="#{bundle.ViewReservationTitle_attendeesEmails}"/>
+                    <h:outputText value="#{bundle.ViewReservationLabel_space}"/>
+                    <h:outputText value="#{reservationController.selected.space}" title="#{bundle.ViewReservationTitle_space}"/>
+                    <h:outputText value="#{bundle.ViewReservationLabel_cardPaymentInfo}"/>
+                    <h:outputText value="#{reservationController.selected.cardPaymentInfo}" title="#{bundle.ViewReservationTitle_cardPaymentInfo}"/>
+                    <h:outputText value="#{bundle.ViewReservationLabel_startDateTime}"/>
+                    <h:outputText value="#{reservationController.selected.startDateTime}" title="#{bundle.ViewReservationTitle_startDateTime}">
+                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                    </h:outputText>
+                    <h:outputText value="#{bundle.ViewReservationLabel_reservedBy}"/>
+                    <h:outputText value="#{reservationController.selected.reservedBy}" title="#{bundle.ViewReservationTitle_reservedBy}"/>
+                    <h:outputText value="#{bundle.ViewReservationLabel_paymentMethod}"/>
+                    <h:outputText value="#{reservationController.selected.paymentMethod}" title="#{bundle.ViewReservationTitle_paymentMethod}"/>
+                    <h:outputText value="#{bundle.ViewReservationLabel_id}"/>
+                    <h:outputText value="#{reservationController.selected.id}" title="#{bundle.ViewReservationTitle_id}"/>
+                    <h:outputText value="#{bundle.ViewReservationLabel_lastModifDate}"/>
+                    <h:outputText value="#{reservationController.selected.lastModifDate}" title="#{bundle.ViewReservationTitle_lastModifDate}"/>
+                    <h:outputText value="#{bundle.ViewReservationLabel_numberOfPeople}"/>
+                    <h:outputText value="#{reservationController.selected.numberOfPeople}" title="#{bundle.ViewReservationTitle_numberOfPeople}"/>
+                    <h:outputText value="#{bundle.ViewReservationLabel_reservationStatus}"/>
+                    <h:outputText value="#{reservationController.selected.reservationStatus}" title="#{bundle.ViewReservationTitle_reservationStatus}"/>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{reservationController.destroyAndView}" value="#{bundle.ViewReservationDestroyLink}"/>
+                <br />
+                <br />
+                <h:link outcome="Edit" value="#{bundle.ViewReservationEditLink}"/>
+                <br />
+                <h:commandLink action="#{reservationController.prepareCreate}" value="#{bundle.ViewReservationCreateLink}" />
+                <br />
+                <h:commandLink action="#{reservationController.prepareList}" value="#{bundle.ViewReservationShowAllLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.ViewReservationIndexLink}"/>
+
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

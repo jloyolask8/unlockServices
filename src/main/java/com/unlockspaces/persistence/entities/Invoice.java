@@ -8,17 +8,17 @@ import javax.persistence.Id;
 public class Invoice implements Serializable {
 
     @Id
-    private Long id1;
+    private Long id1_TBD;
 
     public Invoice() {
 
     }
    
-    public Long getId1() {
-        return this.id1;
+    public Long getId1_TBD() {
+        return this.id1_TBD;
     }
 
-    public void setId1(Long id1) {
-        this.id1 = id1;
+    public void setId1_TBD(Long id1_TBD) {
+        this.id1_TBD = id1_TBD;
     }
 }

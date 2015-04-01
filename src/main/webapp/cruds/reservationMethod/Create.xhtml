@@ -15,6 +15,10 @@
             </h:panelGroup>
             <h:form>
                 <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.CreateReservationMethodLabel_name}" for="name" />
+                    <h:inputText id="name" styleClass="form-control" value="#{reservationMethodController.selected.name}" title="#{bundle.CreateReservationMethodTitle_name}" />
+                    <h:outputLabel value="#{bundle.CreateReservationMethodLabel_details}" for="details" />
+                    <h:inputText id="details" styleClass="form-control" value="#{reservationMethodController.selected.details}" title="#{bundle.CreateReservationMethodTitle_details}" />
                     <h:outputLabel value="#{bundle.CreateReservationMethodLabel_id}" for="id" />
                     <h:inputText id="id" styleClass="form-control" value="#{reservationMethodController.selected.id}" title="#{bundle.CreateReservationMethodTitle_id}" />
                 </h:panelGrid>

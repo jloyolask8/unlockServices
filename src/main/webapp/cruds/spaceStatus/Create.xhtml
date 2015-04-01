@@ -15,6 +15,10 @@
             </h:panelGroup>
             <h:form>
                 <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.CreateSpaceStatusLabel_name}" for="name" />
+                    <h:inputText id="name" styleClass="form-control" value="#{spaceStatusController.selected.name}" title="#{bundle.CreateSpaceStatusTitle_name}" />
+                    <h:outputLabel value="#{bundle.CreateSpaceStatusLabel_details}" for="details" />
+                    <h:inputText id="details" styleClass="form-control" value="#{spaceStatusController.selected.details}" title="#{bundle.CreateSpaceStatusTitle_details}" />
                     <h:outputLabel value="#{bundle.CreateSpaceStatusLabel_id}" for="id" />
                     <h:inputText id="id" styleClass="form-control" value="#{spaceStatusController.selected.id}" title="#{bundle.CreateSpaceStatusTitle_id}" />
                 </h:panelGrid>

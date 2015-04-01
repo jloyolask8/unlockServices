@@ -15,27 +15,23 @@
             </h:panelGroup>
             <h:form>
                 <h:panelGrid columns="2">
-                    <h:outputLabel value="title" for="title" />
-                    <h:inputText id="title" styleClass="form-control" value="#{spaceController.selected.overview.title}" />
-                    
-                    <h:outputLabel value="summary" for="summary" />
-                    <h:inputTextarea id="summary" styleClass="form-control" value="#{spaceController.selected.overview.summary}" />
-                 
-                    
+                    <h:outputLabel value="#{bundle.CreateSpaceLabel_overview}" for="overview" />
+                    <h:inputText id="overview" styleClass="form-control" value="#{spaceController.selected.overview}" title="#{bundle.CreateSpaceTitle_overview}" />
                     <h:outputLabel value="#{bundle.CreateSpaceLabel_venue}" for="venue" />
                     <h:selectOneMenu id="venue" value="#{spaceController.selected.venue}" title="#{bundle.CreateSpaceTitle_venue}" >
                         <f:selectItems value="#{venueController.itemsAvailableSelectOne}"/>
                     </h:selectOneMenu>
-                    
+                    <h:outputLabel value="#{bundle.CreateSpaceLabel_address}" for="address" />
+                    <h:inputText id="address" styleClass="form-control" value="#{spaceController.selected.address}" title="#{bundle.CreateSpaceTitle_address}" />
+                    <h:outputLabel value="#{bundle.CreateSpaceLabel_distance}" for="distance" />
+                    <h:inputText id="distance" styleClass="form-control" value="#{spaceController.selected.distance}" title="#{bundle.CreateSpaceTitle_distance}" />
                     <h:outputLabel value="#{bundle.CreateSpaceLabel_cancelationPolicy}" for="cancelationPolicy" />
                     <h:selectOneMenu id="cancelationPolicy" value="#{spaceController.selected.cancelationPolicy}" title="#{bundle.CreateSpaceTitle_cancelationPolicy}" >
                         <f:selectItems value="#{cancelationPolicyController.itemsAvailableSelectOne}"/>
                     </h:selectOneMenu>
-                    
                     <h:outputLabel value="#{bundle.CreateSpaceLabel_creationDate}" for="creationDate" />
-                    <h:inputText id="creationDate" styleClass="form-control" 
-                                 value="#{spaceController.selected.creationDate}" title="dd/MM/yyyy HH:mm:ss" >
-                        <f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" />
+                    <h:inputText id="creationDate" styleClass="form-control" value="#{spaceController.selected.creationDate}" title="#{bundle.CreateSpaceTitle_creationDate}" >
+                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
                     </h:inputText>
                     <h:outputLabel value="#{bundle.CreateSpaceLabel_type}" for="type" />
                     <h:selectOneMenu id="type" value="#{spaceController.selected.type}" title="#{bundle.CreateSpaceTitle_type}" >
@@ -55,7 +51,8 @@
                     <h:selectOneMenu id="reservationMethod" value="#{spaceController.selected.reservationMethod}" title="#{bundle.CreateSpaceTitle_reservationMethod}" >
                         <f:selectItems value="#{reservationMethodController.itemsAvailableSelectOne}"/>
                     </h:selectOneMenu>
-                  
+                    <h:outputLabel value="#{bundle.CreateSpaceLabel_id}" for="id" />
+                    <h:inputText id="id" styleClass="form-control" value="#{spaceController.selected.id}" title="#{bundle.CreateSpaceTitle_id}" />
                     <h:outputLabel value="#{bundle.CreateSpaceLabel_lastModifDate}" for="lastModifDate" />
                     <h:inputText id="lastModifDate" styleClass="form-control" value="#{spaceController.selected.lastModifDate}" title="#{bundle.CreateSpaceTitle_lastModifDate}" >
                         <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
@@ -64,8 +61,9 @@
                     <h:selectOneMenu id="category" value="#{spaceController.selected.category}" title="#{bundle.CreateSpaceTitle_category}" >
                         <f:selectItems value="#{spaceCategoryController.itemsAvailableSelectOne}"/>
                     </h:selectOneMenu>
-                    
-                     <h:outputLabel value="#{bundle.CreateSpaceLabel_frontPhoto}" for="frontPhoto" />
+                    <h:outputLabel value="#{bundle.CreateSpaceLabel_pricing}" for="pricing" />
+                    <h:inputText id="pricing" styleClass="form-control" value="#{spaceController.selected.pricing}" title="#{bundle.CreateSpaceTitle_pricing}" />
+                    <h:outputLabel value="#{bundle.CreateSpaceLabel_frontPhoto}" for="frontPhoto" />
                     <h:selectOneMenu id="frontPhoto" value="#{spaceController.selected.frontPhoto}" title="#{bundle.CreateSpaceTitle_frontPhoto}" >
                         <f:selectItems value="#{pictureController.itemsAvailableSelectOne}"/>
                     </h:selectOneMenu>

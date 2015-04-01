@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.CreateReservationTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.CreateReservationLabel_payPalPaymentInfo}" for="payPalPaymentInfo" />
+                    <h:inputText id="payPalPaymentInfo" styleClass="form-control" value="#{reservationController.selected.payPalPaymentInfo}" title="#{bundle.CreateReservationTitle_payPalPaymentInfo}" />
+                    <h:outputLabel value="#{bundle.CreateReservationLabel_title}" for="title" />
+                    <h:inputText id="title" styleClass="form-control" value="#{reservationController.selected.title}" title="#{bundle.CreateReservationTitle_title}" />
+                    <h:outputLabel value="#{bundle.CreateReservationLabel_endDateTime}" for="endDateTime" />
+                    <h:inputText id="endDateTime" styleClass="form-control" value="#{reservationController.selected.endDateTime}" title="#{bundle.CreateReservationTitle_endDateTime}" >
+                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                    </h:inputText>
+                    <h:outputLabel value="#{bundle.CreateReservationLabel_creationDate}" for="creationDate" />
+                    <h:inputText id="creationDate" styleClass="form-control" value="#{reservationController.selected.creationDate}" title="#{bundle.CreateReservationTitle_creationDate}" />
+                    <h:outputLabel value="#{bundle.CreateReservationLabel_attendeesEmails}" for="attendeesEmails" />
+                    <h:inputText id="attendeesEmails" styleClass="form-control" value="#{reservationController.selected.attendeesEmails}" title="#{bundle.CreateReservationTitle_attendeesEmails}" />
+                    <h:outputLabel value="#{bundle.CreateReservationLabel_space}" for="space" />
+                    <h:selectOneMenu id="space" value="#{reservationController.selected.space}" title="#{bundle.CreateReservationTitle_space}" >
+                        <f:selectItems value="#{spaceController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                    <h:outputLabel value="#{bundle.CreateReservationLabel_cardPaymentInfo}" for="cardPaymentInfo" />
+                    <h:inputText id="cardPaymentInfo" styleClass="form-control" value="#{reservationController.selected.cardPaymentInfo}" title="#{bundle.CreateReservationTitle_cardPaymentInfo}" />
+                    <h:outputLabel value="#{bundle.CreateReservationLabel_startDateTime}" for="startDateTime" />
+                    <h:inputText id="startDateTime" styleClass="form-control" value="#{reservationController.selected.startDateTime}" title="#{bundle.CreateReservationTitle_startDateTime}" >
+                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                    </h:inputText>
+                    <h:outputLabel value="#{bundle.CreateReservationLabel_reservedBy}" for="reservedBy" />
+                    <h:selectOneMenu id="reservedBy" value="#{reservationController.selected.reservedBy}" title="#{bundle.CreateReservationTitle_reservedBy}" >
+                        <f:selectItems value="#{usuarioController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                    <h:outputLabel value="#{bundle.CreateReservationLabel_paymentMethod}" for="paymentMethod" />
+                    <h:selectOneMenu id="paymentMethod" value="#{reservationController.selected.paymentMethod}" title="#{bundle.CreateReservationTitle_paymentMethod}" >
+                        <f:selectItems value="#{paymentMethodController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                    <h:outputLabel value="#{bundle.CreateReservationLabel_id}" for="id" />
+                    <h:inputText id="id" styleClass="form-control" value="#{reservationController.selected.id}" title="#{bundle.CreateReservationTitle_id}" />
+                    <h:outputLabel value="#{bundle.CreateReservationLabel_lastModifDate}" for="lastModifDate" />
+                    <h:inputText id="lastModifDate" styleClass="form-control" value="#{reservationController.selected.lastModifDate}" title="#{bundle.CreateReservationTitle_lastModifDate}" />
+                    <h:outputLabel value="#{bundle.CreateReservationLabel_numberOfPeople}" for="numberOfPeople" />
+                    <h:inputText id="numberOfPeople" styleClass="form-control" value="#{reservationController.selected.numberOfPeople}" title="#{bundle.CreateReservationTitle_numberOfPeople}" />
+                    <h:outputLabel value="#{bundle.CreateReservationLabel_reservationStatus}" for="reservationStatus" />
+                    <h:selectOneMenu id="reservationStatus" value="#{reservationController.selected.reservationStatus}" title="#{bundle.CreateReservationTitle_reservationStatus}" >
+                        <f:selectItems value="#{reservationStatusController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{reservationController.create}" value="#{bundle.CreateReservationSaveLink}" />
+                <br />
+                <br />
+                <h:commandLink action="#{reservationController.prepareList}" value="#{bundle.CreateReservationShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.CreateReservationIndexLink}"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

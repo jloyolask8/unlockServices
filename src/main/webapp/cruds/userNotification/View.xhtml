@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ViewUserNotificationTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputText value="#{bundle.ViewUserNotificationLabel_details}"/>
+                    <h:outputText value="#{userNotificationController.selected.details}" title="#{bundle.ViewUserNotificationTitle_details}"/>
+                    <h:outputText value="#{bundle.ViewUserNotificationLabel_id}"/>
+                    <h:outputText value="#{userNotificationController.selected.id}" title="#{bundle.ViewUserNotificationTitle_id}"/>
+                    <h:outputText value="#{bundle.ViewUserNotificationLabel_title}"/>
+                    <h:outputText value="#{userNotificationController.selected.title}" title="#{bundle.ViewUserNotificationTitle_title}"/>
+                    <h:outputText value="#{bundle.ViewUserNotificationLabel_creationDate}"/>
+                    <h:outputText value="#{userNotificationController.selected.creationDate}" title="#{bundle.ViewUserNotificationTitle_creationDate}">
+                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                    </h:outputText>
+                    <h:outputText value="#{bundle.ViewUserNotificationLabel_targetUser}"/>
+                    <h:outputText value="#{userNotificationController.selected.targetUser}" title="#{bundle.ViewUserNotificationTitle_targetUser}"/>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{userNotificationController.destroyAndView}" value="#{bundle.ViewUserNotificationDestroyLink}"/>
+                <br />
+                <br />
+                <h:link outcome="Edit" value="#{bundle.ViewUserNotificationEditLink}"/>
+                <br />
+                <h:commandLink action="#{userNotificationController.prepareCreate}" value="#{bundle.ViewUserNotificationCreateLink}" />
+                <br />
+                <h:commandLink action="#{userNotificationController.prepareList}" value="#{bundle.ViewUserNotificationShowAllLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.ViewUserNotificationIndexLink}"/>
+
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

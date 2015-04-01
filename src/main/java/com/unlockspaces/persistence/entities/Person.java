@@ -21,8 +21,6 @@ public abstract class Person implements Serializable {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long systemId;
-    @Basic
-    private String emailAddress;
     @ElementCollection
     private Collection<Address> addresses;
     @Basic
@@ -59,14 +57,6 @@ public abstract class Person implements Serializable {
 
     public void setSystemId(Long systemId) {
         this.systemId = systemId;
-    }
-   
-    public String getEmailAddress() {
-        return this.emailAddress;
-    }
-
-    public void setEmailAddress(String emailAddress) {
-        this.emailAddress = emailAddress;
     }
    
     public Collection<Address> getAddresses() {

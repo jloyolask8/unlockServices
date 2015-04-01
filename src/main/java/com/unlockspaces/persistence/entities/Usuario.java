@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
@@ -22,12 +23,16 @@ public class Usuario extends Person implements Serializable {
     private Collection<Reservation> reservations;
     @ManyToOne(targetEntity = Organization.class)
     private Organization organization;
+    @ManyToMany(targetEntity = IdentityVerificationType.class)
+    private Collection<IdentityVerificationType> identityVerificationTypes;
     @Basic
     private String creationDate;
     @Basic
     private String lastModifDate;
     @OneToMany(targetEntity = Space.class,mappedBy = "createdBy")
     private Collection<Space> spacesListed;
+    @Basic
+    private String email;
     @Basic
     private String username;
 
@@ -83,6 +88,14 @@ public class Usuario extends Person implements Serializable {
         this.organization = organization;
     }
    
+    public Collection<IdentityVerificationType> getIdentityVerificationTypes() {
+        return this.identityVerificationTypes;
+    }
+
+    public void setIdentityVerificationTypes(Collection<IdentityVerificationType> identityVerificationTypes) {
+        this.identityVerificationTypes = identityVerificationTypes;
+    }
+   
     public String getCreationDate() {
         return this.creationDate;
     }
@@ -105,6 +118,14 @@ public class Usuario extends Person implements Serializable {
 
     public void setSpacesListed(Collection<Space> spacesListed) {
         this.spacesListed = spacesListed;
+    }
+   
+    public String getEmail() {
+        return this.email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
    
     public String getUsername() {

@@ -19,6 +19,10 @@
                     <h:outputText value="#{organizationController.selected.name}" title="#{bundle.ViewOrganizationTitle_name}"/>
                     <h:outputText value="#{bundle.ViewOrganizationLabel_id}"/>
                     <h:outputText value="#{organizationController.selected.id}" title="#{bundle.ViewOrganizationTitle_id}"/>
+                    <h:outputText value="#{bundle.ViewOrganizationLabel_creationDate}"/>
+                    <h:outputText value="#{organizationController.selected.creationDate}" title="#{bundle.ViewOrganizationTitle_creationDate}">
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </h:outputText>
                     <h:outputText value="#{bundle.ViewOrganizationLabel_selfDescription}"/>
                     <h:outputText value="#{organizationController.selected.selfDescription}" title="#{bundle.ViewOrganizationTitle_selfDescription}"/>
                 </h:panelGrid>

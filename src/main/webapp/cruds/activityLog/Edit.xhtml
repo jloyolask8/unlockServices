@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.EditActivityLogTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.EditActivityLogLabel_spaceId}" for="spaceId" />
+                    <h:inputText id="spaceId" styleClass="form-control" value="#{activityLogController.selected.spaceId}" title="#{bundle.EditActivityLogTitle_spaceId}" />
+                    <h:outputLabel value="#{bundle.EditActivityLogLabel_description}" for="description" />
+                    <h:inputText id="description" styleClass="form-control" value="#{activityLogController.selected.description}" title="#{bundle.EditActivityLogTitle_description}" />
+                    <h:outputLabel value="#{bundle.EditActivityLogLabel_userId}" for="userId" />
+                    <h:inputText id="userId" styleClass="form-control" value="#{activityLogController.selected.userId}" title="#{bundle.EditActivityLogTitle_userId}" />
+                    <h:outputLabel value="#{bundle.EditActivityLogLabel_idLog}" for="idLog" />
+                    <h:inputText id="idLog" styleClass="form-control" value="#{activityLogController.selected.idLog}" title="#{bundle.EditActivityLogTitle_idLog}" />
+                    <h:outputLabel value="#{bundle.EditActivityLogLabel_creationDateTime}" for="creationDateTime" />
+                    <h:inputText id="creationDateTime" styleClass="form-control" value="#{activityLogController.selected.creationDateTime}" title="#{bundle.EditActivityLogTitle_creationDateTime}" >
+                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                    </h:inputText>
+                    <h:outputLabel value="#{bundle.EditActivityLogLabel_status}" for="status" />
+                    <h:inputText id="status" styleClass="form-control" value="#{activityLogController.selected.status}" title="#{bundle.EditActivityLogTitle_status}" />
+                </h:panelGrid>
+                <h:commandLink action="#{activityLogController.update}" value="#{bundle.EditActivityLogSaveLink}"/>
+                <br />
+                <br />
+                <h:link outcome="View" value="#{bundle.EditActivityLogViewLink}"/>
+                <br />
+                <h:commandLink action="#{activityLogController.prepareList}" value="#{bundle.EditActivityLogShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.EditActivityLogIndexLink}" />
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

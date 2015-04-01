@@ -19,6 +19,10 @@
                     <h:inputText id="name" styleClass="form-control" value="#{organizationController.selected.name}" title="#{bundle.CreateOrganizationTitle_name}" />
                     <h:outputLabel value="#{bundle.CreateOrganizationLabel_id}" for="id" />
                     <h:inputText id="id" styleClass="form-control" value="#{organizationController.selected.id}" title="#{bundle.CreateOrganizationTitle_id}" />
+                    <h:outputLabel value="#{bundle.CreateOrganizationLabel_creationDate}" for="creationDate" />
+                    <h:inputText id="creationDate" styleClass="form-control" value="#{organizationController.selected.creationDate}" title="#{bundle.CreateOrganizationTitle_creationDate}" >
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </h:inputText>
                     <h:outputLabel value="#{bundle.CreateOrganizationLabel_selfDescription}" for="selfDescription" />
                     <h:inputText id="selfDescription" styleClass="form-control" value="#{organizationController.selected.selfDescription}" title="#{bundle.CreateOrganizationTitle_selfDescription}" />
                 </h:panelGrid>

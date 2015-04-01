@@ -188,7 +188,7 @@ public class ReservationMethodController implements Serializable {
         return JsfUtil.getSelectItems(ejbFacade.findAll(), true);
     }
 
-    public ReservationMethod getReservationMethod(java.lang.Long id) {
+    public ReservationMethod getReservationMethod(java.lang.String id) {
         return ejbFacade.find(id);
     }
 
@@ -205,13 +205,13 @@ public class ReservationMethodController implements Serializable {
             return controller.getReservationMethod(getKey(value));
         }
 
-        java.lang.Long getKey(String value) {
-            java.lang.Long key;
-            key = Long.valueOf(value);
+        java.lang.String getKey(String value) {
+            java.lang.String key;
+            key = value;
             return key;
         }
 
-        String getStringKey(java.lang.Long value) {
+        String getStringKey(java.lang.String value) {
             StringBuilder sb = new StringBuilder();
             sb.append(value);
             return sb.toString();

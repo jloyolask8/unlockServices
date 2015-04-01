@@ -15,6 +15,10 @@
             </h:panelGroup>
             <h:form>
                 <h:panelGrid columns="2">
+                    <h:outputText value="#{bundle.ViewSpaceStatusLabel_name}"/>
+                    <h:outputText value="#{spaceStatusController.selected.name}" title="#{bundle.ViewSpaceStatusTitle_name}"/>
+                    <h:outputText value="#{bundle.ViewSpaceStatusLabel_details}"/>
+                    <h:outputText value="#{spaceStatusController.selected.details}" title="#{bundle.ViewSpaceStatusTitle_details}"/>
                     <h:outputText value="#{bundle.ViewSpaceStatusLabel_id}"/>
                     <h:outputText value="#{spaceStatusController.selected.id}" title="#{bundle.ViewSpaceStatusTitle_id}"/>
                 </h:panelGrid>

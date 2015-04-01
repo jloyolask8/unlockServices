@@ -1,0 +1,455 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<jpa:entity-mappings theme="CLASSIC" jaxb-support="false" id="_142786235829197" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm orm_2_1.xsd" xmlns:java="http://jcp.org/en/jsr/detail?id=270" xmlns:jpa="http://java.sun.com/xml/ns/persistence/orm" xmlns:ns4="http://nbmodeler.java.net" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <jpa:mapped-superclass class="Person" compositePrimaryKeyType="NONE" jaxb-root-element="false" static-metamodel="false" visibile="true" minimized="false" id="_1427862358438256">
+        <jpa:attributes>
+            <jpa:id name="systemId" attribute-type="java.lang.Long" visibile="true" id="_1427862358438258">
+                <jpa:generated-value strategy="IDENTITY"/>
+            </jpa:id>
+            <jpa:basic name="identification" attribute-type="java.lang.String" visibile="true" id="_1427862358438260"/>
+            <jpa:basic name="name" attribute-type="java.lang.String" visibile="true" id="_1427862358438261"/>
+            <jpa:basic name="genre" attribute-type="java.lang.String" visibile="true" id="_1427862358438262"/>
+            <jpa:basic name="bornDate" attribute-type="java.util.Date" visibile="true" id="_1427862358438263">
+                <jpa:temporal>DATE</jpa:temporal>
+            </jpa:basic>
+            <jpa:basic name="lastname" attribute-type="java.lang.String" visibile="true" id="_1427862358438265"/>
+            <jpa:basic name="selfDescription" attribute-type="java.lang.String" visibile="true" id="_1427862358438266"/>
+            <jpa:one-to-one name="country" target-entity="Country" primaryKey="false" connected-entity-id="_1427862358335120" visibile="true" id="_1427862358438257"/>
+            <jpa:element-collection name="addresses" target-class="Address" collection-type="java.util.Collection" connected-class-id="_1427862358401195" visibile="true" id="_1427862358438259"/>
+            <jpa:element-collection name="phoneNumbers" target-class="String" collection-type="java.util.Collection" visibile="true" id="_1427862358438264"/>
+        </jpa:attributes>
+    </jpa:mapped-superclass>
+    <jpa:entity class="ActivityLog" compositePrimaryKeyType="NONE" jaxb-root-element="false" static-metamodel="false" visibile="true" minimized="false" id="_1427862358304100">
+        <jpa:attributes>
+            <jpa:id name="idLog" attribute-type="java.lang.Long" visibile="true" id="_1427862358304104">
+                <jpa:generated-value strategy="IDENTITY"/>
+            </jpa:id>
+            <jpa:basic name="spaceId" attribute-type="java.lang.String" visibile="true" id="_1427862358304101"/>
+            <jpa:basic name="description" attribute-type="java.lang.String" visibile="true" id="_1427862358304102"/>
+            <jpa:basic name="userId" attribute-type="java.lang.String" visibile="true" id="_1427862358304103"/>
+            <jpa:basic name="creationDateTime" attribute-type="java.util.Date" visibile="true" id="_1427862358305105">
+                <jpa:temporal>TIMESTAMP</jpa:temporal>
+            </jpa:basic>
+            <jpa:basic name="status" attribute-type="java.lang.String" visibile="true" id="_1427862358305106"/>
+        </jpa:attributes>
+    </jpa:entity>
+    <jpa:entity class="Amenity" compositePrimaryKeyType="NONE" jaxb-root-element="false" static-metamodel="false" visibile="true" minimized="false" id="_1427862358312107">
+        <jpa:attributes>
+            <jpa:id name="id" attribute-type="long" visibile="true" id="_1427862358312111">
+                <jpa:generated-value strategy="IDENTITY"/>
+            </jpa:id>
+            <jpa:basic name="name" attribute-type="java.lang.String" visibile="true" id="_1427862358312108"/>
+            <jpa:basic name="details" attribute-type="java.lang.String" visibile="true" id="_1427862358312110"/>
+            <jpa:many-to-many name="spaces" target-entity="Space" mapped-by="amenitiesAvailable" collection-type="java.util.Collection" connected-entity-id="_1427862358400188" connected-attribute-id="_1427862358401228" visibile="true" id="_1427862358312109"/>
+        </jpa:attributes>
+    </jpa:entity>
+    <jpa:entity class="CancelationPolicy" compositePrimaryKeyType="NONE" jaxb-root-element="false" static-metamodel="false" visibile="true" minimized="false" id="_1427862358320112">
+        <jpa:attributes>
+            <jpa:id name="id" attribute-type="java.lang.Long" visibile="true" id="_1427862358320115">
+                <jpa:generated-value strategy="IDENTITY"/>
+            </jpa:id>
+            <jpa:basic name="name" attribute-type="java.lang.String" visibile="true" id="_1427862358320113"/>
+            <jpa:basic name="details" attribute-type="java.lang.String" visibile="true" id="_1427862358320114"/>
+        </jpa:attributes>
+    </jpa:entity>
+    <jpa:entity class="City" compositePrimaryKeyType="NONE" jaxb-root-element="false" static-metamodel="false" visibile="true" minimized="false" id="_1427862358327116">
+        <jpa:attributes>
+            <jpa:id name="id_code" attribute-type="java.lang.String" visibile="true" id="_1427862358327119"/>
+            <jpa:basic name="name" attribute-type="java.lang.String" visibile="true" id="_1427862358327118"/>
+            <jpa:many-to-one name="country" target-entity="Country" primaryKey="false" connected-entity-id="_1427862358335120" connected-attribute-id="_1427862358335122" visibile="true" id="_1427862358327117"/>
+        </jpa:attributes>
+    </jpa:entity>
+    <jpa:entity class="Country" compositePrimaryKeyType="NONE" jaxb-root-element="false" static-metamodel="false" visibile="true" minimized="false" id="_1427862358335120">
+        <jpa:attributes>
+            <jpa:id name="id_code" attribute-type="java.lang.String" visibile="true" id="_1427862358335125"/>
+            <jpa:basic name="personIDName" attribute-type="java.lang.String" visibile="true" id="_1427862358335121"/>
+            <jpa:basic name="name" attribute-type="java.lang.String" visibile="true" id="_1427862358335123"/>
+            <jpa:basic name="idRegex" attribute-type="java.lang.String" visibile="true" id="_1427862358335124"/>
+            <jpa:one-to-many name="cities" target-entity="City" mapped-by="country" collection-type="java.util.Collection" connected-entity-id="_1427862358327116" connected-attribute-id="_1427862358327117" visibile="true" id="_1427862358335122"/>
+        </jpa:attributes>
+    </jpa:entity>
+    <jpa:entity class="IdentityVerificationType" compositePrimaryKeyType="NONE" jaxb-root-element="false" static-metamodel="false" visibile="true" minimized="false" id="_1427862358341126">
+        <jpa:attributes>
+            <jpa:id name="id" attribute-type="java.lang.String" visibile="true" id="_1427862358341129"/>
+            <jpa:basic name="name" attribute-type="java.lang.String" visibile="true" id="_1427862358341127"/>
+            <jpa:basic name="description" attribute-type="java.lang.String" visibile="true" id="_1427862358341128"/>
+            <jpa:basic name="webIcon" attribute-type="java.lang.String" visibile="true" id="_1427862358341130"/>
+        </jpa:attributes>
+    </jpa:entity>
+    <jpa:entity class="Invoice" compositePrimaryKeyType="NONE" jaxb-root-element="false" static-metamodel="false" visibile="true" minimized="false" id="_1427862358347131">
+        <jpa:attributes>
+            <jpa:id name="id1_TBD" attribute-type="java.lang.Long" visibile="true" id="_1427862358347132"/>
+        </jpa:attributes>
+    </jpa:entity>
+    <jpa:entity class="Organization" compositePrimaryKeyType="NONE" jaxb-root-element="false" static-metamodel="false" visibile="true" minimized="false" id="_1427862358355133">
+        <jpa:attributes>
+            <jpa:id name="id" attribute-type="java.lang.Long" visibile="true" id="_1427862358355135">
+                <jpa:generated-value strategy="IDENTITY"/>
+            </jpa:id>
+            <jpa:basic name="name" attribute-type="java.lang.String" visibile="true" id="_1427862358355134"/>
+            <jpa:basic name="creationDate" attribute-type="java.util.Date" visibile="true" id="_1427862358355136">
+                <jpa:temporal>DATE</jpa:temporal>
+            </jpa:basic>
+            <jpa:basic name="selfDescription" attribute-type="java.lang.String" visibile="true" id="_1427862358355138"/>
+            <jpa:one-to-many name="users" target-entity="Usuario" mapped-by="organization" collection-type="java.util.Collection" connected-entity-id="_1427862358439267" connected-attribute-id="_1427862358439273" visibile="true" id="_1427862358355137"/>
+        </jpa:attributes>
+    </jpa:entity>
+    <jpa:entity class="PaymentMethod" compositePrimaryKeyType="NONE" jaxb-root-element="false" static-metamodel="false" visibile="true" minimized="false" id="_1427862358360139">
+        <jpa:attributes>
+            <jpa:id name="id" attribute-type="java.lang.String" visibile="true" id="_1427862358360141"/>
+            <jpa:basic name="longDescription" attribute-type="java.lang.String" visibile="true" id="_1427862358360140"/>
+            <jpa:basic name="shortDescription" attribute-type="java.lang.String" visibile="true" id="_1427862358360142"/>
+        </jpa:attributes>
+    </jpa:entity>
+    <jpa:entity class="Picture" compositePrimaryKeyType="NONE" jaxb-root-element="false" static-metamodel="false" visibile="true" minimized="false" id="_1427862358368143">
+        <jpa:attributes>
+            <jpa:id name="id" attribute-type="java.lang.Long" visibile="true" id="_1427862358369148">
+                <jpa:generated-value strategy="IDENTITY"/>
+            </jpa:id>
+            <jpa:basic name="cloudinaryUrl2" attribute-type="java.lang.String" visibile="true" id="_1427862358369144"/>
+            <jpa:basic name="cloudinaryUrl1" attribute-type="java.lang.String" visibile="true" id="_1427862358369145"/>
+            <jpa:basic name="filename" attribute-type="java.lang.String" visibile="true" id="_1427862358369146"/>
+            <jpa:basic name="cloudinaryUrl3" attribute-type="java.lang.String" visibile="true" id="_1427862358369147"/>
+            <jpa:basic name="mimeType" attribute-type="java.lang.String" visibile="true" id="_1427862358369149"/>
+            <jpa:basic name="creationDate" attribute-type="java.util.Date" visibile="true" id="_1427862358369150">
+                <jpa:temporal>TIMESTAMP</jpa:temporal>
+            </jpa:basic>
+            <jpa:many-to-one name="space" target-entity="Space" primaryKey="false" connected-entity-id="_1427862358400188" connected-attribute-id="_1427862358401209" visibile="true" id="_1427862358369152"/>
+            <jpa:one-to-one name="uploadedBy" target-entity="Usuario" primaryKey="false" connected-entity-id="_1427862358439267" visibile="true" id="_1427862358369151"/>
+        </jpa:attributes>
+    </jpa:entity>
+    <jpa:entity class="Reservation" compositePrimaryKeyType="NONE" jaxb-root-element="false" static-metamodel="false" visibile="true" minimized="false" id="_1427862358378153">
+        <jpa:attributes>
+            <jpa:id name="id" attribute-type="java.lang.Long" visibile="true" id="_1427862358379176">
+                <jpa:generated-value strategy="IDENTITY"/>
+            </jpa:id>
+            <jpa:basic name="title" attribute-type="java.lang.String" visibile="true" id="_1427862358378158"/>
+            <jpa:basic name="endDateTime" attribute-type="java.util.Date" visibile="true" id="_1427862358378159">
+                <jpa:temporal>TIMESTAMP</jpa:temporal>
+            </jpa:basic>
+            <jpa:basic name="creationDate" attribute-type="java.lang.String" visibile="true" id="_1427862358378160"/>
+            <jpa:basic name="startDateTime" attribute-type="java.util.Date" visibile="true" id="_1427862358379173">
+                <jpa:temporal>TIMESTAMP</jpa:temporal>
+            </jpa:basic>
+            <jpa:basic name="lastModifDate" attribute-type="java.lang.String" visibile="true" id="_1427862358379177"/>
+            <jpa:basic name="numberOfPeople" attribute-type="int" visibile="true" id="_1427862358379178"/>
+            <jpa:many-to-one name="reservedBy" target-entity="Usuario" primaryKey="false" connected-entity-id="_1427862358439267" connected-attribute-id="_1427862358439272" visibile="true" id="_1427862358379174"/>
+            <jpa:one-to-one name="space" target-entity="Space" primaryKey="false" connected-entity-id="_1427862358400188" visibile="true" id="_1427862358378162"/>
+            <jpa:one-to-one name="paymentMethod" target-entity="PaymentMethod" primaryKey="false" connected-entity-id="_1427862358360139" visibile="true" id="_1427862358379175"/>
+            <jpa:one-to-one name="reservationStatus" target-entity="ReservationStatus" primaryKey="false" connected-entity-id="_1427862358393184" visibile="true" id="_1427862358379179"/>
+            <jpa:element-collection name="attendeesEmails" target-class="String" collection-type="java.util.Collection" visibile="true" id="_1427862358378161"/>
+            <jpa:embedded name="payPalPaymentInfo" connected-class-id="_1427862358378155" attribute-type="PayPalPaymentInfo" visibile="true" id="_1427862358378154"/>
+            <jpa:embedded name="cardPaymentInfo" connected-class-id="_1427862358379164" attribute-type="CardPaymentInfo" visibile="true" id="_1427862358379163"/>
+        </jpa:attributes>
+    </jpa:entity>
+    <jpa:entity class="ReservationMethod" compositePrimaryKeyType="NONE" jaxb-root-element="false" static-metamodel="false" visibile="true" minimized="false" id="_1427862358386180">
+        <jpa:attributes>
+            <jpa:id name="id" attribute-type="java.lang.String" visibile="true" id="_1427862358386183"/>
+            <jpa:basic name="name" attribute-type="java.lang.String" visibile="true" id="_1427862358386181"/>
+            <jpa:basic name="details" attribute-type="java.lang.String" visibile="true" id="_1427862358386182"/>
+        </jpa:attributes>
+    </jpa:entity>
+    <jpa:entity class="ReservationStatus" compositePrimaryKeyType="NONE" jaxb-root-element="false" static-metamodel="false" visibile="true" minimized="false" id="_1427862358393184">
+        <jpa:attributes>
+            <jpa:id name="id" attribute-type="java.lang.String" visibile="true" id="_1427862358393187"/>
+            <jpa:basic name="name" attribute-type="java.lang.String" visibile="true" id="_1427862358393185"/>
+            <jpa:basic name="details" attribute-type="java.lang.String" visibile="true" id="_1427862358393186"/>
+        </jpa:attributes>
+    </jpa:entity>
+    <jpa:entity class="Space" compositePrimaryKeyType="NONE" jaxb-root-element="false" static-metamodel="false" visibile="true" minimized="false" id="_1427862358400188">
+        <jpa:attributes>
+            <jpa:id name="id" attribute-type="java.lang.Long" visibile="true" id="_1427862358401215">
+                <jpa:generated-value strategy="IDENTITY"/>
+            </jpa:id>
+            <jpa:basic name="distance" attribute-type="java.lang.Double" visibile="true" id="_1427862358401205"/>
+            <jpa:basic name="creationDate" attribute-type="java.util.Date" visibile="true" id="_1427862358401207">
+                <jpa:temporal>TIMESTAMP</jpa:temporal>
+            </jpa:basic>
+            <jpa:basic name="capacity" attribute-type="int" visibile="true" id="_1427862358401210"/>
+            <jpa:basic name="lastModifDate" attribute-type="java.util.Date" visibile="true" id="_1427862358401216">
+                <jpa:temporal>TIMESTAMP</jpa:temporal>
+            </jpa:basic>
+            <jpa:many-to-one name="venue" target-entity="Venue" primaryKey="false" connected-entity-id="_1427862358445280" connected-attribute-id="_1427862358446310" visibile="true" id="_1427862358400193"/>
+            <jpa:many-to-one name="createdBy" target-entity="Usuario" primaryKey="false" connected-entity-id="_1427862358439267" connected-attribute-id="_1427862358439277" visibile="true" id="_1427862358401213"/>
+            <jpa:one-to-many name="photos" target-entity="Picture" mapped-by="space" collection-type="java.util.Collection" connected-entity-id="_1427862358368143" connected-attribute-id="_1427862358369152" visibile="true" id="_1427862358401209"/>
+            <jpa:one-to-many name="reviews" target-entity="SpaceReview" mapped-by="space" collection-type="java.util.Collection" connected-entity-id="_1427862358414234" connected-attribute-id="_1427862358414241" visibile="true" id="_1427862358401212"/>
+            <jpa:one-to-one name="cancelationPolicy" target-entity="CancelationPolicy" primaryKey="false" connected-entity-id="_1427862358320112" visibile="true" id="_1427862358401206"/>
+            <jpa:one-to-one name="type" target-entity="SpaceType" primaryKey="false" connected-entity-id="_1427862358424246" visibile="true" id="_1427862358401208"/>
+            <jpa:one-to-one name="spaceStatus" target-entity="SpaceStatus" primaryKey="false" connected-entity-id="_1427862358419242" visibile="true" id="_1427862358401211"/>
+            <jpa:one-to-one name="reservationMethod" target-entity="ReservationMethod" primaryKey="false" connected-entity-id="_1427862358386180" visibile="true" id="_1427862358401214"/>
+            <jpa:one-to-one name="category" target-entity="SpaceCategory" primaryKey="false" connected-entity-id="_1427862358407230" visibile="true" id="_1427862358401217"/>
+            <jpa:one-to-one name="frontPhoto" target-entity="Picture" primaryKey="false" connected-entity-id="_1427862358368143" visibile="true" id="_1427862358401229"/>
+            <jpa:many-to-many name="amenitiesAvailable" target-entity="Amenity" collection-type="java.util.Collection" connected-entity-id="_1427862358312107" connected-attribute-id="_1427862358312109" visibile="true" id="_1427862358401228"/>
+            <jpa:embedded name="overview" connected-class-id="_1427862358400190" attribute-type="Overview" visibile="true" id="_1427862358400189"/>
+            <jpa:embedded name="address" connected-class-id="_1427862358401195" attribute-type="Address" visibile="true" id="_1427862358400194"/>
+            <jpa:embedded name="pricing" connected-class-id="_1427862358401219" attribute-type="Pricing" visibile="true" id="_1427862358401218"/>
+        </jpa:attributes>
+    </jpa:entity>
+    <jpa:entity class="SpaceCategory" compositePrimaryKeyType="NONE" jaxb-root-element="false" static-metamodel="false" visibile="true" minimized="false" id="_1427862358407230">
+        <jpa:attributes>
+            <jpa:id name="id" attribute-type="java.lang.String" visibile="true" id="_1427862358407233"/>
+            <jpa:basic name="name" attribute-type="java.lang.String" visibile="true" id="_1427862358407231"/>
+            <jpa:basic name="details" attribute-type="java.lang.String" visibile="true" id="_1427862358407232"/>
+        </jpa:attributes>
+    </jpa:entity>
+    <jpa:entity class="SpaceReview" compositePrimaryKeyType="NONE" jaxb-root-element="false" static-metamodel="false" visibile="true" minimized="false" id="_1427862358414234">
+        <jpa:attributes>
+            <jpa:id name="id" attribute-type="java.lang.Long" visibile="true" id="_1427862358414236">
+                <jpa:generated-value strategy="IDENTITY"/>
+            </jpa:id>
+            <jpa:basic name="rating" attribute-type="int" visibile="true" id="_1427862358414235"/>
+            <jpa:basic name="text" attribute-type="java.lang.String" visibile="true" id="_1427862358414237"/>
+            <jpa:basic name="creationDate" attribute-type="java.util.Date" visibile="true" id="_1427862358414238">
+                <jpa:temporal>TIMESTAMP</jpa:temporal>
+            </jpa:basic>
+            <jpa:basic name="lastModifDate" attribute-type="java.util.Date" visibile="true" id="_1427862358414239">
+                <jpa:temporal>TIMESTAMP</jpa:temporal>
+            </jpa:basic>
+            <jpa:many-to-one name="reviewedBy" target-entity="Usuario" primaryKey="false" connected-entity-id="_1427862358439267" connected-attribute-id="_1427862358439268" visibile="true" id="_1427862358414240"/>
+            <jpa:many-to-one name="space" target-entity="Space" primaryKey="false" connected-entity-id="_1427862358400188" connected-attribute-id="_1427862358401212" visibile="true" id="_1427862358414241"/>
+        </jpa:attributes>
+    </jpa:entity>
+    <jpa:entity class="SpaceStatus" compositePrimaryKeyType="NONE" jaxb-root-element="false" static-metamodel="false" visibile="true" minimized="false" id="_1427862358419242">
+        <jpa:attributes>
+            <jpa:id name="id" attribute-type="java.lang.String" visibile="true" id="_1427862358419245"/>
+            <jpa:basic name="name" attribute-type="java.lang.String" visibile="true" id="_1427862358419243"/>
+            <jpa:basic name="details" attribute-type="java.lang.String" visibile="true" id="_1427862358419244"/>
+        </jpa:attributes>
+    </jpa:entity>
+    <jpa:entity class="SpaceType" compositePrimaryKeyType="NONE" jaxb-root-element="false" static-metamodel="false" visibile="true" minimized="false" id="_1427862358424246">
+        <jpa:attributes>
+            <jpa:id name="id" attribute-type="java.lang.String" visibile="true" id="_1427862358424249"/>
+            <jpa:basic name="name" attribute-type="java.lang.String" visibile="true" id="_1427862358424247"/>
+            <jpa:basic name="details" attribute-type="java.lang.String" visibile="true" id="_1427862358424248"/>
+        </jpa:attributes>
+    </jpa:entity>
+    <jpa:entity class="UserNotification" compositePrimaryKeyType="NONE" jaxb-root-element="false" static-metamodel="false" visibile="true" minimized="false" id="_1427862358431250">
+        <jpa:attributes>
+            <jpa:id name="id" attribute-type="java.lang.Long" visibile="true" id="_1427862358431252">
+                <jpa:generated-value strategy="IDENTITY"/>
+            </jpa:id>
+            <jpa:basic name="details" attribute-type="java.lang.String" visibile="true" id="_1427862358431251"/>
+            <jpa:basic name="title" attribute-type="java.lang.String" visibile="true" id="_1427862358431253"/>
+            <jpa:basic name="creationDate" attribute-type="java.util.Date" visibile="true" id="_1427862358431254">
+                <jpa:temporal>TIMESTAMP</jpa:temporal>
+            </jpa:basic>
+            <jpa:many-to-one name="targetUser" target-entity="Usuario" primaryKey="false" connected-entity-id="_1427862358439267" connected-attribute-id="_1427862358439271" visibile="true" id="_1427862358431255"/>
+        </jpa:attributes>
+    </jpa:entity>
+    <jpa:entity class="Usuario" compositePrimaryKeyType="NONE" jaxb-root-element="false" static-metamodel="false" superclassId="_1427862358438256" visibile="true" minimized="false" id="_1427862358439267">
+        <jpa:attributes>
+            <jpa:basic name="password" attribute-type="java.lang.String" visibile="true" id="_1427862358439269"/>
+            <jpa:basic name="creationDate" attribute-type="java.lang.String" visibile="true" id="_1427862358439275"/>
+            <jpa:basic name="lastModifDate" attribute-type="java.lang.String" visibile="true" id="_1427862358439276"/>
+            <jpa:basic name="email" attribute-type="java.lang.String" visibile="true" id="_1427862358439278"/>
+            <jpa:basic name="username" attribute-type="java.lang.String" visibile="true" id="_1427862358439279"/>
+            <jpa:many-to-one name="organization" target-entity="Organization" primaryKey="false" connected-entity-id="_1427862358355133" connected-attribute-id="_1427862358355137" visibile="true" id="_1427862358439273"/>
+            <jpa:one-to-many name="spaceReviews" target-entity="SpaceReview" mapped-by="reviewedBy" collection-type="java.util.Collection" connected-entity-id="_1427862358414234" connected-attribute-id="_1427862358414240" visibile="true" id="_1427862358439268"/>
+            <jpa:one-to-many name="venuesListed" target-entity="Venue" mapped-by="createdBy" collection-type="java.util.Collection" connected-entity-id="_1427862358445280" connected-attribute-id="_1427862358446308" visibile="true" id="_1427862358439270"/>
+            <jpa:one-to-many name="notificationsReceived" target-entity="UserNotification" mapped-by="targetUser" collection-type="java.util.Collection" connected-entity-id="_1427862358431250" connected-attribute-id="_1427862358431255" visibile="true" id="_1427862358439271"/>
+            <jpa:one-to-many name="reservations" target-entity="Reservation" mapped-by="reservedBy" collection-type="java.util.Collection" connected-entity-id="_1427862358378153" connected-attribute-id="_1427862358379174" visibile="true" id="_1427862358439272"/>
+            <jpa:one-to-many name="spacesListed" target-entity="Space" mapped-by="createdBy" collection-type="java.util.Collection" connected-entity-id="_1427862358400188" connected-attribute-id="_1427862358401213" visibile="true" id="_1427862358439277"/>
+            <jpa:many-to-many name="identityVerificationTypes" target-entity="IdentityVerificationType" collection-type="java.util.Collection" connected-entity-id="_1427862358341126" visibile="true" id="_1427862358439274"/>
+        </jpa:attributes>
+    </jpa:entity>
+    <jpa:entity class="Venue" compositePrimaryKeyType="NONE" jaxb-root-element="false" static-metamodel="false" visibile="true" minimized="false" id="_1427862358445280">
+        <jpa:attributes>
+            <jpa:id name="id" attribute-type="java.lang.Long" visibile="true" id="_1427862358446311">
+                <jpa:generated-value strategy="IDENTITY"/>
+            </jpa:id>
+            <jpa:basic name="timezone" attribute-type="java.lang.String" visibile="true" id="_1427862358446291"/>
+            <jpa:basic name="creationDate" attribute-type="java.util.Date" visibile="true" id="_1427862358446305">
+                <jpa:temporal>TIMESTAMP</jpa:temporal>
+            </jpa:basic>
+            <jpa:basic name="lastModifDate" attribute-type="java.util.Date" visibile="true" id="_1427862358446312">
+                <jpa:temporal>TIMESTAMP</jpa:temporal>
+            </jpa:basic>
+            <jpa:many-to-one name="createdBy" target-entity="Usuario" primaryKey="false" connected-entity-id="_1427862358439267" connected-attribute-id="_1427862358439270" visibile="true" id="_1427862358446308"/>
+            <jpa:one-to-many name="photos" target-entity="Picture" collection-type="java.util.Collection" connected-entity-id="_1427862358368143" visibile="true" id="_1427862358446306"/>
+            <jpa:one-to-many name="spaces" target-entity="Space" mapped-by="venue" collection-type="java.util.Collection" connected-entity-id="_1427862358400188" connected-attribute-id="_1427862358400193" visibile="true" id="_1427862358446310"/>
+            <jpa:one-to-one name="venueLogo" target-entity="Picture" primaryKey="false" connected-entity-id="_1427862358368143" visibile="true" id="_1427862358446307"/>
+            <jpa:one-to-one name="organization" target-entity="Organization" primaryKey="false" connected-entity-id="_1427862358355133" visibile="true" id="_1427862358446309"/>
+            <jpa:one-to-one name="frontPhoto" target-entity="Picture" primaryKey="false" connected-entity-id="_1427862358368143" visibile="true" id="_1427862358446313"/>
+            <jpa:embedded name="overview" connected-class-id="_1427862358400190" attribute-type="Overview" visibile="true" id="_1427862358445281"/>
+            <jpa:embedded name="address" connected-class-id="_1427862358401195" attribute-type="Address" visibile="true" id="_1427862358445282"/>
+            <jpa:embedded name="contactInfo" connected-class-id="_1427862358446284" attribute-type="ContactInfo" visibile="true" id="_1427862358446283"/>
+            <jpa:embedded name="hoursOfOperation" connected-class-id="_1427862358446293" attribute-type="HoursOfOperation" visibile="true" id="_1427862358446292"/>
+        </jpa:attributes>
+    </jpa:entity>
+    <jpa:embeddable class="PayPalPaymentInfo" static-metamodel="false" visibile="true" minimized="false" id="_1427862358378155">
+        <jpa:attributes>
+            <jpa:basic name="payerId" attribute-type="java.lang.String" visibile="true" id="_1427862358378156"/>
+            <jpa:basic name="status" attribute-type="java.lang.String" visibile="true" id="_1427862358378157"/>
+        </jpa:attributes>
+    </jpa:embeddable>
+    <jpa:embeddable class="CardPaymentInfo" static-metamodel="false" visibile="true" minimized="false" id="_1427862358379164">
+        <jpa:attributes>
+            <jpa:basic name="expMonth" attribute-type="java.lang.String" visibile="true" id="_1427862358379165"/>
+            <jpa:basic name="zipCode" attribute-type="java.lang.String" visibile="true" id="_1427862358379166"/>
+            <jpa:basic name="cardHolderName" attribute-type="java.lang.String" visibile="true" id="_1427862358379167"/>
+            <jpa:basic name="expYear" attribute-type="java.lang.String" visibile="true" id="_1427862358379168"/>
+            <jpa:basic name="cardType" attribute-type="java.lang.String" visibile="true" id="_1427862358379169"/>
+            <jpa:basic name="securityCode" attribute-type="java.lang.String" visibile="true" id="_1427862358379170"/>
+            <jpa:basic name="cardNumber" attribute-type="java.lang.String" visibile="true" id="_1427862358379171"/>
+            <jpa:basic name="status" attribute-type="java.lang.String" visibile="true" id="_1427862358379172"/>
+        </jpa:attributes>
+    </jpa:embeddable>
+    <jpa:embeddable class="Overview" static-metamodel="false" visibile="true" minimized="false" id="_1427862358400190">
+        <jpa:attributes>
+            <jpa:basic name="summary" attribute-type="java.lang.String" visibile="true" id="_1427862358400191"/>
+            <jpa:basic name="title" attribute-type="java.lang.String" visibile="true" id="_1427862358400192"/>
+        </jpa:attributes>
+    </jpa:embeddable>
+    <jpa:embeddable class="Address" static-metamodel="false" visibile="true" minimized="false" id="_1427862358401195">
+        <jpa:attributes>
+            <jpa:basic name="addressOnMap" attribute-type="java.lang.String" visibile="true" id="_1427862358401197"/>
+            <jpa:basic name="postalCode" attribute-type="java.lang.String" visibile="true" id="_1427862358401199"/>
+            <jpa:basic name="latitude" attribute-type="java.lang.String" visibile="true" id="_1427862358401200"/>
+            <jpa:basic name="region" attribute-type="java.lang.String" visibile="true" id="_1427862358401201"/>
+            <jpa:basic name="line2" attribute-type="java.lang.String" visibile="true" id="_1427862358401202"/>
+            <jpa:basic name="line1" attribute-type="java.lang.String" visibile="true" id="_1427862358401203"/>
+            <jpa:basic name="longitude" attribute-type="java.lang.String" visibile="true" id="_1427862358401204"/>
+            <jpa:one-to-one name="country" target-entity="Country" primaryKey="false" connected-entity-id="_1427862358335120" visibile="true" id="_1427862358401196"/>
+            <jpa:one-to-one name="city" target-entity="City" primaryKey="false" connected-entity-id="_1427862358327116" visibile="true" id="_1427862358401198"/>
+        </jpa:attributes>
+    </jpa:embeddable>
+    <jpa:embeddable class="Currency" static-metamodel="false" visibile="true" minimized="false" id="_1427862358401224">
+        <jpa:attributes>
+            <jpa:basic name="currencyCode" attribute-type="java.lang.String" visibile="true" id="_1427862358401225"/>
+        </jpa:attributes>
+    </jpa:embeddable>
+    <jpa:embeddable class="Pricing" static-metamodel="false" visibile="true" minimized="false" id="_1427862358401219">
+        <jpa:attributes>
+            <jpa:basic name="mode" attribute-type="java.lang.String" visibile="true" id="_1427862358401220"/>
+            <jpa:basic name="perMonth" attribute-type="java.lang.String" visibile="true" id="_1427862358401221"/>
+            <jpa:basic name="perWeek" attribute-type="java.lang.String" visibile="true" id="_1427862358401222"/>
+            <jpa:basic name="perHour" attribute-type="java.lang.String" visibile="true" id="_1427862358401226"/>
+            <jpa:basic name="perDay" attribute-type="java.lang.String" visibile="true" id="_1427862358401227"/>
+            <jpa:embedded name="currency" connected-class-id="_1427862358401224" attribute-type="Currency" visibile="true" id="_1427862358401223"/>
+        </jpa:attributes>
+    </jpa:embeddable>
+    <jpa:embeddable class="ContactInfo" static-metamodel="false" visibile="true" minimized="false" id="_1427862358446284">
+        <jpa:attributes>
+            <jpa:basic name="whatsapp" attribute-type="java.lang.String" visibile="true" id="_1427862358446285"/>
+            <jpa:basic name="skype" attribute-type="java.lang.String" visibile="true" id="_1427862358446286"/>
+            <jpa:basic name="website" attribute-type="java.lang.String" visibile="true" id="_1427862358446287"/>
+            <jpa:basic name="phone" attribute-type="java.lang.String" visibile="true" id="_1427862358446288"/>
+            <jpa:basic name="name" attribute-type="java.lang.String" visibile="true" id="_1427862358446289"/>
+            <jpa:basic name="email" attribute-type="java.lang.String" visibile="true" id="_1427862358446290"/>
+        </jpa:attributes>
+    </jpa:embeddable>
+    <jpa:embeddable class="Availabilityy" static-metamodel="false" visibile="true" minimized="false" id="_1427862358446295">
+        <jpa:attributes>
+            <jpa:basic name="availabilityOption" attribute-type="java.lang.String" visibile="true" id="_1427862358446296"/>
+            <jpa:basic name="startTime" attribute-type="java.lang.String" visibile="true" id="_1427862358446297"/>
+            <jpa:basic name="endTime" attribute-type="java.lang.String" visibile="true" id="_1427862358446298"/>
+        </jpa:attributes>
+    </jpa:embeddable>
+    <jpa:embeddable class="HoursOfOperation" static-metamodel="false" visibile="true" minimized="false" id="_1427862358446293">
+        <jpa:attributes>
+            <jpa:embedded name="sunday" connected-class-id="_1427862358446295" attribute-type="Availabilityy" visibile="true" id="_1427862358446294"/>
+            <jpa:embedded name="saturday" connected-class-id="_1427862358446295" attribute-type="Availabilityy" visibile="true" id="_1427862358446299"/>
+            <jpa:embedded name="tuesday" connected-class-id="_1427862358446295" attribute-type="Availabilityy" visibile="true" id="_1427862358446300"/>
+            <jpa:embedded name="wednesday" connected-class-id="_1427862358446295" attribute-type="Availabilityy" visibile="true" id="_1427862358446301"/>
+            <jpa:embedded name="thursday" connected-class-id="_1427862358446295" attribute-type="Availabilityy" visibile="true" id="_1427862358446302"/>
+            <jpa:embedded name="friday" connected-class-id="_1427862358446295" attribute-type="Availabilityy" visibile="true" id="_1427862358446303"/>
+            <jpa:embedded name="monday" connected-class-id="_1427862358446295" attribute-type="Availabilityy" visibile="true" id="_1427862358446304"/>
+        </jpa:attributes>
+    </jpa:embeddable>
+    <jpa:diagram id="_142786235829198">
+        <plane elementRef="_142786235829197" id="_142786235829199_p">
+            <shape elementRef="_1427862358304100" id="_1427862358304100_gui">
+                <Bounds x="632.0" y="47.0" width="175.0" height="170.0"/>
+            </shape>
+            <shape elementRef="_1427862358312107" id="_1427862358312107_gui">
+                <Bounds x="283.0" y="1686.0" width="155.0" height="143.0"/>
+            </shape>
+            <shape elementRef="_1427862358320112" id="_1427862358320112_gui">
+                <Bounds x="1071.0" y="2100.0" width="223.0" height="110.0"/>
+            </shape>
+            <shape elementRef="_1427862358327116" id="_1427862358327116_gui">
+                <Bounds x="283.0" y="252.0" width="128.0" height="123.0"/>
+            </shape>
+            <shape elementRef="_1427862358335120" id="_1427862358335120_gui">
+                <Bounds x="30.0" y="30.0" width="154.0" height="163.0"/>
+            </shape>
+            <shape elementRef="_1427862358341126" id="_1427862358341126_gui">
+                <Bounds x="1071.0" y="2682.0" width="268.0" height="130.0"/>
+            </shape>
+            <shape elementRef="_1427862358347131" id="_1427862358347131_gui">
+                <Bounds x="411.0" y="47.0" width="147.0" height="57.0"/>
+            </shape>
+            <shape elementRef="_1427862358355133" id="_1427862358355133_gui">
+                <Bounds x="1994.0" y="2331.0" width="191.0" height="163.0"/>
+            </shape>
+            <shape elementRef="_1427862358360139" id="_1427862358360139_gui">
+                <Bounds x="1401.0" y="252.0" width="214.0" height="110.0"/>
+            </shape>
+            <shape elementRef="_1427862358368143" id="_1427862358368143_gui">
+                <Bounds x="30.0" y="589.0" width="148.0" height="243.0"/>
+            </shape>
+            <shape elementRef="_1427862358378153" id="_1427862358378153_gui">
+                <Bounds x="1071.0" y="589.0" width="183.0" height="355.0"/>
+            </shape>
+            <shape elementRef="_1427862358386180" id="_1427862358386180_gui">
+                <Bounds x="283.0" y="1002.0" width="237.0" height="110.0"/>
+            </shape>
+            <shape elementRef="_1427862358393184" id="_1427862358393184_gui">
+                <Bounds x="1401.0" y="1002.0" width="230.0" height="110.0"/>
+            </shape>
+            <shape elementRef="_1427862358400188" id="_1427862358400188_gui">
+                <Bounds x="582.0" y="1172.0" width="177.0" height="456.0"/>
+            </shape>
+            <shape elementRef="_1427862358407230" id="_1427862358407230_gui">
+                <Bounds x="1071.0" y="1172.0" width="206.0" height="110.0"/>
+            </shape>
+            <shape elementRef="_1427862358414234" id="_1427862358414234_gui">
+                <Bounds x="30.0" y="1172.0" width="191.0" height="203.0"/>
+            </shape>
+            <shape elementRef="_1427862358419242" id="_1427862358419242_gui">
+                <Bounds x="821.0" y="1002.0" width="188.0" height="110.0"/>
+            </shape>
+            <shape elementRef="_1427862358424246" id="_1427862358424246_gui">
+                <Bounds x="821.0" y="1686.0" width="175.0" height="110.0"/>
+            </shape>
+            <shape elementRef="_1427862358431250" id="_1427862358431250_gui">
+                <Bounds x="1693.0" y="2682.0" width="213.0" height="163.0"/>
+            </shape>
+            <shape elementRef="_1427862358439267" id="_1427862358439267_gui">
+                <Bounds x="1401.0" y="2331.0" width="211.0" height="291.0"/>
+            </shape>
+            <shape elementRef="_1427862358445280" id="_1427862358445280_gui">
+                <Bounds x="1401.0" y="1686.0" width="163.0" height="356.0"/>
+            </shape>
+            <shape elementRef="_1427862358438256" id="_1427862358438256_gui">
+                <Bounds x="821.0" y="252.0" width="150.0" height="279.0"/>
+            </shape>
+            <shape elementRef="_1427862358378155" id="_1427862358378155_gui">
+                <Bounds x="1693.0" y="1172.0" width="239.0" height="78.0"/>
+            </shape>
+            <shape elementRef="_1427862358379164" id="_1427862358379164_gui">
+                <Bounds x="1693.0" y="589.0" width="224.0" height="198.0"/>
+            </shape>
+            <shape elementRef="_1427862358400190" id="_1427862358400190_gui">
+                <Bounds x="582.0" y="2100.0" width="167.0" height="78.0"/>
+            </shape>
+            <shape elementRef="_1427862358401195" id="_1427862358401195_gui">
+                <Bounds x="582.0" y="589.0" width="160.0" height="231.0"/>
+            </shape>
+            <shape elementRef="_1427862358401224" id="_1427862358401224_gui">
+                <Bounds x="283.0" y="2331.0" width="165.0" height="58.0"/>
+            </shape>
+            <shape elementRef="_1427862358401219" id="_1427862358401219_gui">
+                <Bounds x="30.0" y="2100.0" width="150.0" height="171.0"/>
+            </shape>
+            <shape elementRef="_1427862358446284" id="_1427862358446284_gui">
+                <Bounds x="1693.0" y="2100.0" width="184.0" height="158.0"/>
+            </shape>
+            <shape elementRef="_1427862358446295" id="_1427862358446295_gui">
+                <Bounds x="2288.0" y="2100.0" width="187.0" height="98.0"/>
+            </shape>
+            <shape elementRef="_1427862358446293" id="_1427862358446293_gui">
+                <Bounds x="1994.0" y="1686.0" width="232.0" height="178.0"/>
+            </shape>
+        </plane>
+    </jpa:diagram>
+</jpa:entity-mappings>

@@ -188,7 +188,7 @@ public class SpaceStatusController implements Serializable {
         return JsfUtil.getSelectItems(ejbFacade.findAll(), true);
     }
 
-    public SpaceStatus getSpaceStatus(java.lang.Long id) {
+    public SpaceStatus getSpaceStatus(java.lang.String id) {
         return ejbFacade.find(id);
     }
 
@@ -205,13 +205,13 @@ public class SpaceStatusController implements Serializable {
             return controller.getSpaceStatus(getKey(value));
         }
 
-        java.lang.Long getKey(String value) {
-            java.lang.Long key;
-            key = Long.valueOf(value);
+        java.lang.String getKey(String value) {
+            java.lang.String key;
+            key = value;
             return key;
         }
 
-        String getStringKey(java.lang.Long value) {
+        String getStringKey(java.lang.String value) {
             StringBuilder sb = new StringBuilder();
             sb.append(value);
             return sb.toString();

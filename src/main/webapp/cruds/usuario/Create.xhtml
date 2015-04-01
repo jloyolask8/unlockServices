@@ -25,6 +25,8 @@
                     <h:inputText id="creationDate" styleClass="form-control" value="#{usuarioController.selected.creationDate}" title="#{bundle.CreateUsuarioTitle_creationDate}" />
                     <h:outputLabel value="#{bundle.CreateUsuarioLabel_lastModifDate}" for="lastModifDate" />
                     <h:inputText id="lastModifDate" styleClass="form-control" value="#{usuarioController.selected.lastModifDate}" title="#{bundle.CreateUsuarioTitle_lastModifDate}" />
+                    <h:outputLabel value="#{bundle.CreateUsuarioLabel_email}" for="email" />
+                    <h:inputText id="email" styleClass="form-control" value="#{usuarioController.selected.email}" title="#{bundle.CreateUsuarioTitle_email}" />
                     <h:outputLabel value="#{bundle.CreateUsuarioLabel_username}" for="username" />
                     <h:inputText id="username" styleClass="form-control" value="#{usuarioController.selected.username}" title="#{bundle.CreateUsuarioTitle_username}" />
                     <h:outputLabel value="#{bundle.CreateUsuarioLabel_country}" for="country" />
@@ -33,8 +35,6 @@
                     </h:selectOneMenu>
                     <h:outputLabel value="#{bundle.CreateUsuarioLabel_systemId}" for="systemId" />
                     <h:inputText id="systemId" styleClass="form-control" value="#{usuarioController.selected.systemId}" title="#{bundle.CreateUsuarioTitle_systemId}" />
-                    <h:outputLabel value="#{bundle.CreateUsuarioLabel_emailAddress}" for="emailAddress" />
-                    <h:inputText id="emailAddress" styleClass="form-control" value="#{usuarioController.selected.emailAddress}" title="#{bundle.CreateUsuarioTitle_emailAddress}" />
                     <h:outputLabel value="#{bundle.CreateUsuarioLabel_addresses}" for="addresses" />
                     <h:inputText id="addresses" styleClass="form-control" value="#{usuarioController.selected.addresses}" title="#{bundle.CreateUsuarioTitle_addresses}" />
                     <h:outputLabel value="#{bundle.CreateUsuarioLabel_identification}" for="identification" />

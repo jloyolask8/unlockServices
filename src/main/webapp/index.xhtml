@@ -1,112 +1,17 @@
-<?xml version='1.0' encoding='UTF-8' ?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
-    <h:head>
-        <title>Facelet Title</title>
-        <h:outputStylesheet name="css/jsfcrud.css"/>
-    </h:head>
-    <h:body>
-        <h1>DATABASE OBJECTS</h1>
-       
-        <h:link outcome="/cruds/amenity/List" value="Show All Amenity Items"/>
-        <br />
-        <h:link outcome="/cruds/cancelationPolicy/List" value="Show All CancelationPolicy Items"/>
-        <br />
-        <h:link outcome="/cruds/city/List" value="Show All City Items"/>
-        <br />
-        <h:link outcome="/cruds/country/List" value="Show All Country Items"/>
-        <br />
-        <h:link outcome="/cruds/organization/List" value="Show All Organization Items"/>
-        <br />
-        <h:link outcome="/cruds/paymentMethod/List" value="Show All PaymentMethod Items"/>
-        <br />
-        <h:link outcome="/cruds/picture/List" value="Show All Picture Items"/>
-        <br />
-        <h:link outcome="/cruds/reservationMethod/List" value="Show All ReservationMethod Items"/>
-        <br />
-        <h:link outcome="/cruds/reservationStatus/List" value="Show All ReservationStatus Items"/>
-        <br />
-        <h:link outcome="/cruds/space/List" value="Show All Space Items"/>
-        <br />
-        <h:link outcome="/cruds/spaceCategory/List" value="Show All SpaceCategory Items"/>
-        <br />
-        <h:link outcome="/cruds/spaceStatus/List" value="Show All SpaceStatus Items"/>
-        <br />
-        <h:link outcome="/cruds/spaceType/List" value="Show All SpaceType Items"/>
-        <br />
-        <h:link outcome="/cruds/usuario/List" value="Show All Usuario Items"/>
-        <br />
-        <h:link outcome="/cruds/venue/List" value="Show All Venue Items"/>
-        
-        <br/> <br/> <h1>Rest Services</h1><br/>
-        <a href="webresources/spaces" >REST Spaces</a>
-    </h:body>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ListAmenityTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            welcome
+        </ui:define>
+    </ui:composition>
 
 </html>
-

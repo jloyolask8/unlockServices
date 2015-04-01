@@ -2,21 +2,59 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
 
     <h:head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <title><ui:insert name="title">Default Title</ui:insert></title>
         <h:outputStylesheet library="css" name="jsfcrud.css"/>
+        <h:outputScript library="js" name="jsfcrud.js"/>
     </h:head>
 
     <h:body>
-        <h1>
-            <ui:insert name="title">Default Title</ui:insert>
-        </h1>
-        <p>
-            <ui:insert name="body">Default Body</ui:insert>
-        </p>
+
+        <p:growl id="growl" life="3000" />
+
+        <p:layout fullPage="true">
+            <p:layoutUnit position="west" size="265" header="Mantenedores de DDBB">
+                <h:form id="menuForm">
+                            <br/><p:commandLink value="ActivityLog" action="/cruds/activityLog/List.xhtml" />
+                            <br/><p:commandLink value="Amenity" action="/cruds/amenity/List.xhtml" />
+                            <br/><p:commandLink value="CancelationPolicy" action="/cruds/cancelationPolicy/List.xhtml" />
+                            <br/><p:commandLink value="City" action="/cruds/city/List.xhtml" />
+                            <br/><p:commandLink value="Country" action="/cruds/country/List.xhtml" />
+                            <br/><p:commandLink value="IdentityVerificationType" action="/cruds/identityVerificationType/List.xhtml" />
+                            <br/><p:commandLink value="Invoice" action="/cruds/invoice/List.xhtml" />
+                            <br/><p:commandLink value="Organization" action="/cruds/organization/List.xhtml" />
+                            <br/><p:commandLink value="PaymentMethod" action="/cruds/paymentMethod/List.xhtml" />
+                            <br/><p:commandLink value="Picture" action="/cruds/picture/List.xhtml" />
+                            <br/><p:commandLink value="Reservation" action="/cruds/reservation/List.xhtml" />
+                            <br/><p:commandLink value="ReservationMethod" action="/cruds/reservationMethod/List.xhtml" />
+                            <br/><p:commandLink value="ReservationStatus" action="/cruds/reservationStatus/List.xhtml" />
+                            <br/><p:commandLink value="Space" action="/cruds/space/List.xhtml" />
+                            <br/><p:commandLink value="SpaceCategory" action="/cruds/spaceCategory/List.xhtml" />
+                            <br/><p:commandLink value="SpaceReview" action="/cruds/spaceReview/List.xhtml" />
+                            <br/><p:commandLink value="SpaceStatus" action="/cruds/spaceStatus/List.xhtml" />
+                            <br/><p:commandLink value="SpaceType" action="/cruds/spaceType/List.xhtml" />
+                            <br/><p:commandLink value="UserNotification" action="/cruds/userNotification/List.xhtml" />
+                            <br/><p:commandLink value="Usuario" action="/cruds/usuario/List.xhtml" />
+                            <br/><p:commandLink value="Venue" action="/cruds/venue/List.xhtml" />
+                            
+                             <br/> <br/> <h1>Rest Services</h1><br/>
+        <a href="webresources/spaces" >REST Spaces</a>
+                </h:form>
+            </p:layoutUnit>
+
+            <p:layoutUnit position="south" size="60">
+                <ui:insert name="footer"/>
+            </p:layoutUnit>
+
+            <p:layoutUnit position="center">
+                <ui:insert name="body"/>
+            </p:layoutUnit>
+
+        </p:layout>
+
     </h:body>
 
 </html>

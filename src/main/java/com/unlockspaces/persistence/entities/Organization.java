@@ -2,12 +2,15 @@ package com.unlockspaces.persistence.entities;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 public class Organization implements Serializable {
@@ -17,6 +20,9 @@ public class Organization implements Serializable {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
+    @Temporal(TemporalType.DATE)
+    @Basic
+    private Date creationDate;
     @OneToMany(targetEntity = Usuario.class,mappedBy = "organization")
     private Collection<Usuario> users;
     @Basic
@@ -40,6 +46,14 @@ public class Organization implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+   
+    public Date getCreationDate() {
+        return this.creationDate;
+    }
+
+    public void setCreationDate(Date creationDate) {
+        this.creationDate = creationDate;
     }
    
     public Collection<Usuario> getUsers() {

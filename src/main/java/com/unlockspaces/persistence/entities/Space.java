@@ -23,6 +23,10 @@ public class Space implements Serializable {
     private Overview overview;
     @ManyToOne(targetEntity = Venue.class)
     private Venue venue;
+    @Embedded
+    private Address address;
+    @Basic
+    private Double distance;
     @OneToOne(targetEntity = CancelationPolicy.class)
     private CancelationPolicy cancelationPolicy;
     @Temporal(TemporalType.TIMESTAMP)
@@ -30,20 +34,20 @@ public class Space implements Serializable {
     private Date creationDate;
     @OneToOne(targetEntity = SpaceType.class)
     private SpaceType type;
-    @OneToMany(targetEntity = Picture.class, mappedBy = "space")
+    @OneToMany(targetEntity = Picture.class,mappedBy = "space")
     private Collection<Picture> photos;
     @Basic
     private int capacity;
     @OneToOne(targetEntity = SpaceStatus.class)
     private SpaceStatus spaceStatus;
-    @OneToMany(targetEntity = SpaceReview.class, mappedBy = "space")
+    @OneToMany(targetEntity = SpaceReview.class,mappedBy = "space")
     private Collection<SpaceReview> reviews;
     @ManyToOne(targetEntity = Usuario.class)
     private Usuario createdBy;
     @OneToOne(targetEntity = ReservationMethod.class)
     private ReservationMethod reservationMethod;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
     @Temporal(TemporalType.TIMESTAMP)
     @Basic
@@ -57,16 +61,14 @@ public class Space implements Serializable {
     @OneToOne(targetEntity = Picture.class)
     private Picture frontPhoto;
 
-    private String latitude;
-    
-    private String longitude;
-
     public Space() {
+        
+        this.overview = new Overview();
+        this.pricing = new Pricing();
+        this.address = new Address();
 
-        this.overview = (new Overview());
-        this.pricing = (new Pricing());
     }
-
+   
     public Overview getOverview() {
         return this.overview;
     }
@@ -74,7 +76,7 @@ public class Space implements Serializable {
     public void setOverview(Overview overview) {
         this.overview = overview;
     }
-
+   
     public Venue getVenue() {
         return this.venue;
     }
@@ -82,7 +84,23 @@ public class Space implements Serializable {
     public void setVenue(Venue venue) {
         this.venue = venue;
     }
+   
+    public Address getAddress() {
+        return this.address;
+    }
 
+    public void setAddress(Address address) {
+        this.address = address;
+    }
+   
+    public Double getDistance() {
+        return this.distance;
+    }
+
+    public void setDistance(Double distance) {
+        this.distance = distance;
+    }
+   
     public CancelationPolicy getCancelationPolicy() {
         return this.cancelationPolicy;
     }
@@ -90,7 +108,7 @@ public class Space implements Serializable {
     public void setCancelationPolicy(CancelationPolicy cancelationPolicy) {
         this.cancelationPolicy = cancelationPolicy;
     }
-
+   
     public Date getCreationDate() {
         return this.creationDate;
     }
@@ -98,7 +116,7 @@ public class Space implements Serializable {
     public void setCreationDate(Date creationDate) {
         this.creationDate = creationDate;
     }
-
+   
     public SpaceType getType() {
         return this.type;
     }
@@ -106,7 +124,7 @@ public class Space implements Serializable {
     public void setType(SpaceType type) {
         this.type = type;
     }
-
+   
     public Collection<Picture> getPhotos() {
         return this.photos;
     }
@@ -114,7 +132,7 @@ public class Space implements Serializable {
     public void setPhotos(Collection<Picture> photos) {
         this.photos = photos;
     }
-
+   
     public int getCapacity() {
         return this.capacity;
     }
@@ -122,7 +140,7 @@ public class Space implements Serializable {
     public void setCapacity(int capacity) {
         this.capacity = capacity;
     }
-
+   
     public SpaceStatus getSpaceStatus() {
         return this.spaceStatus;
     }
@@ -130,7 +148,7 @@ public class Space implements Serializable {
     public void setSpaceStatus(SpaceStatus spaceStatus) {
         this.spaceStatus = spaceStatus;
     }
-
+   
     public Collection<SpaceReview> getReviews() {
         return this.reviews;
     }
@@ -138,7 +156,7 @@ public class Space implements Serializable {
     public void setReviews(Collection<SpaceReview> reviews) {
         this.reviews = reviews;
     }
-
+   
     public Usuario getCreatedBy() {
         return this.createdBy;
     }
@@ -146,7 +164,7 @@ public class Space implements Serializable {
     public void setCreatedBy(Usuario createdBy) {
         this.createdBy = createdBy;
     }
-
+   
     public ReservationMethod getReservationMethod() {
         return this.reservationMethod;
     }
@@ -154,7 +172,7 @@ public class Space implements Serializable {
     public void setReservationMethod(ReservationMethod reservationMethod) {
         this.reservationMethod = reservationMethod;
     }
-
+   
     public Long getId() {
         return this.id;
     }
@@ -162,7 +180,7 @@ public class Space implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
-
+   
     public Date getLastModifDate() {
         return this.lastModifDate;
     }
@@ -170,7 +188,7 @@ public class Space implements Serializable {
     public void setLastModifDate(Date lastModifDate) {
         this.lastModifDate = lastModifDate;
     }
-
+   
     public SpaceCategory getCategory() {
         return this.category;
     }
@@ -178,7 +196,7 @@ public class Space implements Serializable {
     public void setCategory(SpaceCategory category) {
         this.category = category;
     }
-
+   
     public Pricing getPricing() {
         return this.pricing;
     }
@@ -186,7 +204,7 @@ public class Space implements Serializable {
     public void setPricing(Pricing pricing) {
         this.pricing = pricing;
     }
-
+   
     public Collection<Amenity> getAmenitiesAvailable() {
         return this.amenitiesAvailable;
     }
@@ -194,40 +212,12 @@ public class Space implements Serializable {
     public void setAmenitiesAvailable(Collection<Amenity> amenitiesAvailable) {
         this.amenitiesAvailable = amenitiesAvailable;
     }
-
+   
     public Picture getFrontPhoto() {
         return this.frontPhoto;
     }
 
     public void setFrontPhoto(Picture frontPhoto) {
         this.frontPhoto = frontPhoto;
-    }
-
-    /**
-     * @return the latitude
-     */
-    public String getLatitude() {
-        return latitude;
-    }
-
-    /**
-     * @param latitude the latitude to set
-     */
-    public void setLatitude(String latitude) {
-        this.latitude = latitude;
-    }
-
-    /**
-     * @return the longitude
-     */
-    public String getLongitude() {
-        return longitude;
-    }
-
-    /**
-     * @param longitude the longitude to set
-     */
-    public void setLongitude(String longitude) {
-        this.longitude = longitude;
     }
 }
