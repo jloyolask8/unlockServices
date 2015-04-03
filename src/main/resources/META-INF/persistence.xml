@@ -3,6 +3,7 @@
   <persistence-unit name="com.unlockspaces_UnlockServices_war_1.0-SNAPSHOTPU" transaction-type="JTA">
     <jta-data-source>jdbc/unlockspaces</jta-data-source>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
-    <properties/>
+    <properties>
+    </properties>
   </persistence-unit>
 </persistence>

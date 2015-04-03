@@ -51,7 +51,8 @@ public class Venue implements Serializable {
     private Picture frontPhoto;
 
     public Venue() {
-
+        this.overview = new Overview();
+        this.address = new Address();
     }
    
     public Overview getOverview() {
@@ -164,5 +165,9 @@ public class Venue implements Serializable {
 
     public void setFrontPhoto(Picture frontPhoto) {
         this.frontPhoto = frontPhoto;
+    }
+    
+    public String toString(){
+        return this.overview.getTitle();
     }
 }

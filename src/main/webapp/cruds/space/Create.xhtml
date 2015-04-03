@@ -13,18 +13,32 @@
             <h:panelGroup id="messagePanel" layout="block">
                 <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
             </h:panelGroup>
-            <h:form>
+            <h:form id="spaceform">
                 <h:panelGrid columns="2">
-                    <h:outputLabel value="#{bundle.CreateSpaceLabel_overview}" for="overview" />
-                    <h:inputText id="overview" styleClass="form-control" value="#{spaceController.selected.overview}" title="#{bundle.CreateSpaceTitle_overview}" />
+                    <h:outputLabel value="title" for="title" />
+                    <h:inputText id="title" styleClass="form-control" value="#{spaceController.selected.overview.title}" title="#{bundle.CreateSpaceTitle_overview}" />
+                    <h:outputLabel value="summary" for="summary" />
+                    <h:inputText id="summary" styleClass="form-control" value="#{spaceController.selected.overview.summary}" title="#{bundle.CreateSpaceTitle_overview}" />
+                    
                     <h:outputLabel value="#{bundle.CreateSpaceLabel_venue}" for="venue" />
                     <h:selectOneMenu id="venue" value="#{spaceController.selected.venue}" title="#{bundle.CreateSpaceTitle_venue}" >
                         <f:selectItems value="#{venueController.itemsAvailableSelectOne}"/>
                     </h:selectOneMenu>
+
                     <h:outputLabel value="#{bundle.CreateSpaceLabel_address}" for="address" />
-                    <h:inputText id="address" styleClass="form-control" value="#{spaceController.selected.address}" title="#{bundle.CreateSpaceTitle_address}" />
-                    <h:outputLabel value="#{bundle.CreateSpaceLabel_distance}" for="distance" />
-                    <h:inputText id="distance" styleClass="form-control" value="#{spaceController.selected.distance}" title="#{bundle.CreateSpaceTitle_distance}" />
+                    <h:inputText id="address" styleClass="form-control" value="#{spaceController.selected.address.line1}" title="#{bundle.CreateSpaceTitle_address}" />
+
+                    <h:outputLabel value="latitude" for="latitude" />
+                    <h:inputText id="latitude" styleClass="form-control" value="#{spaceController.selected.address.latitude}" title="#{bundle.CreateSpaceTitle_address}" />
+
+                    <h:outputLabel value="longitude" for="longitude" />
+                    <h:inputText id="longitude" styleClass="form-control" value="#{spaceController.selected.address.longitude}" title="#{bundle.CreateSpaceTitle_address}" />
+
+                    <h:outputLabel value="postalCode" for="postalCode" />
+                    <h:inputText id="postalCode" styleClass="form-control" value="#{spaceController.selected.address.postalCode}" title="#{bundle.CreateSpaceTitle_address}" />
+
+                    
+                    
                     <h:outputLabel value="#{bundle.CreateSpaceLabel_cancelationPolicy}" for="cancelationPolicy" />
                     <h:selectOneMenu id="cancelationPolicy" value="#{spaceController.selected.cancelationPolicy}" title="#{bundle.CreateSpaceTitle_cancelationPolicy}" >
                         <f:selectItems value="#{cancelationPolicyController.itemsAvailableSelectOne}"/>
@@ -61,8 +75,9 @@
                     <h:selectOneMenu id="category" value="#{spaceController.selected.category}" title="#{bundle.CreateSpaceTitle_category}" >
                         <f:selectItems value="#{spaceCategoryController.itemsAvailableSelectOne}"/>
                     </h:selectOneMenu>
-                    <h:outputLabel value="#{bundle.CreateSpaceLabel_pricing}" for="pricing" />
-                    <h:inputText id="pricing" styleClass="form-control" value="#{spaceController.selected.pricing}" title="#{bundle.CreateSpaceTitle_pricing}" />
+                    
+                    <h:outputLabel value="#{bundle.CreateSpaceLabel_pricing} perHour" for="pricingperhour" />
+                    <h:inputText id="pricingperhour" styleClass="form-control" value="#{spaceController.selected.pricing.perHour}" title="#{bundle.CreateSpaceTitle_pricing}" />
                     <h:outputLabel value="#{bundle.CreateSpaceLabel_frontPhoto}" for="frontPhoto" />
                     <h:selectOneMenu id="frontPhoto" value="#{spaceController.selected.frontPhoto}" title="#{bundle.CreateSpaceTitle_frontPhoto}" >
                         <f:selectItems value="#{pictureController.itemsAvailableSelectOne}"/>
@@ -77,6 +92,79 @@
                 <br />
                 <h:link outcome="/index" value="#{bundle.CreateSpaceIndexLink}"/>
             </h:form>
+            <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?v=3.exp&amp;signed_in=true&amp;libraries=places"></script>
+
+            <script>
+                //<![CDATA[
+                // This example displays an address form, using the autocomplete feature
+                // of the Google Places API to help users fill in the information.
+
+                var placeSearch, autocomplete;
+                var componentForm = {
+                    locality: 'long_name',
+                    country: 'long_name'
+                };
+
+                function initialize() {
+                    // Create the autocomplete object, restricting the search
+                    // to geographical location types.
+                    var textfield = document.getElementById('spaceform:address');
+                    autocomplete = new google.maps.places.Autocomplete(
+                            /** @type {HTMLInputElement} */(textfield),
+                            {types: ['geocode']});
+                    // When the user selects an address from the dropdown,
+                    // populate the address fields in the form.
+                    google.maps.event.addListener(autocomplete, 'place_changed', function () {
+                        fillInAddress();
+                    });
+                }
+
+                // [START region_fillform]
+                function fillInAddress() {
+                    // Get the place details from the autocomplete object.
+                    var place = autocomplete.getPlace();
+          
+                    document.getElementById('spaceform:latitude').value = place.geometry.location.k;
+                    document.getElementById('spaceform:longitude').value = place.geometry.location.D;
+ 
+                    
+                    // Get each component of the address from the place details
+                    // and fill the corresponding field on the form.
+                    /*
+                    for (var i = 0; i < place.address_components.length; i++) {
+                        var addressType = place.address_components[i].types[0];
+
+
+                        if (componentForm[addressType]) {
+                            var val = place.address_components[i][componentForm[addressType]];
+                            document.getElementById('spaceform:'+addressType).value = val;
+                            //alert("addressType: " + addressType + " val:" + val);
+                        }
+                    }*/
+                }
+                // [END region_fillform]
+
+                // [START region_geolocation]
+                // Bias the autocomplete object to the user's geographical location,
+                // as supplied by the browser's 'navigator.geolocation' object.
+                function geolocate() {
+                    if (navigator.geolocation) {
+                        navigator.geolocation.getCurrentPosition(function (position) {
+                            var geolocation = new google.maps.LatLng(
+                                    position.coords.latitude, position.coords.longitude);
+                            var circle = new google.maps.Circle({
+                                center: geolocation,
+                                radius: position.coords.accuracy
+                            });
+                            autocomplete.setBounds(circle.getBounds());
+                        });
+                    }
+                }
+                // [END region_geolocation]
+                initialize();
+                //]]>
+            </script>
+
         </ui:define>
     </ui:composition>
 

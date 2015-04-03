@@ -10,7 +10,69 @@
             <h:outputText value="#{bundle.ListAmenityTitle}"></h:outputText>
         </ui:define>
         <ui:define name="body">
-            welcome
+            <script src = "http://maps.google.com/maps/api/js?sensor=false" type = "text/javascript" ></script> 
+            
+            <div id="map_canvas" style="width:400px;height:400px;">Google Map</div>
+
+            <script>
+                //<![CDATA[
+
+                function initialize() {
+                    var map_options = {
+                        center: new google.maps.LatLng(-33.407550, -70.570209),
+                        zoom: 11,
+                        mapTypeId: google.maps.MapTypeId.ROADMAP
+                    };
+
+                    var google_map = new google.maps.Map(document.getElementById("map_canvas"), map_options);
+
+                    var info_window = new google.maps.InfoWindow({
+                        content: 'loading'
+                    });
+
+                    var image = 'http://rodmanstreet.org/wp-content/themes/rodman/images/orange-map-marker.png';
+
+                    $.ajax({
+                        url: "http://localhost:8090/unlockServices/faces/webresources/spaces/-33.407550/-70.570209"
+                    }).then(function (data) {
+                        $.each(data, function (i, item) {
+                            //alert(item.overview.title + " " + item.address.latitude + " " + item.address.longitude);
+                            var m = new google.maps.Marker({
+                                map: google_map,
+                                animation: google.maps.Animation.DROP,
+                                title: item.overview.title,
+                                position: new google.maps.LatLng(item.address.latitude, item.address.longitude),
+                                icon: image,
+                                html: '<p><strong>' + item.overview.title + '</strong><br/>' + ((item.distance > 1000) ? (Number((item.distance / 1000).toFixed(1)) + " Kms") : (Number((item.distance).toFixed(1)) + " Mts")) + '</p>'
+                            });
+
+                            google.maps.event.addListener(m, 'click', function () {
+                                info_window.setContent(this.html);
+                                info_window.open(google_map, this);
+                            });
+
+                        });
+                    });
+
+                    var imageYou = 'http://www.google.com/mapmaker/mapfiles/sv_icon.png';
+                    var myLatLng = new google.maps.LatLng(-33.407550, -70.570209);
+                    var beachMarker = new google.maps.Marker({
+                        position: myLatLng,
+                        animation: google.maps.Animation.DROP,
+                        title: "Tu estas aquí",
+                        map: google_map,
+                        icon: imageYou
+                    });
+                    google.maps.event.addListener(beachMarker, 'click', function () {
+                        info_window.setContent(this.title);
+                        info_window.open(google_map, this);
+                    });
+
+                }
+
+                initialize();
+                //]]>
+            </script>
         </ui:define>
     </ui:composition>
 
