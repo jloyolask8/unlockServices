@@ -48,20 +48,11 @@ public class SpaceFacade extends AbstractFacade<Space> {
         try {
             em = getEntityManager();
             //Debug purposes
-            System.out.println("updateGeom4326(" + centerLocation + ")");
+            System.out.println("updateGeom4326 title="+space.toString()+" id="+space.getId()+"(" + centerLocation + ")");
 
-            //**************************/
-//            Query query = em.createNativeQuery("select *, ST_Distance(ST_Transform(locaciones.geom4326,32719), "
-//                    + "ST_Transform(ST_GeomFromText('POINT(" + centerLocation + ")', 4326),32719)) as distance\n"
-//                    + "from (SELECT *\n"
-//                    + " FROM space\n"
-//                    + " WHERE ST_Distance(ST_Transform(geom4326,32719), ST_Transform(ST_GeomFromText('POINT(" + centerLocation + ")', 4326),32719)) < " + meters + ") locaciones"
-//                    + " order by distance;", "distanceResult");
-//            ALTER TABLE space ADD COLUMN distance double precision;
             Query query = em.createNativeQuery("UPDATE space\n"
                     + "   SET geom4326=ST_GeomFromText('POINT(" + centerLocation + ")', 4326)\n"
                     + " WHERE space.id = "+space.getId());
-//            query.setHint(QueryHints.REFRESH, HintValues.TRUE);
             query.executeUpdate();
         } catch (Exception ex) {
             ex.printStackTrace();

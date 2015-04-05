@@ -6,6 +6,7 @@
 package com.unlockspaces.restws.service;
 
 import com.unlockspaces.persistence.entities.Space;
+import com.unlockspaces.persistence.entities.Venue;
 import java.util.LinkedList;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -75,14 +76,6 @@ public abstract class AbstractFacade<T> {
             System.out.println("findMerchantsOnRadio(" + centerLocation + "," + meters + ")");
             long startTime = System.currentTimeMillis();
             //**************************/
-//            Query query = em.createNativeQuery("select *, ST_Distance(ST_Transform(locaciones.geom4326,32719), "
-//                    + "ST_Transform(ST_GeomFromText('POINT(" + centerLocation + ")', 4326),32719)) as distance\n"
-//                    + "from (SELECT *\n"
-//                    + " FROM space\n"
-//                    + " WHERE ST_Distance(ST_Transform(geom4326,32719), ST_Transform(ST_GeomFromText('POINT(" + centerLocation + ")', 4326),32719)) < " + meters + ") locaciones"
-//                    + " order by distance;", "distanceResult");
-//            ALTER TABLE space ADD COLUMN distance double precision;
-
             Query query = em.createNativeQuery("select space.id,space.capacity,space.creationdate,"
                     + "space.lastmodifdate,space.summary,space.title,space.mode,space.perday,space.perhour,"
                     + "space.permonth,space.perweek,space.currencycode,space.createdby_systemid,space.venue_id,"
@@ -108,6 +101,47 @@ public abstract class AbstractFacade<T> {
 //            if (em != null) {
 //                em.close();
 //            }
+        }
+        return new LinkedList();
+    }
+
+    public List<Venue> findVenuesOnRadio(String lat, String lon, int meters) {
+        EntityManager em = null;
+        String centerLocation = lon + ' ' + lat;
+        try {
+            em = getEntityManager();
+            //Debug purposes
+            System.out.println("findVenuesOnRadio(" + centerLocation + "," + meters + ")");
+            long startTime = System.currentTimeMillis();
+            //**************************/
+
+            String findVenuesQuery = "SELECT o.id,o.creationdate,o.lastmodifdate,o.timezone,o.addressonmap,\n"
+                    + "o.latitude,o.line1,o.line2,o.longitude,o.postalcode,o.region,o.city_id_code,\n"
+                    + "o.country_id_code,o.email,o.name,o.phone,o.skype,o.website,o.whatsapp,\n"
+                    + "o.fridayavailabilityoption,o.fridayendtime,o.fridaystarttime,o.mondayavailabilityoption,\n"
+                    + "o.mondayendtime,o.mondaystarttime,o.saturdayavailabilityoption,o.saturdayendtime,\n"
+                    + "o.saturdaystarttime,o.sundayavailabilityoption,o.sundayendtime,o.sundaystarttime,\n"
+                    + "o.thursdayavailabilityoption,o.thursdayendtime,o.thursdaystarttime,o.tuesdayavailabilityoption,\n"
+                    + "o.tuesdayendtime,o.tuesdaystarttime,o.wednesdayavailabilityoption,o.wednesdayendtime,\n"
+                    + "o.wednesdaystarttime,o.summary,o.title,o.createdby_systemid,o.frontphoto_id,o.organization_id,\n"
+                    + "o.venuelogo_id,ST_Distance(ST_Transform(geom4326,32719), \n"
+                    + "ST_Transform(ST_GeomFromText('POINT(" + centerLocation + ")', 4326),32719)) as distance from (SELECT id\n"
+                    + " FROM venue\n"
+                    + " WHERE ST_Distance(ST_Transform(geom4326,32719), ST_Transform(ST_GeomFromText('POINT(" + centerLocation + ")', 4326),32719)) < " + meters + ") locaciones, venue as o\n"
+                    + " where locaciones.id = o.id\n"
+                    + " order by distance;";
+
+            Query query = em.createNativeQuery(findVenuesQuery, Venue.class);
+            query.setHint(QueryHints.REFRESH, HintValues.TRUE);
+
+            List<Venue> results = query.getResultList();
+            //Debug purposes
+            long elapsedTime = System.currentTimeMillis() - startTime;
+            System.out.println("query return " + results.size() + " results in " + elapsedTime + " milliseconds");
+            //*****************************/
+            return results;
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
         return new LinkedList();
     }

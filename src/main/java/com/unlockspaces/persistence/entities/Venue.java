@@ -31,6 +31,8 @@ public class Venue implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     @Basic
     private Date creationDate;
+    @Basic
+    private Double distance;
     @OneToMany(targetEntity = Picture.class)
     private Collection<Picture> photos;
     @OneToOne(targetEntity = Picture.class)
@@ -169,5 +171,19 @@ public class Venue implements Serializable {
     
     public String toString(){
         return this.overview.getTitle();
+    }
+
+    /**
+     * @return the distance
+     */
+    public Double getDistance() {
+        return distance;
+    }
+
+    /**
+     * @param distance the distance to set
+     */
+    public void setDistance(Double distance) {
+        this.distance = distance;
     }
 }

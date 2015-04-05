@@ -33,12 +33,10 @@
                     <h:outputLabel value="postalCode" for="postalCode" />
                     <h:inputText id="postalCode" styleClass="form-control" value="#{venueController.selected.address.postalCode}" title="#{bundle.CreateSpaceTitle_address}" />
                     
-                    <h:outputLabel value="#{bundle.EditVenueLabel_contactInfo}" for="contactInfo" />
-                    <h:inputText id="contactInfo" styleClass="form-control" value="#{venueController.selected.contactInfo}" title="#{bundle.EditVenueTitle_contactInfo}" />
+                    
                     <h:outputLabel value="#{bundle.EditVenueLabel_timezone}" for="timezone" />
                     <h:inputText id="timezone" styleClass="form-control" value="#{venueController.selected.timezone}" title="#{bundle.EditVenueTitle_timezone}" />
-                    <h:outputLabel value="#{bundle.EditVenueLabel_hoursOfOperation}" for="hoursOfOperation" />
-                    <h:inputText id="hoursOfOperation" styleClass="form-control" value="#{venueController.selected.hoursOfOperation}" title="#{bundle.EditVenueTitle_hoursOfOperation}" />
+                    
                     <h:outputLabel value="#{bundle.EditVenueLabel_creationDate}" for="creationDate" />
                     <h:inputText id="creationDate" styleClass="form-control" value="#{venueController.selected.creationDate}" title="#{bundle.EditVenueTitle_creationDate}" >
                         <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
