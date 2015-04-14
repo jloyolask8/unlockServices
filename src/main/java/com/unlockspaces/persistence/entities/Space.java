@@ -1,5 +1,6 @@
 package com.unlockspaces.persistence.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
@@ -15,6 +16,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import org.eclipse.persistence.oxm.annotations.XmlInverseReference;
 
 @Entity
 public class Space implements Serializable {
@@ -22,6 +24,7 @@ public class Space implements Serializable {
     @Embedded
     private Overview overview;
     @ManyToOne(targetEntity = Venue.class)
+    @XmlInverseReference(mappedBy = "spaces")
     private Venue venue;
     @Embedded
     private Address address;
@@ -62,11 +65,10 @@ public class Space implements Serializable {
     private Picture frontPhoto;
 
     public Space() {
-        
         this.overview = new Overview();
         this.pricing = new Pricing();
         this.address = new Address();
-
+        this.distance = 0D;
     }
    
     public Overview getOverview() {
@@ -77,10 +79,12 @@ public class Space implements Serializable {
         this.overview = overview;
     }
    
+    @JsonIgnore
     public Venue getVenue() {
         return this.venue;
     }
 
+    @JsonIgnore
     public void setVenue(Venue venue) {
         this.venue = venue;
     }

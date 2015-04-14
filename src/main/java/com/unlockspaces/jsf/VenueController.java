@@ -192,7 +192,7 @@ public class VenueController implements Serializable {
         return ejbFacade.find(id);
     }
 
-    @FacesConverter(forClass = Venue.class)
+    @FacesConverter(value = "VenueControllerConverter", forClass = Venue.class)
     public static class VenueControllerConverter implements Converter {
 
         @Override
@@ -202,7 +202,8 @@ public class VenueController implements Serializable {
             }
             VenueController controller = (VenueController) facesContext.getApplication().getELResolver().
                     getValue(facesContext.getELContext(), null, "venueController");
-            return controller.getVenue(getKey(value));
+            Venue venue = controller.getVenue(getKey(value));
+            return venue;
         }
 
         java.lang.Long getKey(String value) {
@@ -221,6 +222,9 @@ public class VenueController implements Serializable {
         public String getAsString(FacesContext facesContext, UIComponent component, Object object) {
             if (object == null) {
                 return null;
+            }
+            if(object instanceof String){
+                return ((String)object);
             }
             if (object instanceof Venue) {
                 Venue o = (Venue) object;

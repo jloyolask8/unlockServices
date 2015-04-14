@@ -1,8 +1,10 @@
 package com.unlockspaces.persistence.entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
+import java.util.Objects;
 import javax.persistence.Basic;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -55,6 +57,7 @@ public class Venue implements Serializable {
     public Venue() {
         this.overview = new Overview();
         this.address = new Address();
+        this.distance = 0D;
     }
    
     public Overview getOverview() {
@@ -171,6 +174,14 @@ public class Venue implements Serializable {
     
     public String toString(){
         return this.overview.getTitle();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj instanceof Venue){
+            return (Objects.equals(((Venue)obj).getId(), this.getId()));
+        }
+        return false;
     }
 
     /**

@@ -17,6 +17,8 @@ import javax.faces.convert.FacesConverter;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.WebTarget;
 
 @Named("spaceController")
 @SessionScoped
@@ -81,7 +83,11 @@ public class SpaceController implements Serializable {
 
     public String create() {
         try {
-            getFacade().create(current);
+            //getFacade().create(current);
+            String BASE_URI = "http://localhost:8090/unlockServices/faces/webresources";
+            Client client = javax.ws.rs.client.ClientBuilder.newClient();
+            WebTarget webTarget = client.target(BASE_URI).path("spaces");
+            webTarget.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).post(javax.ws.rs.client.Entity.entity(current, javax.ws.rs.core.MediaType.APPLICATION_JSON));
             JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("SpaceCreated"));
             return prepareCreate();
         } catch (Exception e) {
@@ -98,6 +104,10 @@ public class SpaceController implements Serializable {
 
     public String update() {
         try {
+//            String BASE_URI = "http://localhost:8090/unlockServices/faces/webresources";
+//            Client client = javax.ws.rs.client.ClientBuilder.newClient();
+//            WebTarget webTarget = client.target(BASE_URI).path("spaces");
+//            webTarget.path(java.text.MessageFormat.format("{0}", new Object[]{current.getId()})).request(javax.ws.rs.core.MediaType.APPLICATION_JSON).put(javax.ws.rs.client.Entity.entity(current, javax.ws.rs.core.MediaType.APPLICATION_JSON));
             getFacade().edit(current);
             JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("SpaceUpdated"));
             return "View";

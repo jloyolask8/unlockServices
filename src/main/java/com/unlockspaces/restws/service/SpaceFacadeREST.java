@@ -6,6 +6,7 @@
 package com.unlockspaces.restws.service;
 
 import com.unlockspaces.persistence.entities.Space;
+import com.unlockspaces.persistence.entities.Venue;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -26,6 +27,7 @@ import javax.ws.rs.Produces;
 @Stateless
 @Path("spaces")
 public class SpaceFacadeREST extends AbstractFacade<Space> {
+
     @PersistenceContext(unitName = "com.unlockspaces_UnlockServices_war_1.0-SNAPSHOTPU")
     private EntityManager em;
 
@@ -37,7 +39,9 @@ public class SpaceFacadeREST extends AbstractFacade<Space> {
     @Override
     @Consumes({"application/xml", "application/json"})
     public void create(Space entity) {
+        System.out.println("create space!!!");
         super.create(entity);
+        super.updateGeom4326(entity);
     }
 
     @PUT
@@ -45,6 +49,7 @@ public class SpaceFacadeREST extends AbstractFacade<Space> {
     @Consumes({"application/xml", "application/json"})
     public void edit(@PathParam("id") Integer id, Space entity) {
         super.edit(entity);
+        super.updateGeom4326(entity);
     }
 
     @DELETE
@@ -68,11 +73,31 @@ public class SpaceFacadeREST extends AbstractFacade<Space> {
     }
 
     @GET
-    @Path("{latitude}/{longitude}")
+    @Path("searchSpacesLatLong/{latitude}/{longitude}")
     @Produces({"application/xml", "application/json"})
-    public List<Space> searchLatLong(@PathParam("latitude") String latitude, @PathParam("longitude") String longitude) {
+    public List<Space> searchSpacesLatLong(@PathParam("latitude") String latitude, @PathParam("longitude") String longitude) {
         //10000 meters setted only for test purposes
-        return super.findSpacesOnRadio(latitude, longitude, 10000);
+        List<Space> result = super.findSpacesOnRadio(latitude, longitude, 10000);
+//        Gson gson= new Gson();
+//        String resultString = gson.toJson(result);
+        return result;
+        //Jorge's search here
+    }
+
+    @GET
+    @Path("searchVenuesLatLong/{latitude}/{longitude}")
+    @Produces({"application/xml", "application/json"})
+    public List<Venue> searchVenuesLatLong(@PathParam("latitude") String latitude, @PathParam("longitude") String longitude) {
+        //10000 meters setted only for test purposes
+        List<Venue> result = null;
+        try {
+            result = super.findVenuesOnRadio(latitude, longitude, 10000);
+//        Gson gson= new Gson();
+//        String resultString = gson.toJson(result);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return result;
         //Jorge's search here
     }
 
@@ -87,5 +112,5 @@ public class SpaceFacadeREST extends AbstractFacade<Space> {
     protected EntityManager getEntityManager() {
         return em;
     }
-    
+
 }

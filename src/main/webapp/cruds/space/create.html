@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Create Space</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+        <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+        <script src="http://malsup.github.io/jquery.form.js"></script>
+        <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+        <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500">
+        <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=places"></script>
+        <script>
+
+            function Overview(summary, title) {
+                this.summary = summary;
+                this.title = title;
+            }
+            
+            function Address(country, addressOnMap, city, postalCode, latitude, longitude, region, line2, line1) {
+                this.country = country;
+                this.addressOnMap = addressOnMap;
+                this.city = city;
+                this.postalCode = postalCode;
+                this.latitude = latitude;
+                this.region = region;
+                this.line2 = line2;
+                this.line1 = line1;
+                this.longitude = longitude;
+            }
+            
+            function Space(overview, address) {
+                this.overview = overview;
+                this.address = address;
+            }
+            
+            function createSpace(){
+                var overview = new Overview($("#title").val(), $("#summary").val());
+                var address = new Address(null, null, null, $("#postalCode").val(), $("#latitude").val(), $("#longitude").val(), null, null, $("#address").val());
+                var space = new Space(overview, address);
+                return space;
+            }
+ 
+
+            $(document).ready(function () {
+                // bind 'myForm' and provide a simple callback function 
+                $('#spaceform').ajaxForm(function () {
+                    /*
+                    var form = document.getElementById("spaceform");
+                    var data = {};
+                    for (var i = 0, ii = form.length; i < ii; ++i) {
+                        var input = form[i];
+                        if (input.name) {
+                            if (input.name.indexOf(".") >= 0) {
+                                var dataEmbedded = {};
+                            } else {
+                                data[input.name] = input.value;
+                            }
+                        }
+                    }
+        */
+                    addData(createSpace());
+                });
+            });
+
+            function addToObject(targetObject, objectAttribute, value) {
+                if (objectAttribute.indexOf(".") > 0) {
+                    var attrib = objectAttribute.split(".")[0];
+
+                    targetObject[attrib] = addToObject()
+                }
+            }
+
+            var placeSearch, autocomplete;
+            var componentForm = {
+                locality: 'long_name',
+                country: 'long_name'
+            };
+
+            function initialize() {
+                var textfield = document.getElementById('address');
+                autocomplete = new google.maps.places.Autocomplete(
+                        /** @type {HTMLInputElement} */(textfield),
+                        {types: ['geocode']});
+                google.maps.event.addListener(autocomplete, 'place_changed', function () {
+                    fillInAddress();
+                });
+            }
+
+            function fillInAddress() {
+                // Get the place details from the autocomplete object.
+                var place = autocomplete.getPlace();
+                document.getElementById('latitude').value = place.geometry.location.k;
+                document.getElementById('longitude').value = place.geometry.location.D;
+            }
+
+            //initialize();
+            function addData(space) {
+                $.ajax({
+                    type: "POST",
+                    url: "http://localhost:8090/unlockServices/webresources/spaces",
+                    data: JSON.stringify(space),
+                    contentType: "application/json; charset=utf-8",
+                    crossDomain: true,
+                    dataType: "json",
+                    success: function (data, status, jqXHR) {
+                        alert("success");
+                    },
+                    error: function (jqXHR, status) {
+                        // error handler
+                        console.log(jqXHR);
+                        alert('fail' + status.code);
+                    }
+                });
+            }
+
+            $(function () {
+                $("#creationDate").datepicker();
+            });
+        </script>
+    </head>
+    <body onload="initialize()">
+        <form id="spaceform">
+            <fieldset>
+                <p><label for="title" >title:</label><input id="title" name="overview.title"/></p>
+                <p><label for="summary" >summary</label><input id="summary" name="overview.summary"/></p>
+
+                <p><label for="venue" >venue:</label><select id="venue" name="venue"></select></p>
+
+                <p><label for="address" >address:</label><input id="address" name="address.line1"/></p>
+
+                <p><label for="latitude" >latitude:</label><input id="latitude" name="address.latitude"/></p>
+                <p><label for="longitude" >longitude:</label><input id="longitude" name="address.longitude"/></p>
+
+                <p><label for="postalCode" >postalCode:</label><input id="postalCode" name="address.postalCode"/></p>
+
+
+
+                <p><label for="creationDate" >creationDate:</label><input type="text" id="creationDate" name="creationDate"></p>
+
+            </fieldset>
+            <br />
+            <input type="submit" value="create" /> 
+        </form>
+
+    </body>
+</html>

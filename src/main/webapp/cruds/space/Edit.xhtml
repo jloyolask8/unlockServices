@@ -21,7 +21,7 @@
                     <h:inputText id="summary" styleClass="form-control" value="#{spaceController.selected.overview.summary}" title="#{bundle.CreateSpaceTitle_overview}" />
                     
                     <h:outputLabel value="#{bundle.CreateSpaceLabel_venue}" for="venue" />
-                    <h:selectOneMenu id="venue" value="#{spaceController.selected.venue}" title="#{bundle.CreateSpaceTitle_venue}" >
+                    <h:selectOneMenu id="venue" value="#{spaceController.selected.venue}" title="#{bundle.CreateSpaceTitle_venue}" converter="VenueControllerConverter">
                         <f:selectItems value="#{venueController.itemsAvailableSelectOne}"/>
                     </h:selectOneMenu>
 
