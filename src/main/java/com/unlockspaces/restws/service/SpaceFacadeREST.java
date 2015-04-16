@@ -73,11 +73,12 @@ public class SpaceFacadeREST extends AbstractFacade<Space> {
     }
 
     @GET
-    @Path("searchSpacesLatLong/{latitude}/{longitude}")
+    @Path("searchSpacesLatLong/{latitude}/{longitude}/{radiometers}")
     @Produces({"application/xml", "application/json"})
-    public List<Space> searchSpacesLatLong(@PathParam("latitude") String latitude, @PathParam("longitude") String longitude) {
+    public List<Space> searchSpacesLatLong(@PathParam("latitude") String latitude, @PathParam("longitude") String longitude,
+            @PathParam("radiometers") int radiometers) {
         //10000 meters setted only for test purposes
-        List<Space> result = super.findSpacesOnRadio(latitude, longitude, 10000);
+        List<Space> result = super.findSpacesOnRadio(latitude, longitude, radiometers);
 //        Gson gson= new Gson();
 //        String resultString = gson.toJson(result);
         return result;
