@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <!-- INTERFACE -->
+    <cc:interface>
+    </cc:interface>
+
+    <!-- IMPLEMENTATION -->
+    <cc:implementation>
+        <!-- Sidebar component with st-effect-1 (set on the toggle button within the navbar) -->
+        <aside class="sidebar left sidebar-size-1 sidebar-mini-reveal sidebar-offset-0 sidebar-skin-dark sidebar-visible-desktop" id="sidebar-menu" data-type="collapse">
+            <div data-scrollable="">
+
+                <ul class="sidebar-menu sm-bordered sm-icons-block sm-icons-right">
+                    <li class="hasSubmenu open active">
+                        <a href="#discover"><i class="fa fa-star"></i><span>Discover</span></a>
+                        <ul id="discover" class="in">
+                            <li><a href="index.html"><i class="fa fa-map-marker"></i><span>Full screen Map</span></a>
+                            </li>
+                            <li><a href="map-listing-list.html"><i class="fa fa-list"></i><span>Map Listing - List</span></a>
+                            </li>
+                            <li class="active"><a href="map-listing-grid.html"><i class="fa fa-th"></i><span>Map Listing - Grid</span></a>
+                            </li>
+                            <li><a href="listing.html"><i class="fa fa-list"></i><span>Listing - List</span></a>
+                            </li>
+                            <li><a href="listing-grid.html"><i class="fa fa-th"></i><span>Listing - Grid</span></a>
+                            </li>
+                            <li><a href="listing-map.html"><i class="fa fa-map-marker"></i><span>Listing - Map</span></a>
+                            </li>
+                        </ul>
+                    </li>
+
+
+                </ul>
+                <h4 class="category">Map features</h4>
+                <ul class="sidebar-menu sm-icons-block sm-active-item-bg sm-icons-right">
+                    <li><a href="map-filters.html"><i class="fa fa-search"></i><span>Map Filters</span></a>
+                    </li>
+                    <li><a href="map-themes.html"><i class="fa fa-eyedropper"></i><span>Map Themes</span></a>
+                    </li>
+                    <li><a href="map-markers.html"><i class="fa fa-map-marker"></i><span>Map Markers</span></a>
+                    </li>
+                </ul>
+
+            </div>
+        </aside>
+    </cc:implementation>
+</html>
