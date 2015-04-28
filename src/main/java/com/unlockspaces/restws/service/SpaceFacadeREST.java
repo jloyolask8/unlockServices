@@ -7,6 +7,8 @@ package com.unlockspaces.restws.service;
 
 import com.unlockspaces.persistence.entities.Space;
 import com.unlockspaces.persistence.entities.Venue;
+import java.io.ByteArrayOutputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -19,6 +21,13 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.CacheControl;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
+import javax.xml.bind.PropertyException;
 
 /**
  *
@@ -55,32 +64,58 @@ public class SpaceFacadeREST extends AbstractFacade<Space> {
     @DELETE
     @Path("{id}")
     public void remove(@PathParam("id") Integer id) {
-        super.remove(super.find(id));
+        super.remove(super.find(id.longValue()));
     }
 
     @GET
     @Path("{id}")
-    @Produces({"application/xml", "application/json"})
-    public Space find(@PathParam("id") Integer id) {
-        return super.find(id);
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response find(@PathParam("id") Integer id) {
+        try {
+            return getCacheResponseBuilder(Response.Status.OK).entity(marshallSpace(super.find(id.longValue()))).build();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return getNoCacheResponseBuilder(Response.Status.INTERNAL_SERVER_ERROR).build();
     }
 
     @GET
-    @Override
-    @Produces({"application/xml", "application/json"})
-    public List<Space> findAll() {
-        return super.findAll();
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response findAll_() {
+        try {
+            return getCacheResponseBuilder(Response.Status.OK).entity(marshallSpace(super.findAll())).build();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return getNoCacheResponseBuilder(Response.Status.INTERNAL_SERVER_ERROR).build();
+
+    }
+
+    private String marshallSpace(Object toMarshall) throws PropertyException, JAXBException {
+        String json;
+        JAXBContext jc = JAXBContext.newInstance(Space.class);
+        Marshaller marshaller = jc.createMarshaller();
+        marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+        marshaller.setProperty("eclipselink.media-type", "application/json");
+        marshaller.setProperty("eclipselink.json.include-root", false);
+        //marshaller.setProperty(Marshaller.JAXB_ENCODING, StandardCharsets.ISO_8859_1.name());
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        marshaller.marshal(toMarshall, baos);
+        json = baos.toString(/*StandardCharsets.ISO_8859_1.name()*/);
+        return json;
     }
 
     @GET
-    @Path("searchSpacesLatLong/{latitude}/{longitude}")
-    @Produces({"application/xml", "application/json"})
-    public List<Space> searchSpacesLatLong(@PathParam("latitude") String latitude, @PathParam("longitude") String longitude) {
-        //10000 meters setted only for test purposes
-        List<Space> result = super.findSpacesOnRadio(latitude, longitude, 10000);
-//        Gson gson= new Gson();
-//        String resultString = gson.toJson(result);
-        return result;
+    @Path("searchSpacesLatLong/{latitude}/{longitude}/{radiometers}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response searchSpacesLatLong(@PathParam("latitude") String latitude, @PathParam("longitude") String longitude,
+            @PathParam("radiometers") int radiometers) {
+        try {
+            return getCacheResponseBuilder(Response.Status.OK).entity(marshallSpace(super.findSpacesOnRadio(latitude, longitude, radiometers))).build();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return getNoCacheResponseBuilder(Response.Status.INTERNAL_SERVER_ERROR).build();
         //Jorge's search here
     }
 
@@ -111,6 +146,22 @@ public class SpaceFacadeREST extends AbstractFacade<Space> {
     @Override
     protected EntityManager getEntityManager() {
         return em;
+    }
+    
+    private Response.ResponseBuilder getCacheResponseBuilder(Response.Status status) {
+        CacheControl cc = new CacheControl();
+        cc.setNoCache(false);
+        cc.setMaxAge(300);
+        cc.setMustRevalidate(false);
+        return Response.status(status).cacheControl(cc).header("Access-Control-Allow-Origin", "*");
+    }
+
+    private Response.ResponseBuilder getNoCacheResponseBuilder(Response.Status status) {
+        CacheControl cc = new CacheControl();
+        cc.setNoCache(true);
+        cc.setMaxAge(-1);
+        cc.setMustRevalidate(true);
+        return Response.status(status).cacheControl(cc).header("Access-Control-Allow-Origin", "*");
     }
 
 }

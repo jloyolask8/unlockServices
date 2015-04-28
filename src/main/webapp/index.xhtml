@@ -7,30 +7,146 @@
         
         
         <ui:define name="body">
-            
-            <!-- content push wrapper -->
-        <div class="st-pusher">
-            <!-- sidebar effects INSIDE of st-pusher: -->
-            <!-- st-effect-3, st-effect-6, st-effect-7, st-effect-8, st-effect-14 -->
-            <!-- this is the wrapper for the content -->
-            <div class="st-content">
-                <!-- extra div for emulating position:fixed of the menu -->
-                <div class="st-content-inner padding-top-none" id="content">
-            
-               
-                    
-                </div>
-                <!-- /st-content-inner -->
-            </div>
-            <!-- /st-content -->
-        </div>
-            
+            <script src = "http://maps.google.com/maps/api/js?sensor=false&amp;libraries=geometry" type = "text/javascript" ></script>
 
-            
-        </ui:define>
-        
-        <ui:define name="scripts">
-          
+
+            <div id="map_canvas" style="width:400px;height:400px;">Google Map</div>
+
+            <script>
+                //<![CDATA[
+
+                var markersArray = [];
+                var lastBounds = null;
+                //var loadingSpaces = false;
+
+                function initialize(){
+                    var map_options = {
+                        center: new google.maps.LatLng(-33.407550, -70.570209),
+                        zoom: 11,
+                        mapTypeId: google.maps.MapTypeId.ROADMAP
+                    };
+
+                    var google_map = new google.maps.Map(document.getElementById("map_canvas"), map_options);
+
+                    var info_window = new google.maps.InfoWindow({
+                        content: 'loading'
+                    });
+
+                    var image = 'http://rodmanstreet.org/wp-content/themes/rodman/images/orange-map-marker.png';
+
+                    var imageYou = 'http://www.google.com/mapmaker/mapfiles/sv_icon.png';
+                    var myLatLng = new google.maps.LatLng(-33.407550, -70.570209);
+                    var myPositionMarker = new google.maps.Marker({
+                        position: myLatLng,
+                        animation: google.maps.Animation.DROP,
+                        title: "Tu estas aquí",
+                        map: google_map,
+                        icon: imageYou
+                    });
+                    
+                    google.maps.event.addListener(myPositionMarker, 'click', function () {
+                        info_window.setContent(this.title);
+                        info_window.open(google_map, this);
+                    });
+
+                    google.maps.event.addListener(google_map, 'bounds_changed', function () {
+                        
+                        //console.log("bound_changed loadingSpaces=" + loadingSpaces);
+                        //if (!loadingSpaces) {
+                            //console.log("seted timeout");
+                            var bounds = google_map.getBounds();
+                            //loadingSpaces = true;
+                            //lastBounds = bounds;
+                            loadNewSpacesIfAlreadyStop(google_map, bounds, image, info_window);
+                        //}
+                        //alert(horizontalkm + ' km horizontal, ' + verticalkm + ' km vertical');
+                    });
+                }
+
+                function loadNewSpacesIfAlreadyStop(google_map, lastBounds, image, info_window) {
+                    setTimeout(function () {
+                        //console.log("setTimeout((google_map.getBounds() === lastBounds)):" + (google_map.getBounds() === lastBounds));
+                        if (google_map.getBounds() === lastBounds) {
+                            loadSpaces(google_map, image, info_window, google_map.getBounds());
+                        }
+                        //loadingSpaces = false;
+                    }, 500);
+                }
+
+                function loadSpaces(google_map, image, info_window, bounds) {
+                    console.log("loadSpaces");
+                    // from that, get the coordinates for the NE and SW corners
+                    var NE = bounds.getNorthEast();
+                    var SW = bounds.getSouthWest();
+
+                    // from that, figure out the latitudes and the longitudes
+                    var lat1 = NE.lat();
+                    var lat2 = SW.lat();
+
+                    var lng1 = NE.lng();
+                    var lng2 = SW.lng();
+
+                    // construct new LatLngs using the coordinates for the horizontal distance between lng1 and lng2
+                    var horizontalLatLng1 = new google.maps.LatLng(lat1, lng1);
+                    var horizontalLatLng2 = new google.maps.LatLng(lat1, lng2);
+
+                    // construct new LatLngs using the coordinates for the vertical distance between lat1 and lat2
+                    var verticalLatLng1 = new google.maps.LatLng(lat1, lng1);
+                    var verticalLatLng2 = new google.maps.LatLng(lat2, lng1);
+
+                    // work out the distance horizontally
+                    var horizontal = google.maps.geometry.spherical.computeDistanceBetween(horizontalLatLng1, horizontalLatLng2);
+
+                    // work out the distance vertically
+                    //var vertical = google.maps.geometry.spherical.computeDistanceBetween(verticalLatLng1, verticalLatLng2);
+
+                    // round to kilometres to 1dp
+                    //var horizontalkm = convertMetresToKm(horizontal);
+                    //var verticalkm = convertMetresToKm(vertical);
+
+                    var centre = google_map.getCenter();
+
+                    //clearOverlays();
+                    $.ajax({
+                        url: "http://localhost:8090/unlockServices/faces/webresources/spaces/searchSpacesLatLong/" + centre.k + "/" + centre.D + "/" + Math.round(horizontal / 2)
+                    }).then(function (data) {
+                        clearOverlays();
+                        $.each(data, function (i, item) {
+                            //alert(item.overview.title + " " + item.address.latitude + " " + item.address.longitude);
+                            var marker = new google.maps.Marker({
+                                map: google_map,
+                                //animation: google.maps.Animation.DROP,
+                                title: item.overview.title,
+                                position: new google.maps.LatLng(item.address.latitude, item.address.longitude),
+                                icon: image,
+                                html: '<p><strong>' + item.overview.title + '</strong><br/>' + ((item.distance > 1000) ? (Number((item.distance / 1000).toFixed(1)) + " Kms") : (Number((item.distance).toFixed(1)) + " Mts")) + '</p>'
+                            });
+
+                            markersArray.push(marker);
+
+                            google.maps.event.addListener(marker, 'click', function () {
+                                info_window.setContent(this.html);
+                                info_window.open(google_map, this);
+                            });
+
+                        });
+                    });
+                }
+
+                function clearOverlays() {
+                    for (var i = 0; i < markersArray.length; i++) {
+                        markersArray[i].setMap(null);
+                    }
+                    markersArray.length = 0;
+                }
+
+                function convertMetresToKm(metres) {
+                    return Math.round(metres / 1000 * 10) / 10;    // distance in km rounded to 1dp
+                }
+
+                initialize();
+                //]]>
+            </script>
         </ui:define>
     </ui:composition>
 
