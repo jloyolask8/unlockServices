@@ -7,8 +7,11 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 @Entity
+@XmlRootElement
 public class Usuario extends Person implements Serializable {
 
     @OneToMany(targetEntity = SpaceReview.class,mappedBy = "reviewedBy")
@@ -40,6 +43,7 @@ public class Usuario extends Person implements Serializable {
 
     }
    
+    @XmlTransient
     public Collection<SpaceReview> getSpaceReviews() {
         return this.spaceReviews;
     }
@@ -56,6 +60,7 @@ public class Usuario extends Person implements Serializable {
         this.password = password;
     }
    
+    @XmlTransient
     public Collection<Venue> getVenuesListed() {
         return this.venuesListed;
     }
@@ -64,6 +69,7 @@ public class Usuario extends Person implements Serializable {
         this.venuesListed = venuesListed;
     }
    
+    @XmlTransient
     public Collection<UserNotification> getNotificationsReceived() {
         return this.notificationsReceived;
     }
@@ -72,6 +78,7 @@ public class Usuario extends Person implements Serializable {
         this.notificationsReceived = notificationsReceived;
     }
    
+    @XmlTransient
     public Collection<Reservation> getReservations() {
         return this.reservations;
     }
@@ -88,6 +95,7 @@ public class Usuario extends Person implements Serializable {
         this.organization = organization;
     }
    
+    @XmlTransient
     public Collection<IdentityVerificationType> getIdentityVerificationTypes() {
         return this.identityVerificationTypes;
     }
@@ -112,6 +120,7 @@ public class Usuario extends Person implements Serializable {
         this.lastModifDate = lastModifDate;
     }
    
+    @XmlTransient
     public Collection<Space> getSpacesListed() {
         return this.spacesListed;
     }

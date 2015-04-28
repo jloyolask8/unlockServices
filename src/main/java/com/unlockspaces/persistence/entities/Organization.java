@@ -11,8 +11,11 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 @Entity
+@XmlRootElement
 public class Organization implements Serializable {
 
     @Basic
@@ -56,6 +59,7 @@ public class Organization implements Serializable {
         this.creationDate = creationDate;
     }
    
+    @XmlTransient
     public Collection<Usuario> getUsers() {
         return this.users;
     }

@@ -6,8 +6,11 @@ import javax.persistence.Basic;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 @Entity
+@XmlRootElement
 public class Country implements Serializable {
 
     @Basic
@@ -33,6 +36,7 @@ public class Country implements Serializable {
         this.personIDName = personIDName;
     }
    
+    @XmlTransient
     public Collection<City> getCities() {
         return this.cities;
     }

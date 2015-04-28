@@ -31,8 +31,11 @@ public class Overview implements Serializable {
     public void setTitle(String title) {
         this.title = title;
     }
-    
-    public String toString(){
-        return this.title;
+
+    @Override
+    public String toString() {
+        return "Overview{" + "summary=" + summary + ", title=" + title + '}';
     }
+    
+    
 }

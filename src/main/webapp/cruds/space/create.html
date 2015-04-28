@@ -103,7 +103,7 @@ and open the template in the editor.
             function addData(space) {
                 $.ajax({
                     type: "POST",
-                    url: "http://localhost:8090/unlockServices/webresources/spaces",
+                    url: "http://localhost:8090/unlockServices/api/spaces",
                     data: JSON.stringify(space),
                     contentType: "application/json; charset=utf-8",
                     crossDomain: true,

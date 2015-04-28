@@ -1,6 +1,5 @@
 package com.unlockspaces.persistence.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
@@ -16,15 +15,18 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 import org.eclipse.persistence.oxm.annotations.XmlInverseReference;
 
 @Entity
+@XmlRootElement
 public class Space implements Serializable {
 
     @Embedded
     private Overview overview;
     @ManyToOne(targetEntity = Venue.class)
-    @XmlInverseReference(mappedBy = "spaces")
+    
     private Venue venue;
     @Embedded
     private Address address;
@@ -79,12 +81,12 @@ public class Space implements Serializable {
         this.overview = overview;
     }
    
-    @JsonIgnore
+    @XmlInverseReference(mappedBy = "spaces")
     public Venue getVenue() {
         return this.venue;
     }
 
-    @JsonIgnore
+    
     public void setVenue(Venue venue) {
         this.venue = venue;
     }
@@ -129,6 +131,7 @@ public class Space implements Serializable {
         this.type = type;
     }
    
+    @XmlTransient
     public Collection<Picture> getPhotos() {
         return this.photos;
     }
@@ -153,6 +156,7 @@ public class Space implements Serializable {
         this.spaceStatus = spaceStatus;
     }
    
+    @XmlTransient
     public Collection<SpaceReview> getReviews() {
         return this.reviews;
     }
@@ -209,6 +213,7 @@ public class Space implements Serializable {
         this.pricing = pricing;
     }
    
+    @XmlTransient
     public Collection<Amenity> getAmenitiesAvailable() {
         return this.amenitiesAvailable;
     }
