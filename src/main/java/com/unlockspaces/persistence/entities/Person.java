@@ -9,15 +9,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
-import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @MappedSuperclass
 public abstract class Person implements Serializable {
 
-    @OneToOne(targetEntity = Country.class)
-    private Country country;
+    @Basic
+    private String country;
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long systemId;
@@ -43,11 +42,11 @@ public abstract class Person implements Serializable {
 
     }
    
-    public Country getCountry() {
+    public String getCountry() {
         return this.country;
     }
 
-    public void setCountry(Country country) {
+    public void setCountry(String country) {
         this.country = country;
     }
    

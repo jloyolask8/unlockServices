@@ -37,21 +37,21 @@ public class Venue implements Serializable {
     private Long id;
 
     @Embedded
+    private ContactInfo contactInfo;
+    @Embedded
+    private Address address;
+
+    @Embedded
     private Overview overview;
 
     @Basic
     private String venueType;
 
-    @Embedded
-    private Address address;
-    @Embedded
-    private ContactInfo contactInfo;
     @Basic
     private String timezone;
     @Embedded
     private HoursOfOperation hoursOfOperation;
-    
-    
+
     @OneToMany(targetEntity = Picture.class)
     private Collection<Picture> photos;
     @OneToOne(targetEntity = Picture.class)
@@ -64,10 +64,9 @@ public class Venue implements Serializable {
     @OneToMany(mappedBy = "venue", fetch = FetchType.EAGER)
     private List<Space> spaces;
 
-    
     @OneToOne(targetEntity = Picture.class)
     private Picture frontPhoto;
-    
+
     @Temporal(TemporalType.TIMESTAMP)
     @Basic
     @XmlTransient
@@ -83,6 +82,7 @@ public class Venue implements Serializable {
     public Venue() {
         this.overview = new Overview();
         this.address = new Address();
+        this.contactInfo = new ContactInfo();
         this.distance = 0D;
     }
 
