@@ -50,7 +50,7 @@ public class SpaceFacadeREST extends AbstractFacade<Space> {
     public void create(Space entity) {
         System.out.println("create space!!!");
         super.create(entity);
-        super.updateGeom4326(entity);
+//        super.updateGeom4326(entity);
     }
 
     @PUT
@@ -58,7 +58,7 @@ public class SpaceFacadeREST extends AbstractFacade<Space> {
     @Consumes({"application/xml", "application/json"})
     public void edit(@PathParam("id") Integer id, Space entity) {
         super.edit(entity);
-        super.updateGeom4326(entity);
+//        super.updateGeom4326(entity);
     }
 
     @DELETE
@@ -72,69 +72,16 @@ public class SpaceFacadeREST extends AbstractFacade<Space> {
     @Produces(MediaType.APPLICATION_JSON)
     public Response find(@PathParam("id") Integer id) {
         try {
-            return getCacheResponseBuilder(Response.Status.OK).entity(marshallSpace(super.find(id.longValue()))).build();
+            return getCacheResponseBuilder(Response.Status.OK).entity(super.find(id.longValue())).build();
         } catch (Exception ex) {
             ex.printStackTrace();
         }
         return getNoCacheResponseBuilder(Response.Status.INTERNAL_SERVER_ERROR).build();
     }
 
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response findAll_() {
-        try {
-            return getCacheResponseBuilder(Response.Status.OK).entity(marshallSpace(super.findAll())).build();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        return getNoCacheResponseBuilder(Response.Status.INTERNAL_SERVER_ERROR).build();
+    
 
-    }
-
-    private String marshallSpace(Object toMarshall) throws PropertyException, JAXBException {
-        String json;
-        JAXBContext jc = JAXBContext.newInstance(Space.class);
-        Marshaller marshaller = jc.createMarshaller();
-        marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-        marshaller.setProperty("eclipselink.media-type", "application/json");
-        marshaller.setProperty("eclipselink.json.include-root", false);
-        //marshaller.setProperty(Marshaller.JAXB_ENCODING, StandardCharsets.ISO_8859_1.name());
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        marshaller.marshal(toMarshall, baos);
-        json = baos.toString(/*StandardCharsets.ISO_8859_1.name()*/);
-        return json;
-    }
-
-    @GET
-    @Path("searchSpacesLatLong/{latitude}/{longitude}/{radiometers}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response searchSpacesLatLong(@PathParam("latitude") String latitude, @PathParam("longitude") String longitude,
-            @PathParam("radiometers") int radiometers) {
-        try {
-            return getCacheResponseBuilder(Response.Status.OK).entity(marshallSpace(super.findSpacesOnRadio(latitude, longitude, radiometers))).build();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        return getNoCacheResponseBuilder(Response.Status.INTERNAL_SERVER_ERROR).build();
-        //Jorge's search here
-    }
-
-    @GET
-    @Path("searchVenuesLatLong/{latitude}/{longitude}")
-    @Produces({"application/xml", "application/json"})
-    public List<Venue> searchVenuesLatLong(@PathParam("latitude") String latitude, @PathParam("longitude") String longitude) {
-        //10000 meters setted only for test purposes
-        List<Venue> result = null;
-        try {
-            result = super.findVenuesOnRadio(latitude, longitude, 10000);
-//        Gson gson= new Gson();
-//        String resultString = gson.toJson(result);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        return result;
-        //Jorge's search here
-    }
+    
 
     @GET
     @Path("count")
@@ -148,20 +95,6 @@ public class SpaceFacadeREST extends AbstractFacade<Space> {
         return em;
     }
     
-    private Response.ResponseBuilder getCacheResponseBuilder(Response.Status status) {
-        CacheControl cc = new CacheControl();
-        cc.setNoCache(false);
-        cc.setMaxAge(300);
-        cc.setMustRevalidate(false);
-        return Response.status(status).cacheControl(cc).header("Access-Control-Allow-Origin", "*");
-    }
-
-    private Response.ResponseBuilder getNoCacheResponseBuilder(Response.Status status) {
-        CacheControl cc = new CacheControl();
-        cc.setNoCache(true);
-        cc.setMaxAge(-1);
-        cc.setMustRevalidate(true);
-        return Response.status(status).cacheControl(cc).header("Access-Control-Allow-Origin", "*");
-    }
+   
 
 }
