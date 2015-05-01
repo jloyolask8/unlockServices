@@ -15,6 +15,10 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.codec.binary.Base64;
 import com.auth0.jwt.JWTVerifier;
+import com.auth0.jwt.JWTVerifyException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.security.SignatureException;
 import javax.servlet.http.HttpServletResponse;
 
 @WebFilter(filterName = "jwt-filter", urlPatterns = {"/api/*, /persistence/*"})
@@ -49,29 +53,30 @@ public class JWTFilter implements Filter {
             return;
         }
 
-        String token = getToken((HttpServletRequest) request);
+        
 
         try {
+            String token = getToken((HttpServletRequest) request);
             Map<String, Object> decoded = jwtVerifier.verify(token);
             // Do something with decoded information like UserId
             System.out.println("decoded_" + decoded);
             chain.doFilter(request, response);
-        } catch (Exception e) {
+        } catch (NoAuthorizationException | NoSuchAlgorithmException | InvalidKeyException | IllegalStateException | IOException | SignatureException | JWTVerifyException | ServletException e) {
             System.out.println("Unauthorized");
             throw new ServletException("Unauthorized: Token validation failed", e);
         }
     }
 
-    private String getToken(HttpServletRequest httpRequest) throws ServletException {
+    private String getToken(HttpServletRequest httpRequest) throws NoAuthorizationException {
         String token = null;
         final String authorizationHeader = httpRequest.getHeader("authorization");
         if (authorizationHeader == null) {
-            throw new ServletException("Unauthorized: No Authorization header was found");
+            throw new NoAuthorizationException("Unauthorized: No Authorization header was found");
         }
 
         String[] parts = authorizationHeader.split(" ");
         if (parts.length != 2) {
-            throw new ServletException("Unauthorized: Format is Authorization: Bearer [token]");
+            throw new NoAuthorizationException("Unauthorized: Format is Authorization: Bearer [token]");
         }
 
         String scheme = parts[0];
