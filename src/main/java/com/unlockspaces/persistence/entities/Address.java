@@ -8,12 +8,12 @@ import javax.persistence.OneToOne;
 @Embeddable
 public class Address implements Serializable {
 
-    @OneToOne(targetEntity = Country.class)
-    private Country country;
+//     @Basic
+//    private String country;
     @Basic
     private String addressOnMap;
-    @OneToOne(targetEntity = City.class)
-    private City city;
+     @Basic
+    private String city;
     @Basic
     private String postalCode;
     @Basic
@@ -28,16 +28,11 @@ public class Address implements Serializable {
     private String longitude;
 
     public Address() {
-
+//        this.city = new City();
+//        this.country = new Country();
     }
    
-    public Country getCountry() {
-        return this.country;
-    }
-
-    public void setCountry(Country country) {
-        this.country = country;
-    }
+   
    
     public String getAddressOnMap() {
         return this.addressOnMap;
@@ -47,11 +42,11 @@ public class Address implements Serializable {
         this.addressOnMap = addressOnMap;
     }
    
-    public City getCity() {
+    public String getCity() {
         return this.city;
     }
 
-    public void setCity(City city) {
+    public void setCity(String city) {
         this.city = city;
     }
    
