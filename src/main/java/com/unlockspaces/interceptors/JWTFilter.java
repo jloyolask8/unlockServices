@@ -42,10 +42,10 @@ public class JWTFilter implements Filter {
         HttpServletResponse res = (HttpServletResponse) response;
 //        String path = ((HttpServletRequest) request).getRequestURI();
 
-        res.setHeader("Access-Control-Allow-Origin", "*");
-        res.setHeader("Access-Control-Allow-Credentials", "true");
-        res.setHeader("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT");
-        res.setHeader("Access-Control-Allow-Headers", "Content-Type, Accept, authorization, apiKey, token" );
+//        res.setHeader("Access-Control-Allow-Origin", "*");
+//        res.setHeader("Access-Control-Allow-Credentials", "true");
+//        res.setHeader("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT, OPTIONS");
+//        res.setHeader("Access-Control-Allow-Headers", "Content-Type, Accept, authorization, apiKey, token" );
 
         // IMPORTANT!!! First, Acknowledge any pre-flight test from browsers for this case before validating the headers (CORS stuff)
         if (req.getMethod().equals("OPTIONS")) {

@@ -43,6 +43,8 @@ public class SearchRS extends AbstractFacade<Space> {
     public SearchRS() {
         super(Space.class);
     }
+    
+    
 
     @Override
     protected EntityManager getEntityManager() {
