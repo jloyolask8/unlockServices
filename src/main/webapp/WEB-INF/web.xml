@@ -5,14 +5,33 @@
         <param-value>Development</param-value>
     </context-param>
     
-<!--    <filter>
+    
+     <filter>
+        <filter-name>AllowOptionsRequestFilter</filter-name>
+        <filter-class>com.unlockspaces.interceptors.AllowOptionsRequestFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>AllowOptionsRequestFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    
+    <filter>
         <filter-name>CORS Filter</filter-name>
         <filter-class>org.ebaysf.web.cors.CORSFilter</filter-class>
+        <init-param>
+            <description>A flag to control logging</description>
+            <param-name>cors.logging.enabled</param-name>
+            <param-value>true</param-value>
+        </init-param>
     </filter>
     <filter-mapping>
         <filter-name>CORS Filter</filter-name>
         <url-pattern>/*</url-pattern>
-    </filter-mapping>-->
+    </filter-mapping>
+    
+   
+    
+   
       
     <filter>
         <filter-name>JWTFilter</filter-name>
@@ -26,6 +45,16 @@
         <filter-name>JWTFilter</filter-name>
         <url-pattern>/persistence/*</url-pattern>
     </filter-mapping>
+    
+    <filter>
+        <filter-name>CharacterEncodingFilter</filter-name>
+        <filter-class>com.unlockspaces.interceptors.CharacterEncodingFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>CharacterEncodingFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    
     <servlet>
         <servlet-name>Faces Servlet</servlet-name>
         <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
