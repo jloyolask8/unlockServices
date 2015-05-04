@@ -29,7 +29,7 @@ public class AllowOptionsRequestFilter implements Filter {
             res.setHeader("Access-Control-Allow-Origin", "*");
             res.setHeader("Access-Control-Allow-Credentials", "true");
             res.setHeader("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT");
-            res.setHeader("Access-Control-Allow-Headers", "Content-Type, Accept, authorization");
+            res.setHeader("Access-Control-Allow-Headers", "Content-Type, Accept, authorization, token");
             res.setStatus(HttpServletResponse.SC_OK);
             return;
         }

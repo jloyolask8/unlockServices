@@ -60,11 +60,16 @@ public class JWTFilter implements Filter {
             Map<String, Object> decoded = jwtVerifier.verify(token);
             // Do something with decoded information like UserId
             System.out.println("decoded_" + decoded);
-            chain.doFilter(request, response);
-        } catch (NoAuthorizationException | NoSuchAlgorithmException | InvalidKeyException | IllegalStateException | IOException | SignatureException | JWTVerifyException | ServletException e) {
+            
+        } catch (NoAuthorizationException | NoSuchAlgorithmException | InvalidKeyException | 
+                IllegalStateException | IOException | SignatureException | JWTVerifyException e) {
             System.out.println("Unauthorized");
-            throw new ServletException("Unauthorized: Token validation failed", e);
+//            throw new ServletException("Unauthorized: Token validation failed", e);
+            res.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            return;
         }
+        
+        chain.doFilter(request, response);
     }
 
     private String getToken(HttpServletRequest httpRequest) throws NoAuthorizationException {
