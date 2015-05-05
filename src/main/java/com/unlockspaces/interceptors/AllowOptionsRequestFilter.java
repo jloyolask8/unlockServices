@@ -23,13 +23,13 @@ public class AllowOptionsRequestFilter implements Filter {
 
         System.out.println(req.getMethod() + ": " + path);
 
+        res.setHeader("Access-Control-Allow-Origin", "*");
+        res.setHeader("Access-Control-Allow-Credentials", "true");
+        res.setHeader("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT");
+        res.setHeader("Access-Control-Allow-Headers", "Content-Type, Accept, authorization, token");
+
         // IMPORTANT!!! First, Acknowledge any pre-flight test from browsers for this case before validating the headers (CORS stuff)
         if (req.getMethod().equals("OPTIONS")) {
-
-            res.setHeader("Access-Control-Allow-Origin", "*");
-            res.setHeader("Access-Control-Allow-Credentials", "true");
-            res.setHeader("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT");
-            res.setHeader("Access-Control-Allow-Headers", "Content-Type, Accept, authorization, token");
             res.setStatus(HttpServletResponse.SC_OK);
             return;
         }
