@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Objects;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
+import javax.persistence.ElementCollection;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -53,21 +54,19 @@ public class Venue implements Serializable {
     @Embedded
     private HoursOfOperation hoursOfOperation;
 
-    @OneToMany(targetEntity = Picture.class)
-    private Collection<Picture> photos;
-    @OneToOne(targetEntity = Picture.class)
-    private Picture venueLogo;
+    @ElementCollection(fetch = FetchType.EAGER)
+    private Collection<String> photos;
+    @Basic
+    private String venueLogo;
+    @Basic
+    private String frontPhoto;
+    
     @ManyToOne(targetEntity = Usuario.class)
     private Usuario createdBy;
     @OneToOne(targetEntity = Organization.class)
     private Organization organization;
-
     @OneToMany(mappedBy = "venue", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Space> spaces;
-
-    @OneToOne(targetEntity = Picture.class)
-    private Picture frontPhoto;
-
     @Temporal(TemporalType.TIMESTAMP)
     @Basic
     @XmlTransient
@@ -135,19 +134,19 @@ public class Venue implements Serializable {
         this.creationDate = creationDate;
     }
 
-    public Collection<Picture> getPhotos() {
+    public Collection<String> getPhotos() {
         return this.photos;
     }
 
-    public void setPhotos(Collection<Picture> photos) {
+    public void setPhotos(Collection<String> photos) {
         this.photos = photos;
     }
 
-    public Picture getVenueLogo() {
+    public String getVenueLogo() {
         return this.venueLogo;
     }
 
-    public void setVenueLogo(Picture venueLogo) {
+    public void setVenueLogo(String venueLogo) {
         this.venueLogo = venueLogo;
     }
 
@@ -191,11 +190,11 @@ public class Venue implements Serializable {
         this.lastModifDate = lastModifDate;
     }
 
-    public Picture getFrontPhoto() {
+    public String getFrontPhoto() {
         return this.frontPhoto;
     }
 
-    public void setFrontPhoto(Picture frontPhoto) {
+    public void setFrontPhoto(String frontPhoto) {
         this.frontPhoto = frontPhoto;
     }
 

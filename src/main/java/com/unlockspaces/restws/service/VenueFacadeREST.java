@@ -11,7 +11,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -25,7 +24,6 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
-import temporal.jpacontrollers.exceptions.RollbackFailureException;
 
 /**
  *
@@ -65,7 +63,7 @@ public class VenueFacadeREST extends AbstractFacade<Venue> {
     @Consumes({"application/xml", "application/json"})
     public void edit(@PathParam("id") Long id, Venue entity) {
         try {
-            super.editarVenue(entity);
+            super.edit(entity);
         } catch (Exception ex) {
             Logger.getLogger(VenueFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
             throw new WebApplicationException(ex,
