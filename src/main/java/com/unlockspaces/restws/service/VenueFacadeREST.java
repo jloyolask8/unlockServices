@@ -9,6 +9,8 @@ import com.unlockspaces.persistence.entities.Venue;
 import java.net.URI;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -23,6 +25,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
+import temporal.jpacontrollers.exceptions.RollbackFailureException;
 
 /**
  *
@@ -61,7 +64,13 @@ public class VenueFacadeREST extends AbstractFacade<Venue> {
     @Path("{id}")
     @Consumes({"application/xml", "application/json"})
     public void edit(@PathParam("id") Long id, Venue entity) {
-        super.edit(entity);
+        try {
+            super.editarVenue(entity);
+        } catch (Exception ex) {
+            Logger.getLogger(VenueFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
+            throw new WebApplicationException(ex,
+                    Response.Status.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @DELETE
