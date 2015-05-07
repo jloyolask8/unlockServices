@@ -26,8 +26,7 @@ import temporal.jpacontrollers.exceptions.RollbackFailureException;
  */
 public abstract class AbstractFacade<T> {
 
-    @Resource
-    protected UserTransaction utx = null;
+    
 
     private Class<T> entityClass;
 
@@ -152,11 +151,12 @@ public abstract class AbstractFacade<T> {
                 }
             }
             throw ex;
-        } finally {
-            if (em != null) {
-                em.close();
-            }
-        }
+        } 
+//        finally {
+////            if (em != null) {
+////                em.close();
+////            }
+//        }
     }
 
 }
