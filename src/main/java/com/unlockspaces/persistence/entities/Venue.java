@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -61,7 +62,7 @@ public class Venue implements Serializable {
     @OneToOne(targetEntity = Organization.class)
     private Organization organization;
 
-    @OneToMany(mappedBy = "venue", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "venue", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Space> spaces;
 
     @OneToOne(targetEntity = Picture.class)

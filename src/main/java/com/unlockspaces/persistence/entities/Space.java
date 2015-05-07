@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -63,7 +64,7 @@ public class Space implements Serializable {
     private Pricing pricing;
     @ManyToMany(targetEntity = Amenity.class)
     private Collection<Amenity> amenitiesAvailable;
-    @OneToOne(targetEntity = Picture.class)
+    @OneToOne(targetEntity = Picture.class, cascade = CascadeType.ALL)
     private Picture frontPhoto;
 
     public Space() {
