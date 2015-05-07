@@ -11,6 +11,8 @@ import com.unlockspaces.persistence.entities.Venue;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Resource;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityManager;
 import javax.transaction.UserTransaction;
 import javax.ws.rs.core.CacheControl;
@@ -91,10 +93,11 @@ public abstract class AbstractFacade<T> {
         return Response.status(status).cacheControl(cc);
     }
 
+    @TransactionAttribute(value = TransactionAttributeType.REQUIRED)
     public void editarVenue(Venue venue) throws NonexistentEntityException, RollbackFailureException, Exception {
         EntityManager em = null;
         try {
-            utx.begin();
+//            utx.begin();
             em = getEntityManager();
             Venue persistentVenue = em.find(Venue.class, venue.getId());
             Usuario createdByOld = persistentVenue.getCreatedBy();
@@ -138,13 +141,9 @@ public abstract class AbstractFacade<T> {
                     }
                 }
             }
-            utx.commit();
+//            utx.commit();
         } catch (Exception ex) {
-            try {
-                utx.rollback();
-            } catch (Exception re) {
-                throw new RollbackFailureException("An error occurred attempting to roll back the transaction.", re);
-            }
+         
             String msg = ex.getLocalizedMessage();
             if (msg == null || msg.length() == 0) {
                 Long id = venue.getId();
