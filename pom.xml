@@ -13,6 +13,27 @@
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
+
+    <profiles>
+        
+        <profile>
+            <id>production</id>
+            <properties>
+                <jta-data-source>jdbc/unlockspaces</jta-data-source>
+                <eclipselink.logging.level.sql>SEVERE</eclipselink.logging.level.sql>
+                <shared-cache-mode>DISABLE_SELECTIVE</shared-cache-mode>
+            </properties>
+        </profile>  
+        
+         <profile>
+            <id>debug</id>
+            <properties>
+                <jta-data-source>jdbc/unlockspaces</jta-data-source>
+                <eclipselink.logging.level.sql>FINE</eclipselink.logging.level.sql>
+                <shared-cache-mode>NONE</shared-cache-mode>
+            </properties>
+        </profile>  
+    </profiles>    
     
     <dependencies>
         <dependency>

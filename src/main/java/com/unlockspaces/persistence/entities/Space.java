@@ -5,8 +5,10 @@ import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
+import javax.persistence.ElementCollection;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -40,8 +42,8 @@ public class Space implements Serializable {
     private Date creationDate;
     @OneToOne(targetEntity = SpaceType.class)
     private SpaceType type;
-    @OneToMany(targetEntity = Picture.class,mappedBy = "space")
-    private Collection<Picture> photos;
+    @ElementCollection(fetch = FetchType.EAGER)
+    private Collection<String> photos;
     @Basic
     private int capacity;
     @OneToOne(targetEntity = SpaceStatus.class)
@@ -64,8 +66,8 @@ public class Space implements Serializable {
     private Pricing pricing;
     @ManyToMany(targetEntity = Amenity.class)
     private Collection<Amenity> amenitiesAvailable;
-    @OneToOne(targetEntity = Picture.class, cascade = CascadeType.ALL)
-    private Picture frontPhoto;
+    @Basic
+    private String frontPhoto;
 
     public Space() {
         this.overview = new Overview();
@@ -132,12 +134,12 @@ public class Space implements Serializable {
         this.type = type;
     }
    
-    @XmlTransient
-    public Collection<Picture> getPhotos() {
+    
+    public Collection<String> getPhotos() {
         return this.photos;
     }
 
-    public void setPhotos(Collection<Picture> photos) {
+    public void setPhotos(Collection<String> photos) {
         this.photos = photos;
     }
    
@@ -157,7 +159,6 @@ public class Space implements Serializable {
         this.spaceStatus = spaceStatus;
     }
    
-    @XmlTransient
     public Collection<SpaceReview> getReviews() {
         return this.reviews;
     }
@@ -214,7 +215,6 @@ public class Space implements Serializable {
         this.pricing = pricing;
     }
    
-    @XmlTransient
     public Collection<Amenity> getAmenitiesAvailable() {
         return this.amenitiesAvailable;
     }
@@ -223,11 +223,11 @@ public class Space implements Serializable {
         this.amenitiesAvailable = amenitiesAvailable;
     }
    
-    public Picture getFrontPhoto() {
+    public String getFrontPhoto() {
         return this.frontPhoto;
     }
 
-    public void setFrontPhoto(Picture frontPhoto) {
+    public void setFrontPhoto(String frontPhoto) {
         this.frontPhoto = frontPhoto;
     }
 }
