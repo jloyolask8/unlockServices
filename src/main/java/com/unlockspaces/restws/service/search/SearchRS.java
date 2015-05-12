@@ -188,26 +188,26 @@ public class SearchRS extends AbstractFacade<Space> {
         return new LinkedList();
     }
     
-    public void updateGeom4326(Space space) {
-        EntityManager em = null;
-        String centerLocation = space.getAddress().getLongitude() + ' ' + space.getAddress().getLatitude();
-        try {
-            em = getEntityManager();
-            //Debug purposes
-            System.out.println("updateGeom4326 title="+space.toString()+" id="+space.getId()+"(" + centerLocation + ")");
-
-            Query query = em.createNativeQuery("UPDATE space\n"
-                    + "   SET geom4326=ST_GeomFromText('POINT(" + centerLocation + ")', 4326)\n"
-                    + " WHERE space.id = "+space.getId());
-            query.executeUpdate();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        } finally {
-//            if (em != null) {
-//                em.close();
-//            }
-        }
-    }
+//    public void updateGeom4326(Space space) {
+//        EntityManager em = null;
+//        String centerLocation = space.getAddress().getLongitude() + ' ' + space.getAddress().getLatitude();
+//        try {
+//            em = getEntityManager();
+//            //Debug purposes
+//            System.out.println("updateGeom4326 title="+space.toString()+" id="+space.getId()+"(" + centerLocation + ")");
+//
+//            Query query = em.createNativeQuery("UPDATE space\n"
+//                    + "   SET geom4326=ST_GeomFromText('POINT(" + centerLocation + ")', 4326)\n"
+//                    + " WHERE space.id = "+space.getId());
+//            query.executeUpdate();
+//        } catch (Exception ex) {
+//            ex.printStackTrace();
+//        } finally {
+////            if (em != null) {
+////                em.close();
+////            }
+//        }
+//    }
 
    
 }
