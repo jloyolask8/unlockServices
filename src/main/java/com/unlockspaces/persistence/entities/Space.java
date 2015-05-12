@@ -31,21 +31,22 @@ public class Space implements Serializable {
     @ManyToOne(targetEntity = Venue.class)
     
     private Venue venue;
-    @Embedded
-    private Address address;
-    @Basic
-    private Double distance;
+    
     @OneToOne(targetEntity = CancelationPolicy.class)
     private CancelationPolicy cancelationPolicy;
     @Temporal(TemporalType.TIMESTAMP)
     @Basic
     private Date creationDate;
+    
     @OneToOne(targetEntity = SpaceType.class)
     private SpaceType type;
+    
     @ElementCollection(fetch = FetchType.EAGER)
     private Collection<String> photos;
+    
     @Basic
     private int capacity;
+    
     @OneToOne(targetEntity = SpaceStatus.class)
     private SpaceStatus spaceStatus;
     @OneToMany(targetEntity = SpaceReview.class,mappedBy = "space")
@@ -72,8 +73,6 @@ public class Space implements Serializable {
     public Space() {
         this.overview = new Overview();
         this.pricing = new Pricing();
-        this.address = new Address();
-        this.distance = 0D;
     }
    
     public Overview getOverview() {
@@ -92,22 +91,6 @@ public class Space implements Serializable {
     
     public void setVenue(Venue venue) {
         this.venue = venue;
-    }
-   
-    public Address getAddress() {
-        return this.address;
-    }
-
-    public void setAddress(Address address) {
-        this.address = address;
-    }
-   
-    public Double getDistance() {
-        return this.distance;
-    }
-
-    public void setDistance(Double distance) {
-        this.distance = distance;
     }
    
     public CancelationPolicy getCancelationPolicy() {
