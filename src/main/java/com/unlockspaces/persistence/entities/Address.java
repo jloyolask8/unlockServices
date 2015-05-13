@@ -3,7 +3,6 @@ package com.unlockspaces.persistence.entities;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Embeddable;
-import javax.persistence.OneToOne;
 
 @Embeddable
 public class Address implements Serializable {

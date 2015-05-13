@@ -29,6 +29,7 @@ public class SearchApplicationConfig extends Application {
      * If required, comment out calling this method in getClasses().
      */
     private void addRestResourceClasses(Set<Class<?>> resources) {
+        resources.add(com.unlockspaces.restws.service.AmenityFacadeREST.class);
         resources.add(com.unlockspaces.restws.service.OrganizationFacadeREST.class);
         resources.add(com.unlockspaces.restws.service.SpaceFacadeREST.class);
         resources.add(com.unlockspaces.restws.service.VenueFacadeREST.class);

@@ -1,6 +1,7 @@
 package com.unlockspaces.persistence.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -14,6 +15,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -60,7 +62,7 @@ public class Venue implements Serializable {
     private String venueLogo;
     @Basic
     private String frontPhoto;
-    
+
     @ManyToOne(targetEntity = Usuario.class)
     private Usuario createdBy;
     @OneToOne(targetEntity = Organization.class)
@@ -79,11 +81,20 @@ public class Venue implements Serializable {
     @XmlTransient
     private Double distance;
 
+    //amenities
+    @ManyToMany(targetEntity = Amenity.class)
+    private Collection<Amenity> amenitiesAvailable;
+
+    //admins
+    @ElementCollection(fetch = FetchType.EAGER)
+    private Collection<VenueAdmin> admins;
+
     public Venue() {
         this.overview = new Overview();
         this.address = new Address();
         this.contactInfo = new ContactInfo();
         this.distance = 0D;
+        this.admins = new ArrayList<>();
     }
 
     public Overview getOverview() {
@@ -166,6 +177,7 @@ public class Venue implements Serializable {
         this.organization = organization;
     }
 
+    @XmlTransient
     public List<Space> getSpaces() {
         return this.spaces;
     }
@@ -237,5 +249,34 @@ public class Venue implements Serializable {
      */
     public void setVenueType(String venueType) {
         this.venueType = venueType;
+    }
+
+    /**
+     * @return the admins
+     */
+    public Collection<VenueAdmin> getAdmins() {
+        return admins;
+    }
+
+    /**
+     * @param admins the admins to set
+     */
+    public void setAdmins(Collection<VenueAdmin> admins) {
+        this.admins = admins;
+    }
+
+    /**
+     * @return the amenitiesAvailable
+     */
+    @XmlTransient
+    public Collection<Amenity> getAmenitiesAvailable() {
+        return amenitiesAvailable;
+    }
+
+    /**
+     * @param amenitiesAvailable the amenitiesAvailable to set
+     */
+    public void setAmenitiesAvailable(Collection<Amenity> amenitiesAvailable) {
+        this.amenitiesAvailable = amenitiesAvailable;
     }
 }

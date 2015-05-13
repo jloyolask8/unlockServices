@@ -16,7 +16,7 @@ import javax.persistence.PersistenceContext;
  */
 @Stateless
 public class IdentityVerificationTypeFacade extends AbstractFacade<IdentityVerificationType> {
-    @PersistenceContext(unitName = "com.unlockspaces_UnlockServices_war_1.0-SNAPSHOTPU")
+    @PersistenceContext(unitName = "unlockspaces")
     private EntityManager em;
 
     @Override

@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.ElementCollection;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -65,8 +64,7 @@ public class Space implements Serializable {
     private SpaceCategory category;
     @Embedded
     private Pricing pricing;
-    @ManyToMany(targetEntity = Amenity.class)
-    private Collection<Amenity> amenitiesAvailable;
+   
     @Basic
     private String frontPhoto;
 
@@ -198,13 +196,7 @@ public class Space implements Serializable {
         this.pricing = pricing;
     }
    
-    public Collection<Amenity> getAmenitiesAvailable() {
-        return this.amenitiesAvailable;
-    }
-
-    public void setAmenitiesAvailable(Collection<Amenity> amenitiesAvailable) {
-        this.amenitiesAvailable = amenitiesAvailable;
-    }
+  
    
     public String getFrontPhoto() {
         return this.frontPhoto;

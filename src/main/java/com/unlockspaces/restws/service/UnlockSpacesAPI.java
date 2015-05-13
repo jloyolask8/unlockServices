@@ -13,7 +13,7 @@ import javax.ws.rs.core.Application;
  * @author jonathan
  */
 @javax.ws.rs.ApplicationPath("api")
-public class ApplicationConfig extends Application {
+public class UnlockSpacesAPI extends Application {
 
     @Override
     public Set<Class<?>> getClasses() {
@@ -33,6 +33,7 @@ public class ApplicationConfig extends Application {
         resources.add(com.unlockspaces.restws.service.OrganizationFacadeREST.class);
         resources.add(com.unlockspaces.restws.service.SpaceFacadeREST.class);
         resources.add(com.unlockspaces.restws.service.VenueFacadeREST.class);
+        resources.add(com.unlockspaces.restws.service.AmenityFacadeREST.class);
     }
     
 }

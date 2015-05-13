@@ -33,7 +33,7 @@ import javax.ws.rs.core.Response;
 @Path("venues")
 public class VenueFacadeREST extends AbstractFacade<Venue> {
 
-    @PersistenceContext(unitName = "com.unlockspaces_UnlockServices_war_1.0-SNAPSHOTPU")
+    @PersistenceContext(unitName = "unlockspaces")
     private EntityManager em;
 
     public VenueFacadeREST() {
