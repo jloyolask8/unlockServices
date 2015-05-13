@@ -43,8 +43,6 @@ public class SearchRS extends AbstractFacade<Space> {
     public SearchRS() {
         super(Space.class);
     }
-    
-    
 
     @Override
     protected EntityManager getEntityManager() {
@@ -76,23 +74,20 @@ public class SearchRS extends AbstractFacade<Space> {
         return getNoCacheResponseBuilder(Response.Status.INTERNAL_SERVER_ERROR).build();
 
     }
-    
+
     @GET
-    @Path("searchVenuesLatLong/{latitude}/{longitude}")
-    @Produces({"application/xml", "application/json"})
-    public List<Venue> searchVenuesLatLong(@PathParam("latitude") String latitude, @PathParam("longitude") String longitude) {
-        //10000 meters setted only for test purposes
-        List<Venue> result = null;
+    @Path("searchVenuesLatLong/{latitude}/{longitude}/{radiometers}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response searchVenuesLatLong(@PathParam("latitude") String latitude, @PathParam("longitude") String longitude,
+            @PathParam("radiometers") int radiometers) {
         try {
-            result = findVenuesOnRadio(latitude, longitude, 10000);
-//        Gson gson= new Gson();
-//        String resultString = gson.toJson(result);
+            return getCacheResponseBuilder(Response.Status.OK).entity(marshallSpace(findVenuesOnRadio(latitude, longitude, radiometers))).build();
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        return result;
+        return getNoCacheResponseBuilder(Response.Status.INTERNAL_SERVER_ERROR).build();
         //Jorge's search here
-    } 
+    }
 
     @GET
     @Path("searchSpacesLatLong/{latitude}/{longitude}/{radiometers}")
@@ -107,8 +102,7 @@ public class SearchRS extends AbstractFacade<Space> {
         return getNoCacheResponseBuilder(Response.Status.INTERNAL_SERVER_ERROR).build();
         //Jorge's search here
     }
-    
-    
+
     public List<Space> findSpacesOnRadio(String lat, String lon, int meters) {
         EntityManager em = null;
         String centerLocation = lon + ' ' + lat;
@@ -158,8 +152,8 @@ public class SearchRS extends AbstractFacade<Space> {
             //**************************/
 
             String findVenuesQuery = "SELECT o.id,o.creationdate,o.lastmodifdate,o.timezone,o.addressonmap,\n"
-                    + "o.latitude,o.line1,o.line2,o.longitude,o.postalcode,o.region,o.city_id_code,\n"
-                    + "o.country_id_code,o.email,o.name,o.phone,o.skype,o.website,o.whatsapp,\n"
+                    + "o.latitude,o.line1,o.line2,o.longitude,o.postalcode,o.region,o.city,\n"
+                    + "o.email,o.name,o.phone,o.skype,o.website,o.whatsapp,\n"
                     + "o.fridayavailabilityoption,o.fridayendtime,o.fridaystarttime,o.mondayavailabilityoption,\n"
                     + "o.mondayendtime,o.mondaystarttime,o.saturdayavailabilityoption,o.saturdayendtime,\n"
                     + "o.saturdaystarttime,o.sundayavailabilityoption,o.sundayendtime,o.sundaystarttime,\n"
@@ -187,7 +181,7 @@ public class SearchRS extends AbstractFacade<Space> {
         }
         return new LinkedList();
     }
-    
+
 //    public void updateGeom4326(Space space) {
 //        EntityManager em = null;
 //        String centerLocation = space.getAddress().getLongitude() + ' ' + space.getAddress().getLatitude();
@@ -208,6 +202,4 @@ public class SearchRS extends AbstractFacade<Space> {
 ////            }
 //        }
 //    }
-
-   
 }
