@@ -17,7 +17,7 @@ import javax.persistence.Query;
  */
 @Stateless
 public class VenueFacade extends AbstractFacade<Venue> {
-    @PersistenceContext(unitName = "com.unlockspaces_UnlockServices_war_1.0-SNAPSHOTPU")
+    @PersistenceContext(unitName = "unlockspaces")
     private EntityManager em;
 
     @Override

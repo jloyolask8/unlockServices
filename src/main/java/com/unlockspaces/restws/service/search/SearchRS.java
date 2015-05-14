@@ -37,7 +37,7 @@ import org.eclipse.persistence.config.QueryHints;
 @Path("findspaces")
 public class SearchRS extends AbstractFacade<Space> {
 
-    @PersistenceContext(unitName = "com.unlockspaces_UnlockServices_war_1.0-SNAPSHOTPU")
+    @PersistenceContext(unitName = "unlockspaces")
     private EntityManager em;
 
     public SearchRS() {

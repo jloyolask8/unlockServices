@@ -16,7 +16,7 @@ import javax.persistence.PersistenceContext;
  */
 @Stateless
 public class ActivityLogFacade extends AbstractFacade<ActivityLog> {
-    @PersistenceContext(unitName = "com.unlockspaces_UnlockServices_war_1.0-SNAPSHOTPU")
+    @PersistenceContext(unitName = "unlockspaces")
     private EntityManager em;
 
     @Override

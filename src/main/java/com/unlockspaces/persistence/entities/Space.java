@@ -38,7 +38,7 @@ public class Space implements Serializable {
     @Basic
     private Date creationDate;
     
-    @OneToOne(targetEntity = SpaceType.class)
+    @OneToOne(targetEntity = SpaceType.class, cascade = CascadeType.MERGE)
     private SpaceType type;
     
     @ElementCollection(fetch = FetchType.EAGER)
@@ -65,8 +65,7 @@ public class Space implements Serializable {
     private SpaceCategory category;
     @Embedded
     private Pricing pricing;
-    @ManyToMany(targetEntity = Amenity.class)
-    private Collection<Amenity> amenitiesAvailable;
+   
     @Basic
     private String frontPhoto;
 
@@ -198,13 +197,7 @@ public class Space implements Serializable {
         this.pricing = pricing;
     }
    
-    public Collection<Amenity> getAmenitiesAvailable() {
-        return this.amenitiesAvailable;
-    }
-
-    public void setAmenitiesAvailable(Collection<Amenity> amenitiesAvailable) {
-        this.amenitiesAvailable = amenitiesAvailable;
-    }
+  
    
     public String getFrontPhoto() {
         return this.frontPhoto;

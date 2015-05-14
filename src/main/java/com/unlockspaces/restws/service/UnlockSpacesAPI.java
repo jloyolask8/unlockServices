@@ -13,7 +13,7 @@ import javax.ws.rs.core.Application;
  * @author jonathan
  */
 @javax.ws.rs.ApplicationPath("api")
-public class ApplicationConfig extends Application {
+public class UnlockSpacesAPI extends Application {
 
     @Override
     public Set<Class<?>> getClasses() {
@@ -23,16 +23,19 @@ public class ApplicationConfig extends Application {
     }
 
     /**
-     * Do not modify addRestResourceClasses() method.
-     * It is automatically populated with
-     * all resources defined in the project.
-     * If required, comment out calling this method in getClasses().
+     * Do not modify addRestResourceClasses() method. It is automatically
+     * populated with all resources defined in the project. If required, comment
+     * out calling this method in getClasses().
      */
     private void addRestResourceClasses(Set<Class<?>> resources) {
         resources.add(com.unlockspaces.restws.service.SpaceFacadeREST.class);
         resources.add(com.unlockspaces.restws.service.OrganizationFacadeREST.class);
         resources.add(com.unlockspaces.restws.service.SpaceFacadeREST.class);
         resources.add(com.unlockspaces.restws.service.VenueFacadeREST.class);
+        resources.add(com.unlockspaces.restws.service.AmenityFacadeREST.class);
+        resources.add(com.unlockspaces.restws.service.VenueTypesFacadeREST.class);
+        resources.add(com.unlockspaces.restws.service.SpaceTypesFacadeREST.class);
+        resources.add(com.unlockspaces.restws.service.CurrencyFacadeREST.class);
     }
-    
+
 }

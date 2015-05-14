@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import org.eclipse.persistence.oxm.annotations.XmlInverseReference;
 
 @Entity
 public class SpaceReview implements Serializable {
@@ -29,6 +30,7 @@ public class SpaceReview implements Serializable {
     private Date lastModifDate;
     @ManyToOne(targetEntity = Usuario.class)
     private Usuario reviewedBy;
+    @XmlInverseReference(mappedBy = "reviews")
     @ManyToOne(targetEntity = Space.class)
     private Space space;
 

@@ -13,7 +13,11 @@ public class Currency implements Serializable {
     public Currency() {
 
     }
-   
+
+    public Currency(String currencyCode) {
+        this.currencyCode = currencyCode;
+    }
+
     public String getCurrencyCode() {
         return this.currencyCode;
     }

@@ -5,7 +5,8 @@
  */
 package com.unlockspaces.restws.service;
 
-import com.unlockspaces.persistence.entities.Organization;
+import com.unlockspaces.persistence.entities.Amenity;
+import com.unlockspaces.persistence.entities.SpaceType;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -24,53 +25,33 @@ import javax.ws.rs.Produces;
  * @author jonathan
  */
 @Stateless
-@Path("organizations")
-public class OrganizationFacadeREST extends AbstractFacade<Organization> {
+@Path("spacetypes")
+public class SpaceTypesFacadeREST extends AbstractFacade<SpaceType> {
     @PersistenceContext(unitName = "unlockspaces")
     private EntityManager em;
 
-    public OrganizationFacadeREST() {
-        super(Organization.class);
-    }
-
-    @POST
-    @Override
-    @Consumes({"application/xml", "application/json"})
-    public void create(Organization entity) {
-        super.create(entity);
-    }
-
-    @PUT
-    @Path("{id}")
-    @Consumes({"application/xml", "application/json"})
-    public void edit(@PathParam("id") Long id, Organization entity) {
-        super.edit(entity);
-    }
-
-    @DELETE
-    @Path("{id}")
-    public void remove(@PathParam("id") Long id) {
-        super.remove(super.find(id));
+    public SpaceTypesFacadeREST() {
+        super(SpaceType.class);
     }
 
     @GET
     @Path("{id}")
     @Produces({"application/xml", "application/json"})
-    public Organization find(@PathParam("id") Long id) {
+    public SpaceType find(@PathParam("id") String id) {
         return super.find(id);
     }
 
     @GET
     @Override
     @Produces({"application/xml", "application/json"})
-    public List<Organization> findAll() {
+    public List<SpaceType> findAll() {
         return super.findAll();
     }
 
     @GET
     @Path("{from}/{to}")
     @Produces({"application/xml", "application/json"})
-    public List<Organization> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
+    public List<SpaceType> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
         return super.findRange(new int[]{from, to});
     }
 
