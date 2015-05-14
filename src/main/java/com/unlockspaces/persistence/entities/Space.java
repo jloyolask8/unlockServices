@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.ElementCollection;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -37,7 +38,7 @@ public class Space implements Serializable {
     @Basic
     private Date creationDate;
     
-    @OneToOne(targetEntity = SpaceType.class)
+    @OneToOne(targetEntity = SpaceType.class, cascade = CascadeType.MERGE)
     private SpaceType type;
     
     @ElementCollection(fetch = FetchType.EAGER)
