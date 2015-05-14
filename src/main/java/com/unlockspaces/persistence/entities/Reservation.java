@@ -20,42 +20,58 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class Reservation implements Serializable {
 
-    @Embedded
-    private PayPalPaymentInfo payPalPaymentInfo;
+    //Reservation IDs should be generated with bussiness logic, TODO change serial to a string
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    //space selected for booking
+    @OneToOne(targetEntity = Space.class)
+    private Space space;
+
+    //  Booking details
+    @Temporal(TemporalType.TIMESTAMP)
     @Basic
-    private String title;
+    private Date startDateTime;
     @Temporal(TemporalType.TIMESTAMP)
     @Basic
     private Date endDateTime;
     @Basic
-    private String creationDate;
+    private String title;
+
     @ElementCollection
     private Collection<String> attendeesEmails;
-    @OneToOne(targetEntity = Space.class)
-    private Space space;
-    @Embedded
-    private CardPaymentInfo cardPaymentInfo;
-    @Temporal(TemporalType.TIMESTAMP)
-    @Basic
-    private Date startDateTime;
-    @ManyToOne(targetEntity = Usuario.class)
-    private Usuario reservedBy;
-    @OneToOne(targetEntity = PaymentMethod.class)
-    private PaymentMethod paymentMethod;
-    @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private Long id;
-    @Basic
-    private String lastModifDate;
+
     @Basic
     private int numberOfPeople;
+
+    //Payment details
+    @OneToOne(targetEntity = PaymentMethod.class)
+    private PaymentMethod paymentMethod;
+    //if selected paypal, here comes the paypal account
+    @Embedded
+    private PayPalPaymentInfo payPalPaymentInfo;
+    //if selected credit card, here comes the card info
+    @Embedded
+    private CardPaymentInfo cardPaymentInfo;
+
     @OneToOne(targetEntity = ReservationStatus.class)
     private ReservationStatus reservationStatus;
+
+    //    Reservation system info
+    @Basic
+    private String creationDate;
+
+    @Basic
+    private String lastModifDate;
+
+    @ManyToOne(targetEntity = Usuario.class)
+    private Usuario reservedBy;
 
     public Reservation() {
 
     }
-   
+
     public PayPalPaymentInfo getPayPalPaymentInfo() {
         return this.payPalPaymentInfo;
     }
@@ -63,7 +79,7 @@ public class Reservation implements Serializable {
     public void setPayPalPaymentInfo(PayPalPaymentInfo payPalPaymentInfo) {
         this.payPalPaymentInfo = payPalPaymentInfo;
     }
-   
+
     public String getTitle() {
         return this.title;
     }
@@ -71,7 +87,7 @@ public class Reservation implements Serializable {
     public void setTitle(String title) {
         this.title = title;
     }
-   
+
     public Date getEndDateTime() {
         return this.endDateTime;
     }
@@ -79,7 +95,7 @@ public class Reservation implements Serializable {
     public void setEndDateTime(Date endDateTime) {
         this.endDateTime = endDateTime;
     }
-   
+
     public String getCreationDate() {
         return this.creationDate;
     }
@@ -87,7 +103,7 @@ public class Reservation implements Serializable {
     public void setCreationDate(String creationDate) {
         this.creationDate = creationDate;
     }
-   
+
     public Collection<String> getAttendeesEmails() {
         return this.attendeesEmails;
     }
@@ -95,7 +111,7 @@ public class Reservation implements Serializable {
     public void setAttendeesEmails(Collection<String> attendeesEmails) {
         this.attendeesEmails = attendeesEmails;
     }
-   
+
     public Space getSpace() {
         return this.space;
     }
@@ -103,7 +119,7 @@ public class Reservation implements Serializable {
     public void setSpace(Space space) {
         this.space = space;
     }
-   
+
     public CardPaymentInfo getCardPaymentInfo() {
         return this.cardPaymentInfo;
     }
@@ -111,7 +127,7 @@ public class Reservation implements Serializable {
     public void setCardPaymentInfo(CardPaymentInfo cardPaymentInfo) {
         this.cardPaymentInfo = cardPaymentInfo;
     }
-   
+
     public Date getStartDateTime() {
         return this.startDateTime;
     }
@@ -119,7 +135,7 @@ public class Reservation implements Serializable {
     public void setStartDateTime(Date startDateTime) {
         this.startDateTime = startDateTime;
     }
-   
+
     public Usuario getReservedBy() {
         return this.reservedBy;
     }
@@ -127,7 +143,7 @@ public class Reservation implements Serializable {
     public void setReservedBy(Usuario reservedBy) {
         this.reservedBy = reservedBy;
     }
-   
+
     public PaymentMethod getPaymentMethod() {
         return this.paymentMethod;
     }
@@ -135,7 +151,7 @@ public class Reservation implements Serializable {
     public void setPaymentMethod(PaymentMethod paymentMethod) {
         this.paymentMethod = paymentMethod;
     }
-   
+
     public Long getId() {
         return this.id;
     }
@@ -143,7 +159,7 @@ public class Reservation implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
-   
+
     public String getLastModifDate() {
         return this.lastModifDate;
     }
@@ -151,7 +167,7 @@ public class Reservation implements Serializable {
     public void setLastModifDate(String lastModifDate) {
         this.lastModifDate = lastModifDate;
     }
-   
+
     public int getNumberOfPeople() {
         return this.numberOfPeople;
     }
@@ -159,7 +175,7 @@ public class Reservation implements Serializable {
     public void setNumberOfPeople(int numberOfPeople) {
         this.numberOfPeople = numberOfPeople;
     }
-   
+
     public ReservationStatus getReservationStatus() {
         return this.reservationStatus;
     }
