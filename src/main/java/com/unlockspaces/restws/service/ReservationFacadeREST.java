@@ -5,7 +5,7 @@
  */
 package com.unlockspaces.restws.service;
 
-import com.unlockspaces.persistence.entities.Space;
+import com.unlockspaces.persistence.entities.Reservation;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -25,54 +25,56 @@ import javax.ws.rs.core.Response;
  * @author jonathan
  */
 @Stateless
-@Path("spaces")
-public class SpaceFacadeREST extends AbstractFacade<Space> {
+@Path("reservations")
+public class ReservationFacadeREST extends AbstractFacade<Reservation> {
 
     @PersistenceContext(unitName = "unlockspaces")
     private EntityManager em;
 
-    public SpaceFacadeREST() {
-        super(Space.class);
+    public ReservationFacadeREST() {
+        super(Reservation.class);
     }
 
     @POST
-    @Override
     @Consumes({"application/xml", "application/json"})
-    public void create(Space entity) {
-        System.out.println("create space!!!");
-        super.create(entity);
-//        super.updateGeom4326(entity);
-    }
-
-    @PUT
-    @Path("{id}")
-    @Consumes({"application/xml", "application/json"})
-    public void edit(@PathParam("id") Integer id, Space entity) {
-        super.edit(entity);
-//        super.updateGeom4326(entity);
-    }
-
-    @DELETE
-    @Path("{id}")
-    public void remove(@PathParam("id") Integer id) {
-        super.remove(super.find(id.longValue()));
-    }
-
-    @GET
-    @Path("{id}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response find(@PathParam("id") Integer id) {
+    public Response createReservation(Reservation entity) {
+        System.out.println("create Reservation!!!");
+        
         try {
-            return getCacheResponseBuilder(Response.Status.OK).entity(super.find(id.longValue())).build();
+            super.create(entity);
+            return getNoCacheResponseBuilder(Response.Status.OK).entity(entity).build();
         } catch (Exception ex) {
             ex.printStackTrace();
         }
         return getNoCacheResponseBuilder(Response.Status.INTERNAL_SERVER_ERROR).build();
     }
 
-    
+    @PUT
+    @Path("{id}")
+    @Consumes({"application/xml", "application/json"})
+    public void edit(@PathParam("id") Long id, Reservation entity) {
+        System.out.println("edit Reservation!!!");
+        super.edit(entity);
+    }
 
-    
+    @DELETE
+    @Path("{id}")
+    public void remove(@PathParam("id") Long id) {
+        System.out.println("cancel Reservation!!!");
+        super.remove(super.find(id));
+    }
+
+    @GET
+    @Path("{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response find(@PathParam("id") Long id) {
+        try {
+            return getCacheResponseBuilder(Response.Status.OK).entity(super.find(id)).build();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return getNoCacheResponseBuilder(Response.Status.INTERNAL_SERVER_ERROR).build();
+    }
 
     @GET
     @Path("count")
@@ -85,7 +87,5 @@ public class SpaceFacadeREST extends AbstractFacade<Space> {
     protected EntityManager getEntityManager() {
         return em;
     }
-    
-   
 
 }

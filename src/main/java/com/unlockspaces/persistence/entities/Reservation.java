@@ -51,9 +51,12 @@ public class Reservation implements Serializable {
     //if selected paypal, here comes the paypal account
     @Embedded
     private PayPalPaymentInfo payPalPaymentInfo;
-    //if selected credit card, here comes the card info
+    //if selected credit_card, here comes the card info
     @Embedded
     private CardPaymentInfo cardPaymentInfo;
+
+    @Basic
+    private String paymentStatus;
 
     @OneToOne(targetEntity = ReservationStatus.class)
     private ReservationStatus reservationStatus;
@@ -182,5 +185,19 @@ public class Reservation implements Serializable {
 
     public void setReservationStatus(ReservationStatus reservationStatus) {
         this.reservationStatus = reservationStatus;
+    }
+
+    /**
+     * @return the paymentStatus
+     */
+    public String getPaymentStatus() {
+        return paymentStatus;
+    }
+
+    /**
+     * @param paymentStatus the paymentStatus to set
+     */
+    public void setPaymentStatus(String paymentStatus) {
+        this.paymentStatus = paymentStatus;
     }
 }

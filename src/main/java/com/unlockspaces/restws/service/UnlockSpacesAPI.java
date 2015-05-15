@@ -36,6 +36,7 @@ public class UnlockSpacesAPI extends Application {
         resources.add(com.unlockspaces.restws.service.VenueTypesFacadeREST.class);
         resources.add(com.unlockspaces.restws.service.SpaceTypesFacadeREST.class);
         resources.add(com.unlockspaces.restws.service.CurrencyFacadeREST.class);
+        resources.add(com.unlockspaces.restws.service.ReservationFacadeREST.class);
     }
 
 }
