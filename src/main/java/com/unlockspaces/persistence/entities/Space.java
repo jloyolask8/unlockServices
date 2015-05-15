@@ -12,14 +12,13 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 import org.eclipse.persistence.oxm.annotations.XmlInverseReference;
 
 @Entity
@@ -28,8 +27,8 @@ public class Space implements Serializable {
 
     @Embedded
     private Overview overview;
-    @ManyToOne(targetEntity = Venue.class)
     
+    @ManyToOne(targetEntity = Venue.class)
     private Venue venue;
     
     @OneToOne(targetEntity = CancelationPolicy.class)
@@ -83,6 +82,7 @@ public class Space implements Serializable {
     }
    
     @XmlInverseReference(mappedBy = "spaces")
+    @XmlElement
     public Venue getVenue() {
         return this.venue;
     }
