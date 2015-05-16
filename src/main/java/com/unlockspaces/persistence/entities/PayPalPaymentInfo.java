@@ -9,8 +9,9 @@ public class PayPalPaymentInfo implements Serializable {
 
     @Basic
     private String payerId;
-    @Basic
-    private String status;
+    
+    //TODO add more fields as needed when using the paypal API
+   
 
     public PayPalPaymentInfo() {
 
@@ -24,11 +25,5 @@ public class PayPalPaymentInfo implements Serializable {
         this.payerId = payerId;
     }
    
-    public String getStatus() {
-        return this.status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
+    
 }

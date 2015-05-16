@@ -21,8 +21,6 @@ public class CardPaymentInfo implements Serializable {
     private String securityCode;
     @Basic
     private String cardNumber;
-    @Basic
-    private String status;
 
     public CardPaymentInfo() {
 
@@ -84,11 +82,5 @@ public class CardPaymentInfo implements Serializable {
         this.cardNumber = cardNumber;
     }
    
-    public String getStatus() {
-        return this.status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
+   
 }
