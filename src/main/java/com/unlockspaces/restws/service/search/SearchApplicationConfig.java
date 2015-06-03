@@ -32,6 +32,7 @@ public class SearchApplicationConfig extends Application {
         resources.add(com.unlockspaces.restws.service.AmenityFacadeREST.class);
         resources.add(com.unlockspaces.restws.service.CurrencyFacadeREST.class);
         resources.add(com.unlockspaces.restws.service.OrganizationFacadeREST.class);
+        resources.add(com.unlockspaces.restws.service.ReservationFacadeREST.class);
         resources.add(com.unlockspaces.restws.service.SpaceFacadeREST.class);
         resources.add(com.unlockspaces.restws.service.SpaceTypesFacadeREST.class);
         resources.add(com.unlockspaces.restws.service.VenueFacadeREST.class);

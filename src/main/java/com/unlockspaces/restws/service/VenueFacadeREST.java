@@ -5,10 +5,15 @@
  */
 package com.unlockspaces.restws.service;
 
+import com.itcs.jpautils.EasyCriteriaQuery;
+import com.unlockspaces.persistence.entities.Reservation;
+import com.unlockspaces.persistence.entities.Reservation_;
+import com.unlockspaces.persistence.entities.Space;
 import com.unlockspaces.persistence.entities.Venue;
 import java.net.URI;
 import java.util.Date;
 import java.util.List;
+import java.util.function.Consumer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.Stateless;
@@ -48,7 +53,7 @@ public class VenueFacadeREST extends AbstractFacade<Venue> {
             entity.setCreationDate(new Date());
             super.create(entity);
 //            long venueId = entity.getId();
-            
+
             return Response.created(URI.create("/#/app/venues/list")).entity(entity).build();
         } catch (Exception e) {
             e.printStackTrace();
@@ -73,8 +78,27 @@ public class VenueFacadeREST extends AbstractFacade<Venue> {
 
     @DELETE
     @Path("{id}")
-    public void remove(@PathParam("id") Long id) {
-        super.remove(super.find(id));
+    public Response remove(@PathParam("id") Long id) {
+        try {
+            Venue venue = super.find(id);
+//            boolean hasReservations = false;
+            if (!venue.getSpaces().isEmpty()) {
+                List<Space> spaces = venue.getSpaces();
+                for (Space space : spaces) {
+                    EasyCriteriaQuery<Reservation> query = new EasyCriteriaQuery<>(em, Reservation.class);
+                    query.addEqualPredicate(Reservation_.space.getName(), space);
+                    Long count = query.count();
+                    if (count > 0) {
+                        return getNoCacheResponseBuilder(Response.Status.OK).entity("El venue tiene spaces con reservations").build();
+                    }
+                }
+            }
+            super.remove(super.find(id));
+            return getCacheResponseBuilder(Response.Status.OK).build();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return getNoCacheResponseBuilder(Response.Status.INTERNAL_SERVER_ERROR).build();
     }
 
     @GET
