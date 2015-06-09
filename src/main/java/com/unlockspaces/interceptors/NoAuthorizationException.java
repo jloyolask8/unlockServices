@@ -9,7 +9,7 @@ package com.unlockspaces.interceptors;
  *
  * @author jonathan
  */
-class NoAuthorizationException extends Exception {
+public class NoAuthorizationException extends Exception {
 
     public NoAuthorizationException(String message) {
         super(message);
