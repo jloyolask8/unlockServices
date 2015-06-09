@@ -11,8 +11,8 @@ public class Address implements Serializable {
 //    private String country;
     @Basic
     private String addressOnMap;
-     @Basic
-    private String city;
+//     @Basic
+//    private String city;
     @Basic
     private String postalCode;
     @Basic
@@ -41,13 +41,13 @@ public class Address implements Serializable {
         this.addressOnMap = addressOnMap;
     }
    
-    public String getCity() {
-        return this.city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
+//    public String getCity() {
+//        return this.city;
+//    }
+//
+//    public void setCity(String city) {
+//        this.city = city;
+//    }
    
     public String getPostalCode() {
         return this.postalCode;

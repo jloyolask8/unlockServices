@@ -37,6 +37,11 @@ public abstract class Person implements Serializable {
     private String lastname;
     @Basic
     private String selfDescription;
+    
+    @Basic
+    private String picture;
+    @Basic
+    private String locale;
 
     public Person() {
 
@@ -120,5 +125,33 @@ public abstract class Person implements Serializable {
 
     public void setSelfDescription(String selfDescription) {
         this.selfDescription = selfDescription;
+    }
+
+    /**
+     * @return the picture
+     */
+    public String getPicture() {
+        return picture;
+    }
+
+    /**
+     * @param picture the picture to set
+     */
+    public void setPicture(String picture) {
+        this.picture = picture;
+    }
+
+    /**
+     * @return the locale
+     */
+    public String getLocale() {
+        return locale;
+    }
+
+    /**
+     * @param locale the locale to set
+     */
+    public void setLocale(String locale) {
+        this.locale = locale;
     }
 }
