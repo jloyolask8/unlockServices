@@ -6,6 +6,8 @@
 package com.unlockspaces.restws.service;
 
 import com.unlockspaces.persistence.entities.Reservation;
+import com.unlockspaces.persistence.entities.Usuario;
+import java.util.Date;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -17,6 +19,8 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -37,10 +41,16 @@ public class ReservationFacadeREST extends AbstractFacade<Reservation> {
 
     @POST
     @Consumes({"application/xml", "application/json"})
-    public Response createReservation(Reservation entity) {
+    public Response createReservation(@Context HttpHeaders headers, Reservation entity) {
         System.out.println("create Reservation!!!");
-        
+        String userID = getLoggedUserId(headers);
+        System.out.println("userID:" + userID);
         try {
+            Usuario findUsuarioByUserId = findUsuarioByUserId(userID);
+
+            System.out.println("entity:" + entity);
+            entity.setCreationDate((new Date()).toString());
+            entity.setReservedBy(findUsuarioByUserId);
             super.create(entity);
             return getNoCacheResponseBuilder(Response.Status.OK).entity(entity).build();
         } catch (Exception ex) {
