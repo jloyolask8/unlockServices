@@ -7,6 +7,7 @@ package com.unlockspaces.restws.service;
 
 import com.itcs.jpautils.EasyCriteriaQuery;
 import com.unlockspaces.persistence.entities.Reservation;
+import com.unlockspaces.persistence.entities.ReservationStatus;
 import com.unlockspaces.persistence.entities.Reservation_;
 import com.unlockspaces.persistence.entities.Space;
 import com.unlockspaces.persistence.entities.Usuario;
@@ -59,6 +60,8 @@ public class ReservationFacadeREST extends AbstractFacade<Reservation> {
             System.out.println("entity:" + entity);
             entity.setCreationDate((new Date()).toString());
             entity.setReservedBy(findUsuarioByUserId);
+            entity.setReservationStatus(ReservationStatus.EnumReservationStatus.APROVED.getReservationStatus());
+            
             super.create(entity);
             return getNoCacheResponseBuilder(Response.Status.OK).entity(entity).build();
         } catch (Exception ex) {
