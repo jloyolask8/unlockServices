@@ -5,13 +5,10 @@
  */
 package com.unlockspaces.restws.service;
 
-<<<<<<< HEAD
 import com.itcs.jpautils.EasyCriteriaQuery;
 import com.unlockspaces.persistence.entities.Reservation;
 import com.unlockspaces.persistence.entities.Reservation_;
 import com.unlockspaces.persistence.entities.Space;
-=======
->>>>>>> branch_jonathan
 import com.unlockspaces.persistence.entities.Usuario;
 import com.unlockspaces.persistence.entities.Venue;
 import java.net.URI;
@@ -23,7 +20,6 @@ import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
