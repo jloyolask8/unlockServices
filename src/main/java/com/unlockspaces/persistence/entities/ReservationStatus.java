@@ -10,6 +10,25 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class ReservationStatus implements Serializable {
 
+    public enum EnumReservationStatus {
+
+        APROVED(new ReservationStatus("APROVED", "APROVED")),
+        PENDING(new ReservationStatus("PENDING", "PENDING")), 
+        REJECTED(new ReservationStatus("REJECTED", "REJECTED")), 
+        CANCELED_BY_USER(new ReservationStatus("CANCELED_BY_USER", "CANCELED_BY_USER")), 
+        CANCELED_BY_OWNER(new ReservationStatus("CANCELED_BY_OWNER", "CANCELED_BY_OWNER"));
+
+        private ReservationStatus reservationStatus;
+
+        EnumReservationStatus(ReservationStatus reservationStatus) {
+            this.reservationStatus = reservationStatus;
+        }
+
+        public ReservationStatus getReservationStatus() {
+            return reservationStatus;
+        }
+    }
+
     @Basic
     private String name;
     @Basic
@@ -17,10 +36,15 @@ public class ReservationStatus implements Serializable {
     @Id
     private String id;
 
+    public ReservationStatus(String id, String name) {
+        this.name = name;
+        this.id = id;
+    }
+
     public ReservationStatus() {
 
     }
-   
+
     public String getName() {
         return this.name;
     }
@@ -28,7 +52,7 @@ public class ReservationStatus implements Serializable {
     public void setName(String name) {
         this.name = name;
     }
-   
+
     public String getDetails() {
         return this.details;
     }
@@ -36,7 +60,7 @@ public class ReservationStatus implements Serializable {
     public void setDetails(String details) {
         this.details = details;
     }
-   
+
     public String getId() {
         return this.id;
     }
