@@ -1,6 +1,7 @@
 package com.unlockspaces.persistence.entities;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -71,7 +72,18 @@ public class Reservation implements Serializable {
     @OneToOne(targetEntity = ReservationStatus.class)
     private ReservationStatus reservationStatus;
 
-   
+    //    Reservation system info
+    @Basic
+    private String creationDate;
+
+    @Basic
+    private String lastModifDate;
+    
+    @Basic
+    private BigDecimal paymentAmount;
+    
+    @Basic
+    private BigDecimal paymentVat;
 
     @ManyToOne(targetEntity = Usuario.class)
     private Usuario reservedBy;
@@ -207,16 +219,30 @@ public class Reservation implements Serializable {
     }
 
     /**
-     * @return the expirationDate
+     * @return the paymentAmount
      */
-    public Date getExpirationDate() {
-        return expirationDate;
+    public BigDecimal getPaymentAmount() {
+        return paymentAmount;
     }
 
     /**
-     * @param expirationDate the expirationDate to set
+     * @param paymentAmount the paymentAmount to set
      */
-    public void setExpirationDate(Date expirationDate) {
-        this.expirationDate = expirationDate;
+    public void setPaymentAmount(BigDecimal paymentAmount) {
+        this.paymentAmount = paymentAmount;
+    }
+
+    /**
+     * @return the paymentVat
+     */
+    public BigDecimal getPaymentVat() {
+        return paymentVat;
+    }
+
+    /**
+     * @param paymentVat the paymentVat to set
+     */
+    public void setPaymentVat(BigDecimal paymentVat) {
+        this.paymentVat = paymentVat;
     }
 }
