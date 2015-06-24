@@ -60,7 +60,7 @@ public class ReservationFacadeREST extends AbstractFacade<Reservation> {
             System.out.println("entity:" + entity);
             entity.setCreationDate((new Date()).toString());
             entity.setReservedBy(findUsuarioByUserId);
-            entity.setReservationStatus(ReservationStatus.EnumReservationStatus.APROVED.getReservationStatus());
+            entity.setReservationStatus(ReservationStatus.EnumReservationStatus.APPROVED.getReservationStatus());
             
             super.create(entity);
             return getNoCacheResponseBuilder(Response.Status.OK).entity(entity).build();

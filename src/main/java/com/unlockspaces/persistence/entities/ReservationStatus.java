@@ -12,7 +12,7 @@ public class ReservationStatus implements Serializable {
 
     public enum EnumReservationStatus {
 
-        APROVED(new ReservationStatus("APROVED", "APROVED")),
+        APPROVED(new ReservationStatus("APPROVED", "APPROVED")),
         PENDING(new ReservationStatus("PENDING", "PENDING")), 
         REJECTED(new ReservationStatus("REJECTED", "REJECTED")), 
         CANCELED_BY_USER(new ReservationStatus("CANCELED_BY_USER", "CANCELED_BY_USER")), 
