@@ -71,7 +71,7 @@ public class CancelationPolicyJpaController implements Serializable {
             }
             String msg = ex.getLocalizedMessage();
             if (msg == null || msg.length() == 0) {
-                Long id = cancelationPolicy.getId();
+                String id = cancelationPolicy.getId();
                 if (findCancelationPolicy(id) == null) {
                     throw new NonexistentEntityException("The cancelationPolicy with id " + id + " no longer exists.");
                 }
@@ -136,7 +136,7 @@ public class CancelationPolicyJpaController implements Serializable {
         }
     }
 
-    public CancelationPolicy findCancelationPolicy(Long id) {
+    public CancelationPolicy findCancelationPolicy(String id) {
         EntityManager em = getEntityManager();
         try {
             return em.find(CancelationPolicy.class, id);

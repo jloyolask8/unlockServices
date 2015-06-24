@@ -14,6 +14,7 @@ import com.unlockspaces.persistence.entities.Usuario;
 import com.unlockspaces.persistence.entities.Venue;
 import com.unlockspaces.persistence.entities.Venue_;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -32,6 +33,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  *
@@ -54,20 +56,55 @@ public class ReservationFacadeREST extends AbstractFacade<Reservation> {
         System.out.println("create Reservation!!!");
         String userID = getLoggedUserId(headers);
         System.out.println("userID:" + userID);
+        System.out.println("entity:" + entity);
         try {
+
             Usuario findUsuarioByUserId = findUsuarioByUserId(userID);
 
-            System.out.println("entity:" + entity);
-            entity.setCreationDate((new Date()).toString());
-            entity.setReservedBy(findUsuarioByUserId);
-            entity.setReservationStatus(ReservationStatus.EnumReservationStatus.APROVED.getReservationStatus());
+            if (findUsuarioByUserId != null) {
+                if (!StringUtils.isEmpty(findUsuarioByUserId.getPicture())
+                        && findUsuarioByUserId.isEmailVerified()) {
+
+                    entity.setCreationDate((new Date()).toString());
+                    entity.setReservedBy(findUsuarioByUserId);
+
+                    if (entity.getSpace().isInstantBooking()) {
+                        entity.setReservationStatus(ReservationStatus.EnumReservationStatus.ACCEPTED.getReservationStatus());
+                        //TODO send an confirmation email, and set this reservation booked if payment is successful
+                    } else {
+                        //needs confirmation, in case no confirmation is received by the owner in 24 hours we must Reject the request
+                        entity.setReservationStatus(ReservationStatus.EnumReservationStatus.PENDING.getReservationStatus());
+                        long day = 24 * 60 * 60 * 1000;
+                        Date today = Calendar.getInstance().getTime();
+                        today = new Date(today.getTime() + day);
+                        entity.setExpirationDate(today);
+                    }
+
+                    //TODO: 1. send emails, notifications.
+                    //TODO: 2. schedule events for expiration day.
+            /* Si despues de 24 horas  se cancela el booking cualquier monto
+                     que U.S. a recolectado seran devueltos al clients.
             
-            super.create(entity);
-            return getNoCacheResponseBuilder(Response.Status.OK).entity(entity).build();
+                     *En caso del booking se confirme el cliente recivibra un correo y
+                     un mensaje via de app confirmando el booking, esto lo puede 
+                     elejir el cliente en la app (Settings)
+                     */
+                    super.create(entity);
+                    return getNoCacheResponseBuilder(Response.Status.OK).entity(entity).build();
+
+                } else {
+                    //ask the user to verify its picture and email!
+                }
+            } else {
+                //for some reason the used entered is not in our database
+
+            }
+
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        return getNoCacheResponseBuilder(Response.Status.INTERNAL_SERVER_ERROR).build();
+
+        return getNoCacheResponseBuilder(Response.Status.PRECONDITION_FAILED).build();
     }
 
     @PUT
@@ -132,7 +169,7 @@ public class ReservationFacadeREST extends AbstractFacade<Reservation> {
             for (Venue venue : venuesList) {
                 for (Space space : venue.getSpaces()) {
                     EasyCriteriaQuery<Reservation> queryReservations = new EasyCriteriaQuery<>(em, Reservation.class);
-                    queryReservations.addEqualPredicate(Reservation_.space.getName(),space);
+                    queryReservations.addEqualPredicate(Reservation_.space.getName(), space);
                     reservationsList.addAll(queryReservations.getAllResultList());
                 }
             }

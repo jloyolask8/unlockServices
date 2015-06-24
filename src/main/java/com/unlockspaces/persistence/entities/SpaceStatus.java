@@ -10,6 +10,23 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class SpaceStatus implements Serializable {
 
+    public enum EnumSpaceStatus {
+
+        PUBLISHED(new SpaceStatus("PUBLISHED", "PUBLISHED", "")),
+        PENDING(new SpaceStatus("PENDING", "PENDING", "")), 
+        REJECTED(new SpaceStatus("REJECTED", "REJECTED", ""));
+
+        private SpaceStatus spaceStatus;
+
+        EnumSpaceStatus(SpaceStatus s) {
+            this.spaceStatus = s;
+        }
+
+        public SpaceStatus getSpaceStatus() {
+            return spaceStatus;
+        }
+    }
+    
     @Basic
     private String name;
     @Basic
@@ -20,6 +37,14 @@ public class SpaceStatus implements Serializable {
     public SpaceStatus() {
 
     }
+
+    public SpaceStatus(String id, String name, String details) {
+        this.name = name;
+        this.details = details;
+        this.id = id;
+    }
+    
+    
    
     public String getName() {
         return this.name;
