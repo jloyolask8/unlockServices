@@ -37,6 +37,16 @@ public class Reservation implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     @Basic
     private Date endDateTime;
+     //Reservation system info
+    @Basic
+    private String creationDate;
+
+    @Basic
+    private String lastModifDate;
+    
+    @Basic
+    private Date expirationDate;
+    
     @Basic
     private String title;
 

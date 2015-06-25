@@ -25,48 +25,61 @@ import org.eclipse.persistence.oxm.annotations.XmlInverseReference;
 @XmlRootElement
 public class Space implements Serializable {
 
+    @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    private Long id;
+    
+    @Basic
+    private boolean instantBooking;
+     
     @Embedded
     private Overview overview;
     
     @ManyToOne(targetEntity = Venue.class)
     private Venue venue;
     
-    @OneToOne(targetEntity = CancelationPolicy.class)
-    private CancelationPolicy cancelationPolicy;
-    @Temporal(TemporalType.TIMESTAMP)
-    @Basic
-    private Date creationDate;
-    
-    @OneToOne(targetEntity = SpaceType.class, cascade = CascadeType.MERGE)
+     @OneToOne(targetEntity = SpaceType.class, cascade = CascadeType.MERGE)
     private SpaceType type;
     
+      @Basic
+    private String frontPhoto;
+      
     @ElementCollection(fetch = FetchType.EAGER)
     private Collection<String> photos;
     
     @Basic
     private int capacity;
     
-    @OneToOne(targetEntity = SpaceStatus.class)
-    private SpaceStatus spaceStatus;
-    @OneToMany(targetEntity = SpaceReview.class,mappedBy = "space")
-    private Collection<SpaceReview> reviews;
     @ManyToOne(targetEntity = Usuario.class)
     private Usuario createdBy;
-    @OneToOne(targetEntity = ReservationMethod.class)
-    private ReservationMethod reservationMethod;
-    @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private Long id;
+    
+    @Temporal(TemporalType.TIMESTAMP)
+    @Basic
+    private Date creationDate;
+    
     @Temporal(TemporalType.TIMESTAMP)
     @Basic
     private Date lastModifDate;
+    
+    @OneToOne(targetEntity = SpaceStatus.class)
+    private SpaceStatus spaceStatus;
+    
+    @OneToOne(targetEntity = CancelationPolicy.class)
+    private CancelationPolicy cancelationPolicy;
+    //todo
+     @OneToMany(targetEntity = SpaceReview.class,mappedBy = "space")
+    private Collection<SpaceReview> reviews;
+    //todo
+    @OneToOne(targetEntity = ReservationMethod.class)
+    private ReservationMethod reservationMethod;
+    //todo
     @OneToOne(targetEntity = SpaceCategory.class)
     private SpaceCategory category;
+    //
     @Embedded
     private Pricing pricing;
    
-    @Basic
-    private String frontPhoto;
+   
 
     public Space() {
         this.overview = new Overview();
@@ -205,5 +218,19 @@ public class Space implements Serializable {
 
     public void setFrontPhoto(String frontPhoto) {
         this.frontPhoto = frontPhoto;
+    }
+
+    /**
+     * @return the instantBooking
+     */
+    public boolean isInstantBooking() {
+        return instantBooking;
+    }
+
+    /**
+     * @param instantBooking the instantBooking to set
+     */
+    public void setInstantBooking(boolean instantBooking) {
+        this.instantBooking = instantBooking;
     }
 }

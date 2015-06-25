@@ -5,7 +5,7 @@
  */
 package com.unlockspaces.restws.service;
 
-import com.unlockspaces.persistence.entities.SpaceType;
+import com.unlockspaces.persistence.entities.CancelationPolicy;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -20,36 +20,36 @@ import javax.ws.rs.Produces;
  * @author jonathan
  */
 @Stateless
-@Path("spacetypes")
-public class SpaceTypesFacadeREST extends AbstractFacade<SpaceType> {
+@Path("cp")
+public class CancelationPolicyTypesFacadeREST extends AbstractFacade<CancelationPolicy> {
     @PersistenceContext(unitName = "unlockspaces")
     private EntityManager em;
 
-    public SpaceTypesFacadeREST() {
-        super(SpaceType.class);
+    public CancelationPolicyTypesFacadeREST() {
+        super(CancelationPolicy.class);
     }
 
     @GET
     @Path("{id}")
     @Produces({"application/xml", "application/json"})
-    public SpaceType find(@PathParam("id") String id) {
+    public CancelationPolicy find(@PathParam("id") Long id) {
         return super.find(id);
     }
 
     @GET
     @Override
     @Produces({"application/xml", "application/json"})
-    public List<SpaceType> findAll() {
-        System.out.println("SpaceTypesFacadeREST.findAll()");
-        final List<SpaceType> findAll = super.findAll();
-        System.out.println("Done with SpaceTypesFacadeREST.findAll() found " + findAll.size() + " elements.");
+    public List<CancelationPolicy> findAll() {
+        System.out.println("CancelationPolicy.findAll()");
+        final List<CancelationPolicy> findAll = super.findAll();
+        System.out.println("Done with CancelationPolicy.findAll() found " + findAll.size() + " elements.");
         return findAll;
     }
 
     @GET
     @Path("{from}/{to}")
     @Produces({"application/xml", "application/json"})
-    public List<SpaceType> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
+    public List<CancelationPolicy> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
         return super.findRange(new int[]{from, to});
     }
 

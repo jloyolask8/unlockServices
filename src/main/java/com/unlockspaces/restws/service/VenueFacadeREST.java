@@ -6,6 +6,7 @@
 package com.unlockspaces.restws.service;
 
 import com.itcs.jpautils.EasyCriteriaQuery;
+import com.unlockspaces.jpautils.OrderBy;
 import com.unlockspaces.persistence.entities.Reservation;
 import com.unlockspaces.persistence.entities.Reservation_;
 import com.unlockspaces.persistence.entities.Space;
@@ -133,7 +134,7 @@ public class VenueFacadeREST extends AbstractFacade<Venue> {
 //            final Usuario usuarioFromSession = getUsuarioFromSession(request);
 //            Usuario usuarioFromHeader = getUsuarioFromHeader(headers);
 
-            final List<Venue> findVenuesByUser = findVenuesByUser(findUsuarioByUserId, null);
+            final List<Venue> findVenuesByUser = findVenuesByUser(findUsuarioByUserId, new OrderBy("creationDate", OrderBy.OrderType.ASC));
             return findVenuesByUser;
         } catch (Exception e) {
             e.printStackTrace();

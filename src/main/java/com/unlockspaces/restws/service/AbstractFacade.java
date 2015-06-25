@@ -11,6 +11,7 @@ import com.auth0.jwt.JWTVerifyException;
 import com.unlockspaces.interceptors.JWTFilter;
 import com.unlockspaces.interceptors.NoAuthorizationException;
 import com.unlockspaces.jpautils.OrderBy;
+import com.unlockspaces.persistence.entities.Identity;
 import com.unlockspaces.persistence.entities.Space;
 import com.unlockspaces.persistence.entities.Usuario;
 import com.unlockspaces.persistence.entities.Venue;
@@ -21,6 +22,7 @@ import java.security.NoSuchAlgorithmException;
 import java.security.SignatureException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -40,6 +42,9 @@ import javax.ws.rs.core.Response;
 import org.apache.commons.codec.binary.Base64;
 import temporal.jpacontrollers.exceptions.NonexistentEntityException;
 import temporal.jpacontrollers.exceptions.RollbackFailureException;
+import us.monoid.json.JSONArray;
+import us.monoid.json.JSONException;
+import us.monoid.json.JSONObject;
 
 /**
  *
@@ -142,7 +147,9 @@ public abstract class AbstractFacade<T> {
         Usuario usuario = null;
         try {
             //findByUserId.userId
-            usuario = (Usuario) getEntityManager().createNamedQuery("Usuario.findByUserId").setParameter("userId", userId).getSingleResult();
+            usuario = (Usuario) getEntityManager()
+                    .createNamedQuery("Usuario.findByUserId").setParameter("userId", userId)
+                    .getSingleResult();
         } catch (javax.persistence.NoResultException no) {
             Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "Usuario not found for email/id: {0}", userId);
         }
@@ -154,55 +161,55 @@ public abstract class AbstractFacade<T> {
      * To get a user we rely on the authorization header set by auth0.com This
      * method will check if the user exists in the database. have a Users table,
      * that would have a copy of each user coming from Auth0, without passwords
-     * of course?. Every time a users logs in, you would search that user if it
-     * does not exist, insert it, if it does, update all the fields, essentially
-     * keeping a local copy of the user data.
+     * of course??? well passwords are needed for those users that singed up
+     * without a social provider identity. Every time a users logs in, you would
+     * search that user - if it does not exist, we save it, if it does exists,
+     * we update all the fields. Essentially, we are just keeping a local copy
+     * of the user data.
      *
-     * @param req
-     * @return
+     * @param usuario
+     * @param userData
      */
-//    public Usuario getUsuarioFromSession(javax.servlet.http.HttpServletRequest req) {
-//       
-//        Auth0User userData = Auth0User.get(req);
-//        
-//        System.out.println("userData:" + userData);
-//        final String userId = (String) userData.getEmail();//We will use the email as the id for the user
-//
-//        Usuario usuario;
-//        try {
-//            usuario = (Usuario) getEntityManager().createNamedQuery("Usuario.findByEmail").setParameter("email", userId).getSingleResult();
-//        } catch (javax.persistence.NoResultException no) {
-//            Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "Usuario not found for email/id: {0}", userId);
-//            usuario = null;
-//        }
-//
-//        if (usuario == null) {
-//            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-//            usuario = new Usuario();
-//            usuario.setCreationDate(sdf.format(new Date()));
-//            usuario.setUserId(userId);
-//            usuario.setUsername(userData.getNickname());
-//            setUserData(usuario, userData);
-//
-//            getEntityManager().persist(usuario);
-//        } else {
-//            setUserData(usuario, userData);
-//            usuario = getEntityManager().merge(usuario);
-//        }
-//
-//        return usuario;
-//    }
-//
     protected void setUserData(Usuario usuario, final Auth0User userData) {
         usuario.setEmail(userData.getEmail());
         usuario.setUsername(userData.getEmail());
         usuario.setPicture(userData.getPicture());
-        usuario.setCreationDate((String) userData.getProperty("created_at"));
+        usuario.setCreationDate(userData.getProperty("created_at"));
 
-        usuario.setGenre((String) userData.getProperty("gender"));
-        usuario.setLastname((String) userData.getProperty("family_name"));
-        usuario.setName((String) userData.getProperty("given_name"));
-        usuario.setLocale((String) userData.getProperty("locale"));
+        usuario.setGenre(userData.getProperty("gender"));
+        usuario.setName(userData.getProperty("given_name"));
+        usuario.setLastname(userData.getProperty("family_name"));
+
+        usuario.setLocale(userData.getProperty("locale"));
+        final Boolean email_verified = userData.get("email_verified", Boolean.class);
+        usuario.setEmailVerified(email_verified);
+
+        final JSONArray identities = userData.getIdentities();
+
+        Collection<Identity> identitiesCollection = new ArrayList(identities.length());
+        
+        //Check the identity provider(s), to save them in our db.
+        for (int i = 0; i < identities.length(); i++) {
+            try {
+                Identity identity = new Identity();
+                final JSONObject jsonObject = identities.getJSONObject(i);
+
+                identity.setProvider((String) jsonObject.get("provider"));
+                identity.setAccessToken((String) jsonObject.get("access_token"));
+                identity.setIsSocial(jsonObject.getBoolean("isSocial"));
+                identity.setConnection((String) jsonObject.get("connection"));
+                identity.setUserId((String) jsonObject.get("user_id"));
+                
+                identitiesCollection.add(identity);
+
+            } catch (JSONException ex) {
+                Logger.getLogger(AbstractFacade.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        }
+        
+        usuario.setIdentities(identitiesCollection);
+
     }
 
     /**

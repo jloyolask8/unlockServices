@@ -3,8 +3,10 @@ package com.unlockspaces.persistence.entities;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -38,8 +40,7 @@ public class Usuario extends Person implements Serializable {
     private Collection<Reservation> reservations;
     @ManyToOne(targetEntity = Organization.class)
     private Organization organization;
-    @ManyToMany(targetEntity = IdentityVerificationType.class)
-    private Collection<IdentityVerificationType> identityVerificationTypes;
+    
     @Basic
     private String creationDate;
     @Basic
@@ -48,8 +49,16 @@ public class Usuario extends Person implements Serializable {
     private Collection<Space> spacesListed;
     @Basic
     private String email;
+
+    @Basic
+    @Column(name = "email_verified")
+    private boolean emailVerified;
+
     @Basic
     private String username;
+    
+    @ElementCollection(fetch = FetchType.EAGER)
+    private Collection<Identity> identities;
 
     public Usuario() {
 
@@ -107,15 +116,6 @@ public class Usuario extends Person implements Serializable {
         this.organization = organization;
     }
 
-    @XmlTransient
-    public Collection<IdentityVerificationType> getIdentityVerificationTypes() {
-        return this.identityVerificationTypes;
-    }
-
-    public void setIdentityVerificationTypes(Collection<IdentityVerificationType> identityVerificationTypes) {
-        this.identityVerificationTypes = identityVerificationTypes;
-    }
-
     public String getCreationDate() {
         return this.creationDate;
     }
@@ -169,5 +169,33 @@ public class Usuario extends Person implements Serializable {
      */
     public void setUserId(String userId) {
         this.userId = userId;
+    }
+
+    /**
+     * @return the emailVerified
+     */
+    public boolean isEmailVerified() {
+        return emailVerified;
+    }
+
+    /**
+     * @param emailVerified the emailVerified to set
+     */
+    public void setEmailVerified(boolean emailVerified) {
+        this.emailVerified = emailVerified;
+    }
+
+    /**
+     * @return the identities
+     */
+    public Collection<Identity> getIdentities() {
+        return identities;
+    }
+
+    /**
+     * @param identities the identities to set
+     */
+    public void setIdentities(Collection<Identity> identities) {
+        this.identities = identities;
     }
 }

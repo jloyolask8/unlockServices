@@ -188,7 +188,7 @@ public class CancelationPolicyController implements Serializable {
         return JsfUtil.getSelectItems(ejbFacade.findAll(), true);
     }
 
-    public CancelationPolicy getCancelationPolicy(java.lang.Long id) {
+    public CancelationPolicy getCancelationPolicy(String id) {
         return ejbFacade.find(id);
     }
 
@@ -202,20 +202,20 @@ public class CancelationPolicyController implements Serializable {
             }
             CancelationPolicyController controller = (CancelationPolicyController) facesContext.getApplication().getELResolver().
                     getValue(facesContext.getELContext(), null, "cancelationPolicyController");
-            return controller.getCancelationPolicy(getKey(value));
+            return controller.getCancelationPolicy(value);
         }
 
-        java.lang.Long getKey(String value) {
-            java.lang.Long key;
-            key = Long.valueOf(value);
-            return key;
-        }
-
-        String getStringKey(java.lang.Long value) {
-            StringBuilder sb = new StringBuilder();
-            sb.append(value);
-            return sb.toString();
-        }
+//        java.lang.Long getKey(String value) {
+//            java.lang.Long key;
+//            key = Long.valueOf(value);
+//            return key;
+//        }
+//
+//        String getStringKey(java.lang.Long value) {
+//            StringBuilder sb = new StringBuilder();
+//            sb.append(value);
+//            return sb.toString();
+//        }
 
         @Override
         public String getAsString(FacesContext facesContext, UIComponent component, Object object) {
@@ -224,7 +224,7 @@ public class CancelationPolicyController implements Serializable {
             }
             if (object instanceof CancelationPolicy) {
                 CancelationPolicy o = (CancelationPolicy) object;
-                return getStringKey(o.getId());
+                return o.getId();
             } else {
                 throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: " + CancelationPolicy.class.getName());
             }
