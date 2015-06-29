@@ -45,6 +45,7 @@ public class Reservation implements Serializable {
     private String lastModifDate;
     
     @Basic
+    @Temporal(TemporalType.TIMESTAMP)
     private Date expirationDate;
     
     @Basic
@@ -71,13 +72,6 @@ public class Reservation implements Serializable {
 
     @OneToOne(targetEntity = ReservationStatus.class)
     private ReservationStatus reservationStatus;
-
-    //    Reservation system info
-    @Basic
-    private String creationDate;
-
-    @Basic
-    private String lastModifDate;
     
     @Basic
     private BigDecimal paymentAmount;
@@ -244,5 +238,19 @@ public class Reservation implements Serializable {
      */
     public void setPaymentVat(BigDecimal paymentVat) {
         this.paymentVat = paymentVat;
+    }
+    
+    /**
+     * @return the expirationDate
+     */
+    public Date getExpirationDate() {
+        return expirationDate;
+    }
+
+    /**
+     * @param expirationDate the expirationDate to set
+     */
+    public void setExpirationDate(Date expirationDate) {
+        this.expirationDate = expirationDate;
     }
 }
