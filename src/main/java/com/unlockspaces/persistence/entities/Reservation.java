@@ -56,6 +56,12 @@ public class Reservation implements Serializable {
 
     @Basic
     private int numberOfPeople;
+    
+    @Basic
+    private int duration;
+    
+    @Basic
+    private String durationUnit;
 
     //Payment details
     @OneToOne(targetEntity = PaymentMethod.class)
@@ -252,5 +258,33 @@ public class Reservation implements Serializable {
      */
     public void setExpirationDate(Date expirationDate) {
         this.expirationDate = expirationDate;
+    }
+
+    /**
+     * @return the duration
+     */
+    public int getDuration() {
+        return duration;
+    }
+
+    /**
+     * @param duration the duration to set
+     */
+    public void setDuration(int duration) {
+        this.duration = duration;
+    }
+
+    /**
+     * @return the durationUnit
+     */
+    public String getDurationUnit() {
+        return durationUnit;
+    }
+
+    /**
+     * @param durationUnit the durationUnit to set
+     */
+    public void setDurationUnit(String durationUnit) {
+        this.durationUnit = durationUnit;
     }
 }
