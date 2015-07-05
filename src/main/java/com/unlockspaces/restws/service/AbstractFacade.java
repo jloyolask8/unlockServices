@@ -40,6 +40,7 @@ import javax.ws.rs.core.CacheControl;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Response;
 import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.lang3.StringUtils;
 import temporal.jpacontrollers.exceptions.NonexistentEntityException;
 import temporal.jpacontrollers.exceptions.RollbackFailureException;
 import us.monoid.json.JSONArray;
@@ -171,23 +172,74 @@ public abstract class AbstractFacade<T> {
      * @param userData
      */
     protected void setUserData(Usuario usuario, final Auth0User userData) {
-        usuario.setEmail(userData.getEmail());
-        usuario.setUsername(userData.getEmail());
-        usuario.setPicture(userData.getPicture());
-        usuario.setCreationDate(userData.getProperty("created_at"));
 
-        usuario.setGenre(userData.getProperty("gender"));
-        usuario.setName(userData.getProperty("given_name"));
-        usuario.setLastname(userData.getProperty("family_name"));
+        if (StringUtils.isEmpty(usuario.getUsername())) {
+            usuario.setUsername(userData.getNickname());
+        }
+        if (StringUtils.isEmpty(usuario.getPicture())) {
+            usuario.setPicture(userData.getPicture());
+        }
 
-        usuario.setLocale(userData.getProperty("locale"));
-        final Boolean email_verified = userData.get("email_verified", Boolean.class);
-        usuario.setEmailVerified(email_verified);
+        try {
+            if (StringUtils.isEmpty(usuario.getEmail())) {
+                usuario.setEmail(userData.getEmail());
+            }
+        } catch (Exception e) {
+            System.out.println("email not found");
+        }
+
+        try {
+            if (StringUtils.isEmpty(usuario.getGenre())) {
+                final String emailv = (String) userData.getProperty("email_verified");
+                final Boolean email_verified = Boolean.valueOf(emailv);
+                usuario.setEmailVerified(email_verified);
+            }
+        } catch (Exception e) {
+            System.out.println("email_verified not found");
+        }
+
+        try {
+            if (StringUtils.isEmpty(usuario.getGenre())) {
+                usuario.setGenre((String) userData.getProperty("gender"));
+            }
+        } catch (Exception e) {
+            System.out.println("gender not found");
+        }
+        try {
+            if (StringUtils.isEmpty(usuario.getLastname())) {
+                usuario.setLastname((String) userData.getProperty("family_name"));
+            }
+        } catch (Exception e) {
+            System.out.println("family_name not found");
+        }
+        try {
+            if (StringUtils.isEmpty(usuario.getName())) {
+                usuario.setName((String) userData.getProperty("given_name"));
+            }
+        } catch (Exception e) {
+            System.out.println("given_name not found");
+        }
+
+        try {
+            if (StringUtils.isEmpty(usuario.getLocale())) {
+                usuario.setLocale((String) userData.getProperty("locale"));
+            }
+        } catch (Exception e) {
+            System.out.println("locale not found");
+        }
+
+        try {
+            if (StringUtils.isEmpty(usuario.getCreationDate())) {
+                usuario.setCreationDate(userData.getProperty("created_at"));
+            }
+        } catch (Exception e) {
+            System.out.println("locale not found");
+        }
 
         final JSONArray identities = userData.getIdentities();
 
         Collection<Identity> identitiesCollection = new ArrayList(identities.length());
-        
+
         //Check the identity provider(s), to save them in our db.
         for (int i = 0; i < identities.length(); i++) {
             try {
@@ -199,7 +251,7 @@ public abstract class AbstractFacade<T> {
                 identity.setIsSocial(jsonObject.getBoolean("isSocial"));
                 identity.setConnection((String) jsonObject.get("connection"));
                 identity.setUserId((String) jsonObject.get("user_id"));
-                
+
                 identitiesCollection.add(identity);
 
             } catch (JSONException ex) {
@@ -207,7 +259,7 @@ public abstract class AbstractFacade<T> {
             }
 
         }
-        
+
         usuario.setIdentities(identitiesCollection);
 
     }

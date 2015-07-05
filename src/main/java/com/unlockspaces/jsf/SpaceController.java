@@ -81,20 +81,20 @@ public class SpaceController implements Serializable {
         return "Create";
     }
 
-    public String create() {
-        try {
-            //getFacade().create(current);
-            String BASE_URI = "http://localhost:8090/unlockServices/api";
-            Client client = javax.ws.rs.client.ClientBuilder.newClient();
-            WebTarget webTarget = client.target(BASE_URI).path("spaces");
-            webTarget.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).post(javax.ws.rs.client.Entity.entity(current, javax.ws.rs.core.MediaType.APPLICATION_JSON));
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("SpaceCreated"));
-            return prepareCreate();
-        } catch (Exception e) {
-            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
-            return null;
-        }
-    }
+//    public String create() {
+//        try {
+//            //getFacade().create(current);
+//            String BASE_URI = "http://localhost:8090/unlockServices/api";
+//            Client client = javax.ws.rs.client.ClientBuilder.newClient();
+//            WebTarget webTarget = client.target(BASE_URI).path("spaces");
+//            webTarget.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).post(javax.ws.rs.client.Entity.entity(current, javax.ws.rs.core.MediaType.APPLICATION_JSON));
+//            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("SpaceCreated"));
+//            return prepareCreate();
+//        } catch (Exception e) {
+//            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
+//            return null;
+//        }
+//    }
 
     public String prepareEdit() {
         current = (Space) getItems().getRowData();
