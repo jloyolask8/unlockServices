@@ -223,4 +223,11 @@ public class Usuario extends Person implements Serializable {
     public void setIdentities(Collection<Identity> identities) {
         this.identities = identities;
     }
+
+    @Override
+    public String toString() {
+        return "Usuario{" + "userId=" + userId + ", email=" + email + '}';
+    }
+    
+    
 }

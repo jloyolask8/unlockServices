@@ -20,74 +20,7 @@
                     <h:commandLink action="#{spaceController.previous}" value="#{bundle.Previous} #{spaceController.pagination.pageSize}" rendered="#{spaceController.pagination.hasPreviousPage}"/>&nbsp;
                     <h:commandLink action="#{spaceController.next}" value="#{bundle.Next} #{spaceController.pagination.pageSize}" rendered="#{spaceController.pagination.hasNextPage}"/>&nbsp;
                     <h:dataTable value="#{spaceController.items}" var="item" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" style="border:solid 1px">
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListSpaceTitle_overview}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.overview}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListSpaceTitle_venue}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.venue}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListSpaceTitle_address}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.address}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListSpaceTitle_distance}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.distance}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListSpaceTitle_cancelationPolicy}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.cancelationPolicy}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListSpaceTitle_creationDate}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.creationDate}">
-                                <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
-                            </h:outputText>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListSpaceTitle_type}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.type}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListSpaceTitle_capacity}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.capacity}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListSpaceTitle_spaceStatus}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.spaceStatus}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListSpaceTitle_createdBy}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.createdBy}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListSpaceTitle_reservationMethod}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.reservationMethod}"/>
-                        </h:column>
+                      
                         <h:column>
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListSpaceTitle_id}"/>
@@ -96,30 +29,50 @@
                         </h:column>
                         <h:column>
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListSpaceTitle_lastModifDate}"/>
+                                <h:outputText value="#{bundle.ListSpaceTitle_overview}"/>
                             </f:facet>
-                            <h:outputText value="#{item.lastModifDate}">
+                            <h:outputText value="#{item.overview.title}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListSpaceTitle_venue}"/>
+                            </f:facet>
+                            <h:outputLink target="_blank" value="http://www.unlockspaces.com/#/app/venues/#{item.venue.id}/preview">preview</h:outputLink>
+                        </h:column>
+                        
+                        
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListSpaceTitle_creationDate}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.creationDate}">
                                 <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
                             </h:outputText>
                         </h:column>
+                        
+                        
                         <h:column>
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListSpaceTitle_category}"/>
+                                <h:outputText value="#{bundle.ListSpaceTitle_createdBy}"/>
                             </f:facet>
-                            <h:outputText value="#{item.category}"/>
+                            <h:outputText value="#{item.createdBy}"/>
                         </h:column>
+                       
                         <h:column>
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListSpaceTitle_pricing}"/>
+                                <h:outputText value="#{bundle.ListSpaceTitle_spaceStatus}"/>
                             </f:facet>
-                            <h:outputText value="#{item.pricing}"/>
+                            <h:outputText value="#{item.spaceStatus}"/>
                         </h:column>
+                        
                         <h:column>
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListSpaceTitle_frontPhoto}"/>
+                                <h:outputText value="Status change"/>
                             </f:facet>
-                            <h:outputText value="#{item.frontPhoto}"/>
+                            <h:commandLink rendered="#{item.spaceStatus.id eq 'PENDING'}" action="#{spaceController.publishSpace()}" value="PUBLISH"/>
+                           
                         </h:column>
+                        
                         <h:column>
                             <f:facet name="header">
                                 <h:outputText value="&nbsp;"/>

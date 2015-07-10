@@ -10,6 +10,7 @@ import com.unlockspaces.jpautils.OrderBy;
 import com.unlockspaces.persistence.entities.Reservation;
 import com.unlockspaces.persistence.entities.Reservation_;
 import com.unlockspaces.persistence.entities.Space;
+import com.unlockspaces.persistence.entities.SpaceStatus;
 import com.unlockspaces.persistence.entities.Usuario;
 import com.unlockspaces.persistence.entities.Venue;
 import java.net.URI;
@@ -83,6 +84,17 @@ public class VenueFacadeREST extends AbstractFacade<Venue> {
     @Consumes({"application/xml", "application/json"})
     public void edit(@PathParam("id") Long id, Venue entity) {
         try {
+            for (Space space : entity.getSpaces()) {
+                if(space.getCreationDate() == null){
+                    space.setCreationDate(new Date());
+                }
+                
+                if(space.getSpaceStatus() == null){
+                    space.setSpaceStatus(SpaceStatus.EnumSpaceStatus.PENDING.getSpaceStatus());
+                }
+                    
+                    
+            }
             super.edit(entity);
         } catch (Exception ex) {
             Logger.getLogger(VenueFacadeREST.class.getName()).log(Level.SEVERE, null, ex);

@@ -4,6 +4,7 @@ import com.unlockspaces.persistence.entities.Space;
 import com.unlockspaces.jsf.util.JsfUtil;
 import com.unlockspaces.jsf.util.PaginationHelper;
 import com.unlockspaces.ejb.SpaceFacade;
+import com.unlockspaces.persistence.entities.SpaceStatus;
 
 import java.io.Serializable;
 import java.util.ResourceBundle;
@@ -67,6 +68,19 @@ public class SpaceController implements Serializable {
     public String prepareList() {
         recreateModel();
         return "List";
+    }
+    
+    public String publishSpace() {
+        try{
+        current = (Space) getItems().getRowData();
+        selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
+        current.setSpaceStatus(SpaceStatus.EnumSpaceStatus.PUBLISHED.getSpaceStatus());
+        getFacade().edit(current);
+        JsfUtil.addSuccessMessage("space was published successfully!");
+        }catch(Exception e){
+            JsfUtil.addErrorMessage(e.getClass().getName());
+        }
+        return null;
     }
 
     public String prepareView() {

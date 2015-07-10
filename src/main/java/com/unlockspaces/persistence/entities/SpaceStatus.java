@@ -69,4 +69,11 @@ public class SpaceStatus implements Serializable {
     public void setId(String id) {
         this.id = id;
     }
+
+    @Override
+    public String toString() {
+        return "SpaceStatus{" + "name=" + name + '}';
+    }
+    
+    
 }
