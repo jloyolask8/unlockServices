@@ -23,20 +23,16 @@ public class SearchApplicationConfig extends Application {
     }
 
     /**
-     * Do not modify addRestResourceClasses() method.
-     * It is automatically populated with
-     * all resources defined in the project.
-     * If required, comment out calling this method in getClasses().
+     * Do not modify addRestResourceClasses() method. It is automatically
+     * populated with all resources defined in the project. If required, comment
+     * out calling this method in getClasses().
      */
     private void addRestResourceClasses(Set<Class<?>> resources) {
         resources.add(com.unlockspaces.restws.service.AmenityFacadeREST.class);
         resources.add(com.unlockspaces.restws.service.CancelationPolicyTypesFacadeREST.class);
         resources.add(com.unlockspaces.restws.service.CurrencyFacadeREST.class);
-<<<<<<< HEAD
         resources.add(com.unlockspaces.restws.service.MailTemplateFacadeREST.class);
-=======
         resources.add(com.unlockspaces.restws.service.NotificationsFacadeREST.class);
->>>>>>> branch_jonathan
         resources.add(com.unlockspaces.restws.service.OrganizationFacadeREST.class);
         resources.add(com.unlockspaces.restws.service.ReservationFacadeREST.class);
         resources.add(com.unlockspaces.restws.service.SpaceFacadeREST.class);
@@ -46,5 +42,5 @@ public class SearchApplicationConfig extends Application {
         resources.add(com.unlockspaces.restws.service.VenueTypesFacadeREST.class);
         resources.add(com.unlockspaces.restws.service.search.SearchRS.class);
     }
-    
+
 }

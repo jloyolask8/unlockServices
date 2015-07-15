@@ -21,10 +21,7 @@ import com.unlockspaces.persistence.entities.Identity;
 import com.unlockspaces.persistence.entities.MailTemplate;
 import com.unlockspaces.persistence.entities.Space;
 import com.unlockspaces.persistence.entities.UserNotification;
-<<<<<<< HEAD
-=======
 import com.unlockspaces.persistence.entities.UserNotification_;
->>>>>>> branch_jonathan
 import com.unlockspaces.persistence.entities.Usuario;
 import com.unlockspaces.persistence.entities.Venue;
 import com.unlockspaces.persistence.entities.Venue_;
