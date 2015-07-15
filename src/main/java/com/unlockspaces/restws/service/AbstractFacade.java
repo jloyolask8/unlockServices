@@ -8,11 +8,19 @@ package com.unlockspaces.restws.service;
 import com.auth0.Auth0User;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.JWTVerifyException;
+import com.microtripit.mandrillapp.lutung.MandrillApi;
+import com.microtripit.mandrillapp.lutung.model.MandrillApiError;
+import com.microtripit.mandrillapp.lutung.view.MandrillMessage;
+import com.microtripit.mandrillapp.lutung.view.MandrillMessageStatus;
+import com.microtripit.mandrillapp.lutung.view.MandrillTemplate;
 import com.unlockspaces.interceptors.JWTFilter;
 import com.unlockspaces.interceptors.NoAuthorizationException;
 import com.unlockspaces.jpautils.OrderBy;
+import com.unlockspaces.jsf.util.TaskExecutor;
 import com.unlockspaces.persistence.entities.Identity;
+import com.unlockspaces.persistence.entities.MailTemplate;
 import com.unlockspaces.persistence.entities.Space;
+import com.unlockspaces.persistence.entities.UserNotification;
 import com.unlockspaces.persistence.entities.Usuario;
 import com.unlockspaces.persistence.entities.Venue;
 import com.unlockspaces.persistence.entities.Venue_;
@@ -25,6 +33,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
@@ -64,6 +73,59 @@ public abstract class AbstractFacade<T> {
         jwtVerifier = new JWTVerifier(
                 new Base64(true).decodeBase64(JWTFilter.AUTH0_CLIENT_SECRET),
                 JWTFilter.AUTH0_CLIENT_ID);
+    }
+    
+    public void sendNotification(final Usuario usuario, MailTemplate templateId, final String notificationDetail, final String notificationTitle) throws MandrillApiError, IOException {
+        final MailTemplate templateIdFromDB = getEntityManager().find(MailTemplate.class, templateId.getName());
+        TaskExecutor.submitTask(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    sendNotif(usuario, templateIdFromDB, notificationDetail, notificationTitle);
+                } catch (MandrillApiError ex) {
+                    Logger.getLogger(AbstractFacade.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (IOException ex) {
+                    Logger.getLogger(AbstractFacade.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        });
+    }
+    
+    private void sendNotif(Usuario usuario, MailTemplate templateId, String notificationDetail, String notificationTitle) throws MandrillApiError, IOException {
+        
+        MandrillApi mandrillApi = new MandrillApi("-pOrmLXkRDWIQBOsPSAIwQ");
+// create your message
+        MandrillMessage message = new MandrillMessage();
+        MandrillTemplate template = mandrillApi.templates().info(templateId.getTemplate());
+        Map<String, String> map = new HashMap<>();
+        map.put("test", "test");
+        String messageHtml = mandrillApi.templates().render(templateId.getTemplate(), map, new HashMap<String, String>());
+        message.setSubject(template.getSubject());
+        message.setHtml(messageHtml);
+        message.setAutoText(true);
+        message.setFromEmail(template.getFromEmail());
+        message.setFromName(template.getFromName());
+        ArrayList<MandrillMessage.Recipient> recipients = new ArrayList<>();
+        MandrillMessage.Recipient recipient = new MandrillMessage.Recipient();
+        recipient.setEmail(usuario.getEmail());
+        recipient.setName(usuario.getName()+" "+usuario.getLastname());
+        recipients.add(recipient);
+        message.setTo(recipients);
+        message.setPreserveRecipients(true);
+
+        MandrillMessageStatus[] messageStatusReports = mandrillApi
+                .messages().send(message, true);
+        createNotification(notificationDetail, usuario, notificationTitle);
+    }
+
+    private void createNotification(String notificationDetail, Usuario usuario, String notificationTitle) {
+        UserNotification notification = new UserNotification();
+        notification.setCreationDate(new Date());
+        notification.setDetails(notificationDetail);
+        notification.setRead(false);
+        notification.setTargetUser(usuario);
+        notification.setTitle(notificationTitle);
+        getEntityManager().persist(notification);
     }
 
     protected List<Venue> findVenuesByUser(Usuario user, OrderBy orderBy) {

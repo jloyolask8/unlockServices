@@ -6,6 +6,7 @@
 package com.unlockspaces.restws.service;
 
 import com.itcs.jpautils.EasyCriteriaQuery;
+import com.unlockspaces.persistence.entities.MailTemplate;
 import com.unlockspaces.persistence.entities.Reservation;
 import com.unlockspaces.persistence.entities.ReservationStatus;
 import com.unlockspaces.persistence.entities.Reservation_;
@@ -15,6 +16,8 @@ import com.unlockspaces.persistence.entities.Venue;
 import com.unlockspaces.persistence.entities.Venue_;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -78,6 +81,7 @@ public class ReservationFacadeREST extends AbstractFacade<Reservation> {
                         Date today = Calendar.getInstance().getTime();
                         today = new Date(today.getTime() + day);
                         entity.setExpirationDate(today);
+
                     }
 
                     //TODO: 1. send emails, notifications.
@@ -89,6 +93,8 @@ public class ReservationFacadeREST extends AbstractFacade<Reservation> {
                      un mensaje via de app confirmando el booking, esto lo puede 
                      elejir el cliente en la app (Settings)
                      */
+                    sendNotification(entity.getSpace().getVenue().getCreatedBy(),
+                            MailTemplate.MailTemplateEnum.RENT_REQUEST.getMailTemplate(),"Rent Request Notification", "Rent Request");
                     super.create(entity);
                     return getNoCacheResponseBuilder(Response.Status.OK).entity(entity).build();
 
@@ -106,6 +112,8 @@ public class ReservationFacadeREST extends AbstractFacade<Reservation> {
 
         return getNoCacheResponseBuilder(Response.Status.PRECONDITION_FAILED).build();
     }
+
+    
 
     @PUT
     @Path("{id}")
@@ -173,6 +181,12 @@ public class ReservationFacadeREST extends AbstractFacade<Reservation> {
                     reservationsList.addAll(queryReservations.getAllResultList());
                 }
             }
+            Collections.sort(reservationsList, new Comparator<Reservation>() {
+                @Override
+                public int compare(Reservation o1, Reservation o2) {
+                    return (int) (o2.getId() - o1.getId());
+                }
+            });
             return reservationsList;
         } catch (Exception ex) {
             ex.printStackTrace();
