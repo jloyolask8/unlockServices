@@ -212,7 +212,7 @@ public class Venue implements Serializable {
 
     @Override
     public String toString() {
-        return "Venue{" + "overview=" + overview + ", address=" + address + ", contactInfo=" + contactInfo + ", timezone=" + timezone + ", hoursOfOperation=" + hoursOfOperation + ", creationDate=" + creationDate + ", distance=" + distance + ", photos=" + photos + ", venueLogo=" + venueLogo + ", createdBy=" + createdBy + ", organization=" + organization + ", spaces=" + spaces + ", id=" + id + ", lastModifDate=" + lastModifDate + ", frontPhoto=" + frontPhoto + '}';
+        return "Venue{id=" + id + "-" + getOverview().getTitle() + '}';
     }
 
     @Override

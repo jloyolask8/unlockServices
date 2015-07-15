@@ -11,6 +11,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -40,7 +41,7 @@ public class Usuario extends Person implements Serializable {
     private Collection<Reservation> reservations;
     @ManyToOne(targetEntity = Organization.class)
     private Organization organization;
-    
+
     @Basic
     private String creationDate;
     @Basic
@@ -56,9 +57,15 @@ public class Usuario extends Person implements Serializable {
 
     @Basic
     private String username;
-    
+
     @ElementCollection(fetch = FetchType.EAGER)
     private Collection<Identity> identities;
+
+    @Transient
+    private Integer spacesQty;
+
+    @Transient
+    private Integer venuesQty;
 
     public Usuario() {
 
@@ -79,6 +86,24 @@ public class Usuario extends Person implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public int getVenuesQty() {
+        return this.venuesListed != null ? this.venuesListed.size() : 0;
+    }
+
+    public void setVenuesQty() {
+    }
+
+    public void setSpacesQty() {
+    }
+
+    public int getSpacesQty() {
+        int qty = 0;
+        for (Venue venuesListed1 : this.venuesListed) {
+            qty = qty + (venuesListed1.getSpaces() != null ? venuesListed1.getSpaces().size() : 0);
+        }
+        return this.venuesListed != null ? this.venuesListed.size() : 0;
     }
 
     @XmlTransient
@@ -198,4 +223,11 @@ public class Usuario extends Person implements Serializable {
     public void setIdentities(Collection<Identity> identities) {
         this.identities = identities;
     }
+
+    @Override
+    public String toString() {
+        return "Usuario{" + "userId=" + userId + ", email=" + email + '}';
+    }
+    
+    
 }

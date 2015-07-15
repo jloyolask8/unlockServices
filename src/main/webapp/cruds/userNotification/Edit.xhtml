@@ -26,9 +26,12 @@
                         <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
                     </h:inputText>
                     <h:outputLabel value="#{bundle.EditUserNotificationLabel_targetUser}" for="targetUser" />
-                    <h:selectOneMenu id="targetUser" value="#{userNotificationController.selected.targetUser}" title="#{bundle.EditUserNotificationTitle_targetUser}" >
-                        <f:selectItems value="#{usuarioController.itemsAvailableSelectOne}"/>
+                    
+                    <h:selectOneMenu id="targetUser" value="#{userNotificationController.selected.targetUser}" >
+                        <f:selectItems value="#{usuarioController.itemsAvailable}" var="user" itemLabel="#{user.email}" itemValue="#{user}"/>
                     </h:selectOneMenu>
+                    
+                   
                 </h:panelGrid>
                 <h:commandLink action="#{userNotificationController.update}" value="#{bundle.EditUserNotificationSaveLink}"/>
                 <br />

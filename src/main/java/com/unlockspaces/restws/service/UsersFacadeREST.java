@@ -7,6 +7,7 @@ package com.unlockspaces.restws.service;
 
 import com.auth0.Auth0User;
 import com.unlockspaces.persistence.entities.Usuario;
+import com.unlockspaces.persistence.entities.Venue;
 import java.net.URI;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -14,8 +15,11 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.HttpHeaders;
@@ -37,11 +41,23 @@ public class UsersFacadeREST extends AbstractFacade<Usuario> {
         super(Usuario.class);
     }
 
+    @GET
+    @Path("{id}")
+    @Produces({"application/xml", "application/json"})
+    public Response find(@PathParam("id") String userId) {
+        final Usuario findUsuarioByUserId = findUsuarioByUserId(userId);
+        if (findUsuarioByUserId != null) {
+            return Response.accepted(findUsuarioByUserId).build();
+        } else {
+            return Response.noContent().build();
+        }
+    }
+
     @POST
     @Consumes({"application/xml", "application/json"})
     public Response saveOrEditUser(@Context HttpHeaders headers, String entity) {
 
-        System.out.println("saveOrEditUser:"+entity);
+        System.out.println("saveOrEditUser:" + entity);
 //        Usuario usuarioFromHeader = getUsuarioFromHeader(headers);
         String userID = getLoggedUserId(headers);
         System.out.println("userID:" + userID);
@@ -57,8 +73,6 @@ public class UsersFacadeREST extends AbstractFacade<Usuario> {
             System.out.println("userData:" + userData);
 
             Usuario findUsuarioByUserId = findUsuarioByUserId(userID);
-            
-            
 
             if (findUsuarioByUserId != null) {
                 //merge
@@ -71,7 +85,7 @@ public class UsersFacadeREST extends AbstractFacade<Usuario> {
                 findUsuarioByUserId = new Usuario();
                 findUsuarioByUserId.setUserId(userID);
                 setUserData(findUsuarioByUserId, userData);
-                
+
                 super.create(findUsuarioByUserId);
             }
 

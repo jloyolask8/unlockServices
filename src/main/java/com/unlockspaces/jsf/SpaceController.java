@@ -4,6 +4,7 @@ import com.unlockspaces.persistence.entities.Space;
 import com.unlockspaces.jsf.util.JsfUtil;
 import com.unlockspaces.jsf.util.PaginationHelper;
 import com.unlockspaces.ejb.SpaceFacade;
+import com.unlockspaces.persistence.entities.SpaceStatus;
 
 import java.io.Serializable;
 import java.util.ResourceBundle;
@@ -68,6 +69,19 @@ public class SpaceController implements Serializable {
         recreateModel();
         return "List";
     }
+    
+    public String publishSpace() {
+        try{
+        current = (Space) getItems().getRowData();
+        selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
+        current.setSpaceStatus(SpaceStatus.EnumSpaceStatus.PUBLISHED.getSpaceStatus());
+        getFacade().edit(current);
+        JsfUtil.addSuccessMessage("space was published successfully!");
+        }catch(Exception e){
+            JsfUtil.addErrorMessage(e.getClass().getName());
+        }
+        return null;
+    }
 
     public String prepareView() {
         current = (Space) getItems().getRowData();
@@ -81,20 +95,20 @@ public class SpaceController implements Serializable {
         return "Create";
     }
 
-    public String create() {
-        try {
-            //getFacade().create(current);
-            String BASE_URI = "http://localhost:8090/unlockServices/api";
-            Client client = javax.ws.rs.client.ClientBuilder.newClient();
-            WebTarget webTarget = client.target(BASE_URI).path("spaces");
-            webTarget.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).post(javax.ws.rs.client.Entity.entity(current, javax.ws.rs.core.MediaType.APPLICATION_JSON));
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("SpaceCreated"));
-            return prepareCreate();
-        } catch (Exception e) {
-            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
-            return null;
-        }
-    }
+//    public String create() {
+//        try {
+//            //getFacade().create(current);
+//            String BASE_URI = "http://localhost:8090/unlockServices/api";
+//            Client client = javax.ws.rs.client.ClientBuilder.newClient();
+//            WebTarget webTarget = client.target(BASE_URI).path("spaces");
+//            webTarget.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).post(javax.ws.rs.client.Entity.entity(current, javax.ws.rs.core.MediaType.APPLICATION_JSON));
+//            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("SpaceCreated"));
+//            return prepareCreate();
+//        } catch (Exception e) {
+//            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
+//            return null;
+//        }
+//    }
 
     public String prepareEdit() {
         current = (Space) getItems().getRowData();

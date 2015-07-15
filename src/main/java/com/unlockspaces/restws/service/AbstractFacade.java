@@ -21,6 +21,10 @@ import com.unlockspaces.persistence.entities.Identity;
 import com.unlockspaces.persistence.entities.MailTemplate;
 import com.unlockspaces.persistence.entities.Space;
 import com.unlockspaces.persistence.entities.UserNotification;
+<<<<<<< HEAD
+=======
+import com.unlockspaces.persistence.entities.UserNotification_;
+>>>>>>> branch_jonathan
 import com.unlockspaces.persistence.entities.Usuario;
 import com.unlockspaces.persistence.entities.Venue;
 import com.unlockspaces.persistence.entities.Venue_;
@@ -44,11 +48,13 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.ws.rs.core.CacheControl;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Response;
 import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.lang3.StringUtils;
 import temporal.jpacontrollers.exceptions.NonexistentEntityException;
 import temporal.jpacontrollers.exceptions.RollbackFailureException;
 import us.monoid.json.JSONArray;
@@ -126,6 +132,36 @@ public abstract class AbstractFacade<T> {
         notification.setTargetUser(usuario);
         notification.setTitle(notificationTitle);
         getEntityManager().persist(notification);
+    }
+
+    protected List<UserNotification> findUnreadNotificationsByUser(Usuario user) {
+        System.out.println("findUnreadNotificationsByUser:" + user);
+        try {
+
+            if (user != null) {
+                CriteriaBuilder criteriaBuilder = getEntityManager().getCriteriaBuilder();
+                CriteriaQuery criteriaQuery = criteriaBuilder.createQuery(UserNotification.class);
+                Root root = criteriaQuery.from(UserNotification.class);
+                Predicate equalUser = criteriaBuilder.equal(root.get(UserNotification_.targetUser), user);
+                Predicate unread = criteriaBuilder.equal(root.get(UserNotification_.read), false);
+
+                criteriaQuery.where(criteriaBuilder.and(equalUser, unread));
+                criteriaQuery.orderBy(criteriaBuilder.desc(root.get(UserNotification_.creationDate.getName())));
+                Query q = getEntityManager().createQuery(criteriaQuery);
+
+//            if (!all) {
+                q.setMaxResults(10);
+                q.setFirstResult(0);
+//            }
+                return q.getResultList();
+            }
+
+        } catch (Exception ex) {
+            Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, ex.getMessage());
+        }
+
+        return Collections.EMPTY_LIST;
+
     }
 
     protected List<Venue> findVenuesByUser(Usuario user, OrderBy orderBy) {
@@ -233,23 +269,74 @@ public abstract class AbstractFacade<T> {
      * @param userData
      */
     protected void setUserData(Usuario usuario, final Auth0User userData) {
-        usuario.setEmail(userData.getEmail());
-        usuario.setUsername(userData.getEmail());
-        usuario.setPicture(userData.getPicture());
-        usuario.setCreationDate(userData.getProperty("created_at"));
 
-        usuario.setGenre(userData.getProperty("gender"));
-        usuario.setName(userData.getProperty("given_name"));
-        usuario.setLastname(userData.getProperty("family_name"));
+        if (StringUtils.isEmpty(usuario.getUsername())) {
+            usuario.setUsername(userData.getNickname());
+        }
+        if (StringUtils.isEmpty(usuario.getPicture())) {
+            usuario.setPicture(userData.getPicture());
+        }
 
-        usuario.setLocale(userData.getProperty("locale"));
-        final Boolean email_verified = userData.get("email_verified", Boolean.class);
-        usuario.setEmailVerified(email_verified);
+        try {
+            if (StringUtils.isEmpty(usuario.getEmail())) {
+                usuario.setEmail(userData.getEmail());
+            }
+        } catch (Exception e) {
+            System.out.println("email not found");
+        }
+
+        try {
+            if (StringUtils.isEmpty(usuario.getGenre())) {
+                final String emailv = (String) userData.getProperty("email_verified");
+                final Boolean email_verified = Boolean.valueOf(emailv);
+                usuario.setEmailVerified(email_verified);
+            }
+        } catch (Exception e) {
+            System.out.println("email_verified not found");
+        }
+
+        try {
+            if (StringUtils.isEmpty(usuario.getGenre())) {
+                usuario.setGenre((String) userData.getProperty("gender"));
+            }
+        } catch (Exception e) {
+            System.out.println("gender not found");
+        }
+        try {
+            if (StringUtils.isEmpty(usuario.getLastname())) {
+                usuario.setLastname((String) userData.getProperty("family_name"));
+            }
+        } catch (Exception e) {
+            System.out.println("family_name not found");
+        }
+        try {
+            if (StringUtils.isEmpty(usuario.getName())) {
+                usuario.setName((String) userData.getProperty("given_name"));
+            }
+        } catch (Exception e) {
+            System.out.println("given_name not found");
+        }
+
+        try {
+            if (StringUtils.isEmpty(usuario.getLocale())) {
+                usuario.setLocale((String) userData.getProperty("locale"));
+            }
+        } catch (Exception e) {
+            System.out.println("locale not found");
+        }
+
+        try {
+            if (StringUtils.isEmpty(usuario.getCreationDate())) {
+                usuario.setCreationDate(userData.getProperty("created_at"));
+            }
+        } catch (Exception e) {
+            System.out.println("locale not found");
+        }
 
         final JSONArray identities = userData.getIdentities();
 
         Collection<Identity> identitiesCollection = new ArrayList(identities.length());
-        
+
         //Check the identity provider(s), to save them in our db.
         for (int i = 0; i < identities.length(); i++) {
             try {
@@ -261,7 +348,7 @@ public abstract class AbstractFacade<T> {
                 identity.setIsSocial(jsonObject.getBoolean("isSocial"));
                 identity.setConnection((String) jsonObject.get("connection"));
                 identity.setUserId((String) jsonObject.get("user_id"));
-                
+
                 identitiesCollection.add(identity);
 
             } catch (JSONException ex) {
@@ -269,7 +356,7 @@ public abstract class AbstractFacade<T> {
             }
 
         }
-        
+
         usuario.setIdentities(identitiesCollection);
 
     }

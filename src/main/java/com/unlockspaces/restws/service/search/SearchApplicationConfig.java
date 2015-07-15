@@ -32,7 +32,11 @@ public class SearchApplicationConfig extends Application {
         resources.add(com.unlockspaces.restws.service.AmenityFacadeREST.class);
         resources.add(com.unlockspaces.restws.service.CancelationPolicyTypesFacadeREST.class);
         resources.add(com.unlockspaces.restws.service.CurrencyFacadeREST.class);
+<<<<<<< HEAD
         resources.add(com.unlockspaces.restws.service.MailTemplateFacadeREST.class);
+=======
+        resources.add(com.unlockspaces.restws.service.NotificationsFacadeREST.class);
+>>>>>>> branch_jonathan
         resources.add(com.unlockspaces.restws.service.OrganizationFacadeREST.class);
         resources.add(com.unlockspaces.restws.service.ReservationFacadeREST.class);
         resources.add(com.unlockspaces.restws.service.SpaceFacadeREST.class);
