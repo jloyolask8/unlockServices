@@ -40,9 +40,9 @@
                     <h:outputLabel value="#{bundle.EditSpaceLabel_capacity}" for="capacity" />
                     <h:inputText id="capacity" styleClass="form-control" value="#{spaceController.selected.capacity}" title="#{bundle.EditSpaceTitle_capacity}" />
                     <h:outputLabel value="#{bundle.EditSpaceLabel_spaceStatus}" for="spaceStatus" />
-                    <h:selectOneMenu id="spaceStatus" value="#{spaceController.selected.spaceStatus}" title="#{bundle.EditSpaceTitle_spaceStatus}" >
-                        <f:selectItems value="#{spaceStatusController.itemsAvailableSelectOne}"/>
-                    </h:selectOneMenu>
+                    <h:outputLabel id="spaceStatus" value="#{spaceController.selected.spaceStatus}" title="#{bundle.EditSpaceTitle_spaceStatus}" >
+                    </h:outputLabel>
+                    
                     <h:outputLabel value="#{bundle.EditSpaceLabel_createdBy}" for="createdBy" />
                     <h:selectOneMenu id="createdBy" value="#{spaceController.selected.createdBy}" title="#{bundle.EditSpaceTitle_createdBy}" >
                         <f:selectItems value="#{usuarioController.itemsAvailableSelectOne}"/>

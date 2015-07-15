@@ -13,6 +13,8 @@ import com.unlockspaces.interceptors.NoAuthorizationException;
 import com.unlockspaces.jpautils.OrderBy;
 import com.unlockspaces.persistence.entities.Identity;
 import com.unlockspaces.persistence.entities.Space;
+import com.unlockspaces.persistence.entities.UserNotification;
+import com.unlockspaces.persistence.entities.UserNotification_;
 import com.unlockspaces.persistence.entities.Usuario;
 import com.unlockspaces.persistence.entities.Venue;
 import com.unlockspaces.persistence.entities.Venue_;
@@ -35,6 +37,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.ws.rs.core.CacheControl;
 import javax.ws.rs.core.HttpHeaders;
@@ -65,6 +68,36 @@ public abstract class AbstractFacade<T> {
         jwtVerifier = new JWTVerifier(
                 new Base64(true).decodeBase64(JWTFilter.AUTH0_CLIENT_SECRET),
                 JWTFilter.AUTH0_CLIENT_ID);
+    }
+
+    protected List<UserNotification> findUnreadNotificationsByUser(Usuario user) {
+        System.out.println("findUnreadNotificationsByUser:" + user);
+        try {
+
+            if (user != null) {
+                CriteriaBuilder criteriaBuilder = getEntityManager().getCriteriaBuilder();
+                CriteriaQuery criteriaQuery = criteriaBuilder.createQuery(UserNotification.class);
+                Root root = criteriaQuery.from(UserNotification.class);
+                Predicate equalUser = criteriaBuilder.equal(root.get(UserNotification_.targetUser), user);
+                Predicate unread = criteriaBuilder.equal(root.get(UserNotification_.read), false);
+
+                criteriaQuery.where(criteriaBuilder.and(equalUser, unread));
+                criteriaQuery.orderBy(criteriaBuilder.desc(root.get(UserNotification_.creationDate.getName())));
+                Query q = getEntityManager().createQuery(criteriaQuery);
+
+//            if (!all) {
+                q.setMaxResults(10);
+                q.setFirstResult(0);
+//            }
+                return q.getResultList();
+            }
+
+        } catch (Exception ex) {
+            Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, ex.getMessage());
+        }
+
+        return Collections.EMPTY_LIST;
+
     }
 
     protected List<Venue> findVenuesByUser(Usuario user, OrderBy orderBy) {

@@ -6,6 +6,7 @@ import com.unlockspaces.jsf.util.PaginationHelper;
 import com.unlockspaces.ejb.UsuarioFacade;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.ResourceBundle;
 import javax.ejb.EJB;
 import javax.inject.Named;
@@ -179,6 +180,10 @@ public class UsuarioController implements Serializable {
         recreateModel();
         return "List";
     }
+    
+    public List<Usuario> getItemsAvailable() {
+        return ejbFacade.findAll();
+    }
 
     public SelectItem[] getItemsAvailableSelectMany() {
         return JsfUtil.getSelectItems(ejbFacade.findAll(), false);
@@ -197,6 +202,7 @@ public class UsuarioController implements Serializable {
 
         @Override
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
+            System.out.println("UsuarioControllerConverter.getAsObject " + value);
             if (value == null || value.length() == 0) {
                 return null;
             }
@@ -219,6 +225,7 @@ public class UsuarioController implements Serializable {
 
         @Override
         public String getAsString(FacesContext facesContext, UIComponent component, Object object) {
+            System.out.println("UsuarioControllerConverter.getAsString " + object);
             if (object == null) {
                 return null;
             }

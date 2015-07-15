@@ -16,13 +16,15 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class UserNotification implements Serializable {
 
+     @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    private Long id;
+     
     @Basic
     private boolean read;
     @Basic
     private String details;
-    @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private Long id;
+   
     @Basic
     private String title;
     @Temporal(TemporalType.TIMESTAMP)
