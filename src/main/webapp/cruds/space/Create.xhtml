@@ -25,18 +25,7 @@
                         <f:selectItems value="#{venueController.itemsAvailableSelectOne}"/>
                     </h:selectOneMenu>
 
-                    <h:outputLabel value="#{bundle.CreateSpaceLabel_address}" for="address" />
-                    <h:inputText id="address" styleClass="form-control" value="#{spaceController.selected.address.line1}" title="#{bundle.CreateSpaceTitle_address}" />
-
-                    <h:outputLabel value="latitude" for="latitude" />
-                    <h:inputText id="latitude" styleClass="form-control" value="#{spaceController.selected.address.latitude}" title="#{bundle.CreateSpaceTitle_address}" />
-
-                    <h:outputLabel value="longitude" for="longitude" />
-                    <h:inputText id="longitude" styleClass="form-control" value="#{spaceController.selected.address.longitude}" title="#{bundle.CreateSpaceTitle_address}" />
-
-                    <h:outputLabel value="postalCode" for="postalCode" />
-                    <h:inputText id="postalCode" styleClass="form-control" value="#{spaceController.selected.address.postalCode}" title="#{bundle.CreateSpaceTitle_address}" />
-
+                   
 
 
                     <h:outputLabel value="#{bundle.CreateSpaceLabel_cancelationPolicy}" for="cancelationPolicy" />
