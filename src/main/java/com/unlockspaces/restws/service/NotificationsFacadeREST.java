@@ -53,15 +53,6 @@ public class NotificationsFacadeREST extends AbstractFacade<UserNotification> {
 //            final Usuario usuarioFromSession = getUsuarioFromSession(request);
 //            Usuario usuarioFromHeader = getUsuarioFromHeader(headers);
             
-            UserNotification un  = new UserNotification();
-            un.setCreationDate(new Date());
-            un.setDetails("test details =)");
-            un.setRead(false);
-            un.setTitle("test title");
-            un.setTargetUser(findUsuarioByUserId);
-            
-            getEntityManager().persist(un);
-
             final List<UserNotification> findByUser = findUnreadNotificationsByUser(findUsuarioByUserId);
             return findByUser;
         } catch (Exception e) {
