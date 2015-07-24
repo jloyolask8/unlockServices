@@ -107,6 +107,11 @@
             <artifactId>lutung</artifactId>
             <version>0.0.5</version>
         </dependency>
+        <dependency>
+            <groupId>com.pusher</groupId>
+            <artifactId>pusher-java-client</artifactId>
+            <version>0.3.3</version>
+        </dependency>
         <!--        <dependency>
             <groupId>org.ebaysf.web</groupId>
             <artifactId>cors-filter</artifactId>

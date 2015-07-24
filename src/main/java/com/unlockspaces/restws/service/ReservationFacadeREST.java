@@ -13,6 +13,7 @@ import com.unlockspaces.persistence.entities.Reservation_;
 import com.unlockspaces.persistence.entities.Space;
 import com.unlockspaces.persistence.entities.Usuario;
 import com.unlockspaces.persistence.entities.Venue;
+import com.unlockspaces.persistence.entities.VenueAdmin;
 import com.unlockspaces.persistence.entities.Venue_;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -93,6 +94,10 @@ public class ReservationFacadeREST extends AbstractFacade<Reservation> {
                      un mensaje via de app confirmando el booking, esto lo puede 
                      elejir el cliente en la app (Settings)
                      */
+                    for (VenueAdmin admin : entity.getSpace().getVenue().getAdmins()) {
+                        sendNotification(admin.getAdminName(), admin.getAdminEmail(),
+                            MailTemplate.MailTemplateEnum.RENT_REQUEST.getMailTemplate(),"Rent Request Notification", "Rent Request");
+                    }
                     sendNotification(entity.getSpace().getVenue().getCreatedBy(),
                             MailTemplate.MailTemplateEnum.RENT_REQUEST.getMailTemplate(),"Rent Request Notification", "Rent Request");
                     super.create(entity);

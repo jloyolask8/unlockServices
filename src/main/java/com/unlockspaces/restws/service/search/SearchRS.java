@@ -5,10 +5,15 @@
  */
 package com.unlockspaces.restws.service.search;
 
+import com.itcs.jpautils.EasyCriteriaQuery;
+import com.unlockspaces.persistence.entities.Reservation;
+import com.unlockspaces.persistence.entities.Reservation_;
 import com.unlockspaces.persistence.entities.Space;
 import com.unlockspaces.persistence.entities.Venue;
 import com.unlockspaces.restws.service.AbstractFacade;
 import java.io.ByteArrayOutputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -19,7 +24,6 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.core.CacheControl;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.xml.bind.JAXBContext;
@@ -82,6 +86,70 @@ public class SearchRS extends AbstractFacade<Space> {
             @PathParam("radiometers") int radiometers) {
         try {
             return getCacheResponseBuilder(Response.Status.OK).entity(marshallSpace(findVenuesOnRadio(latitude, longitude, radiometers))).build();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return getNoCacheResponseBuilder(Response.Status.INTERNAL_SERVER_ERROR).build();
+        //Jorge's search here
+    }
+
+    @GET
+    @Path("searchVenuesLatLongTimeRange/{latitude}/{longitude}/{radiometers}/{start}/{end}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response searchVenuesLatLongTimeRange(
+            @PathParam("latitude") String latitude,
+            @PathParam("longitude") String longitude,
+            @PathParam("radiometers") int radiometers,
+            @PathParam("start") String start,
+            @PathParam("end") String end) {
+        try {
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd-HH-mm");
+            Date startDate = format.parse(start);
+            Date endDate = format.parse(end);
+            List<Venue> result = new LinkedList<>();
+            List<Space> spaces = new LinkedList<>();
+            List<Venue> venues = findVenuesOnRadio(latitude, longitude, radiometers);
+            for (Venue venue : venues) {
+                for (Space space : venue.getSpaces()) {
+                    EasyCriteriaQuery<Reservation> queryReservationStart = new EasyCriteriaQuery<>(em, Reservation.class);
+                    queryReservationStart.addEqualPredicate(Reservation_.space.getName(), space);
+                    //queryReservationStart.add
+                    queryReservationStart.addBetweenPredicate(Reservation_.startDateTime, startDate, endDate);
+                    if (queryReservationStart.count() == 0) {
+                        EasyCriteriaQuery<Reservation> queryReservationsEnd = new EasyCriteriaQuery<>(em, Reservation.class);
+                        queryReservationsEnd.addEqualPredicate(Reservation_.space.getName(), space);
+                        queryReservationsEnd.addBetweenPredicate(Reservation_.endDateTime, startDate, endDate);
+                        if (queryReservationsEnd.count() == 0) {
+                            EasyCriteriaQuery<Reservation> queryReservationsA = new EasyCriteriaQuery<>(em, Reservation.class);
+                            queryReservationsA.addEqualPredicate(Reservation_.space.getName(), space);
+                            queryReservationsA.addGreaterThanPredicate(Reservation_.startDateTime, startDate, true);
+                            queryReservationsA.addLessThanPredicate(Reservation_.endDateTime, endDate, true);
+                            if (queryReservationsA.count() == 0) {
+                                EasyCriteriaQuery<Reservation> queryReservationsB = new EasyCriteriaQuery<>(em, Reservation.class);
+                                queryReservationsB.addEqualPredicate(Reservation_.space.getName(), space);
+                                queryReservationsB.addLessThanPredicate(Reservation_.startDateTime, startDate, true);
+                                queryReservationsB.addGreaterThanPredicate(Reservation_.endDateTime, endDate, true);
+                                if (queryReservationsB.count() == 0) {
+                                    spaces.add(space);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            for (Space space : spaces) {
+                Venue venue = space.getVenue();
+                int index = result.indexOf(venue);
+                if (index < 0) {
+                    venue.setSpaces(new LinkedList<Space>());
+                    venue.getSpaces().add(space);
+                    result.add(venue);
+                } else {
+                    venue = result.get(index);
+                    venue.getSpaces().add(space);
+                }
+            }
+            return getCacheResponseBuilder(Response.Status.OK).entity(marshallSpace(result)).build();
         } catch (Exception ex) {
             ex.printStackTrace();
         }

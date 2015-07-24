@@ -13,6 +13,8 @@ import com.microtripit.mandrillapp.lutung.model.MandrillApiError;
 import com.microtripit.mandrillapp.lutung.view.MandrillMessage;
 import com.microtripit.mandrillapp.lutung.view.MandrillMessageStatus;
 import com.microtripit.mandrillapp.lutung.view.MandrillTemplate;
+import com.pusher.client.Pusher;
+import com.pusher.client.PusherOptions;
 import com.unlockspaces.interceptors.JWTFilter;
 import com.unlockspaces.interceptors.NoAuthorizationException;
 import com.unlockspaces.jpautils.OrderBy;
@@ -78,23 +80,37 @@ public abstract class AbstractFacade<T> {
                 JWTFilter.AUTH0_CLIENT_ID);
     }
     
-    public void sendNotification(final Usuario usuario, MailTemplate templateId, final String notificationDetail, final String notificationTitle) throws MandrillApiError, IOException {
+    public void sendNotification(final String nombre, final String email, MailTemplate templateId, final String notificationDetail, final String notificationTitle) throws MandrillApiError, IOException {
         final MailTemplate templateIdFromDB = getEntityManager().find(MailTemplate.class, templateId.getName());
+        //createNotification(notificationDetail, usuario, notificationTitle);
         TaskExecutor.submitTask(new Runnable() {
             @Override
             public void run() {
                 try {
-                    sendNotif(usuario, templateIdFromDB, notificationDetail, notificationTitle);
-                } catch (MandrillApiError ex) {
-                    Logger.getLogger(AbstractFacade.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (IOException ex) {
+                    sendNotif(nombre, email, templateIdFromDB);
+                } catch (MandrillApiError | IOException ex) {
                     Logger.getLogger(AbstractFacade.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         });
     }
     
-    private void sendNotif(Usuario usuario, MailTemplate templateId, String notificationDetail, String notificationTitle) throws MandrillApiError, IOException {
+    public void sendNotification(final Usuario usuario, MailTemplate templateId, final String notificationDetail, final String notificationTitle) throws MandrillApiError, IOException {
+        final MailTemplate templateIdFromDB = getEntityManager().find(MailTemplate.class, templateId.getName());
+        createNotification(notificationDetail, usuario, notificationTitle);
+        TaskExecutor.submitTask(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    sendNotif(usuario.getName()+" "+usuario.getLastname(), usuario.getEmail(), templateIdFromDB);
+                } catch (MandrillApiError | IOException ex) {
+                    Logger.getLogger(AbstractFacade.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        });
+    }
+    
+    private void sendNotif(String name, String email, MailTemplate templateId) throws MandrillApiError, IOException {
         
         MandrillApi mandrillApi = new MandrillApi("-pOrmLXkRDWIQBOsPSAIwQ");
 // create your message
@@ -110,15 +126,21 @@ public abstract class AbstractFacade<T> {
         message.setFromName(template.getFromName());
         ArrayList<MandrillMessage.Recipient> recipients = new ArrayList<>();
         MandrillMessage.Recipient recipient = new MandrillMessage.Recipient();
-        recipient.setEmail(usuario.getEmail());
-        recipient.setName(usuario.getName()+" "+usuario.getLastname());
+        recipient.setEmail(email);
+        recipient.setName(name);
         recipients.add(recipient);
         message.setTo(recipients);
         message.setPreserveRecipients(true);
 
         MandrillMessageStatus[] messageStatusReports = mandrillApi
                 .messages().send(message, true);
-        createNotification(notificationDetail, usuario, notificationTitle);
+        
+    }
+    
+    private void pushNotification(Usuario usuario){
+        
+        Pusher pusher = new Pusher("8ea2e01f54b16c6d6e55");
+        pusher.connect();
     }
 
     private void createNotification(String notificationDetail, Usuario usuario, String notificationTitle) {
@@ -129,6 +151,7 @@ public abstract class AbstractFacade<T> {
         notification.setTargetUser(usuario);
         notification.setTitle(notificationTitle);
         getEntityManager().persist(notification);
+        getEntityManager().flush();
     }
 
     protected List<UserNotification> findUnreadNotificationsByUser(Usuario user) {
