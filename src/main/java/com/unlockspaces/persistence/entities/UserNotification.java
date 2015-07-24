@@ -24,6 +24,10 @@ public class UserNotification implements Serializable {
     private boolean read;
     @Basic
     private String details;
+    
+//  colors = ['primary', 'info', 'success', 'warning', 'danger', 'dark'];
+    @Basic
+    private String color;
    
     @Basic
     private String title;
@@ -83,5 +87,19 @@ public class UserNotification implements Serializable {
 
     public void setTargetUser(Usuario targetUser) {
         this.targetUser = targetUser;
+    }
+
+    /**
+     * @return the color
+     */
+    public String getColor() {
+        return color;
+    }
+
+    /**
+     * @param color the color to set
+     */
+    public void setColor(String color) {
+        this.color = color;
     }
 }

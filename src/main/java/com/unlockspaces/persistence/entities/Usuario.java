@@ -67,6 +67,10 @@ public class Usuario extends Person implements Serializable {
     @Transient
     private Integer venuesQty;
 
+    @Basic
+    @Column(name = "has_new_notifications")
+    private boolean hasNewNotifications;
+
     public Usuario() {
 
     }
@@ -228,6 +232,19 @@ public class Usuario extends Person implements Serializable {
     public String toString() {
         return "Usuario{" + "userId=" + userId + ", email=" + email + '}';
     }
-    
-    
+
+    /**
+     * @return the hasNewNotifications
+     */
+    public boolean isHasNewNotifications() {
+        return hasNewNotifications;
+    }
+
+    /**
+     * @param hasNewNotifications the hasNewNotifications to set
+     */
+    public void setHasNewNotifications(boolean hasNewNotifications) {
+        this.hasNewNotifications = hasNewNotifications;
+    }
+
 }
