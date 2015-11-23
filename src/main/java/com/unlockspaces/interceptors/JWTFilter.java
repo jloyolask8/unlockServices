@@ -29,8 +29,8 @@ import javax.servlet.http.HttpServletResponse;
 public class JWTFilter implements Filter {
 
     //put this values on web.xml 
-    public static final String AUTH0_CLIENT_SECRET = "14ykPsAXCrLeac3kWDp9ibpyFzda-yYxl5aKLlrl1QQqxBa5PLzMWKzIvYFtiOE3";
-    public static final String AUTH0_CLIENT_ID = "8e3elusXRGQ8Jp2vv0i3T8B3KcW4zWeG";
+    public static final String AUTH0_CLIENT_SECRET = "_c8TPyMqMpaIP0yOZRq-cFcMbpcg83N1xbbudX5wakdJF_3sJa9-VAVU-L2EU7v5";
+    public static final String AUTH0_CLIENT_ID = "kZ20aDwJnCVMaVBqRRL2TG39KdOZax5A";
 
     private JWTVerifier jwtVerifier;
 
